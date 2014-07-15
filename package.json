@@ -8,6 +8,8 @@
   "devDependencies": {
     "gulp": "^3.8.6",
     "gulp-slim": "0.0.8",
-    "win-spawn": "^2.0.0"
+    "win-spawn": "^2.0.0",
+    "gulp-rimraf": "^0.1.0",
+    "rimraf": "^2.2.8"
   }
 }

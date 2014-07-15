@@ -1,5 +1,6 @@
 var gulp = require('gulp');
 var slim = require("gulp-slim");
+var rimraf = require('rimraf');
 
 gulp.task('slim', ['slim-main', 'slim-partials']);
 
@@ -17,6 +18,10 @@ gulp.task('slim-partials', function() {
       pretty: true
     }))
     .pipe(gulp.dest("./www/partials/"));
+});
+
+gulp.task('clean', function(cb) {
+  rimraf('./www', cb);
 });
 
 gulp.task('default', function() {

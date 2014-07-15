@@ -7,6 +7,7 @@ var sass = require('gulp-sass')
 var coffee = require('gulp-coffee');
 var gutil = require('gulp-util');
 var bower = require('gulp-bower');
+var connect = require('gulp-connect');
 
 gulp.task('default', function() {
   // place code for your default task here
@@ -99,4 +100,11 @@ gulp.task('clean', function(cb) {
     .pipe(rimraf({
       force: true
     }));
+});
+
+gulp.task('connect', function() {
+  connect.server({
+    root: 'www',
+    livereload: true
+  });
 });

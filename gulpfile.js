@@ -15,24 +15,40 @@ gulp.task('default', function() {
 gulp.task('slim', ['slim-main', 'slim-partials']);
 gulp.task('build', ['slim', 'coffee', 'sass']);
 
+var srcPath = './src/';
+var appPath = './www/';
+
+var pathBuilder = function(base, path) {
+  return base + path;
+};
+
+function partialOneArg(f, a) {
+  return function(b) {
+    return f(a, b);
+  }
+};
+
+var pathBaseOnSrc = partialOneArg(pathBuilder, srcPath);
+var pathBaseOnApp = partialOneArg(pathBuilder, appPath);
+
 var path = {
   src: {
     slim: {
-      main: './src/slim/*.slim',
-      partials: './src/slim/partials/*.slim'
+      main: pathBaseOnSrc('slim/*.slim'),
+      partials: pathBaseOnSrc('slim/partials/*.slim')
     },
-    sass: './src/scss/*.scss',
-    coffee: './src/coffee/*.coffee'
+    sass: pathBaseOnSrc('scss/*.scss'),
+    coffee: pathBaseOnSrc('coffee/*.coffee')
   },
   app: {
     html: {
-      main: './www/',
-      partials: './www/partials/'
+      main: pathBaseOnApp(''),
+      partials: pathBaseOnApp('partials/')
     },
-    css: './www/css/',
-    js: './www/js/'
+    css: pathBaseOnApp('css/'),
+    js: pathBaseOnApp('js/')
   },
-  bower: './src/bower_components'
+  bower: pathBaseOnSrc('bower_components')
 };
 
 var cleanArr = [

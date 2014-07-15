@@ -1,6 +1,7 @@
 var gulp = require('gulp');
 var slim = require("gulp-slim");
 var rimraf = require('rimraf');
+var sass = require('gulp-sass')
 
 gulp.task('slim', ['slim-main', 'slim-partials']);
 
@@ -18,6 +19,12 @@ gulp.task('slim-partials', function() {
       pretty: true
     }))
     .pipe(gulp.dest("./www/partials/"));
+});
+
+gulp.task('sass', function () {
+    gulp.src('./src/scss/*.scss')
+        .pipe(sass())
+        .pipe(gulp.dest('./www/css'));
 });
 
 gulp.task('clean', function(cb) {

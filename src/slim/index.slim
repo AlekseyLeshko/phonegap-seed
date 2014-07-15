@@ -1,12 +1,31 @@
 doctype html
-html
+html.no-js lang="en" ng-app="myApp"
   head
-    title Slim Examples
-    javascript:
-      alert('Slim supports embedded javascript!')
-
+    meta charset="utf-8"
+    meta content="IE=edge" http-equiv="X-UA-Compatible"
+    title My AngularJS App
+    meta content="" name="description"
+    meta content="width=device-width, initial-scale=1" name="viewport"
+    link href="bower_components/html5-boilerplate/css/normalize.css" rel="stylesheet"
+    link href="bower_components/html5-boilerplate/css/main.css" rel="stylesheet"
+    link href="css/app.css" rel="stylesheet"
+    script src="bower_components/html5-boilerplate/js/vendor/modernizr-2.6.2.min.js"
   body
-    h1 Markup examples
+    ul.menu
+      li
+        a href="#/view1"  view1
+      li
+        a href="#/view2"  view2
 
-    #content
-      p This example shows you how a basic Slim file looks like.
+    div ng-view=""
+    div
+      | Angular seed app: v
+      span app-version=""
+
+    script src="bower_components/angular/angular.js"
+    script src="bower_components/angular-route/angular-route.js"
+    script src="js/app.js"
+    script src="js/services.js"
+    script src="js/controllers.js"
+    script src="js/filters.js"
+    script src="js/directives.js"

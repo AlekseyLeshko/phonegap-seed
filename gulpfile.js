@@ -1,9 +1,12 @@
+'use strict';
+
 var gulp = require('gulp');
 var slim = require("gulp-slim");
 var rimraf = require('rimraf');
 var sass = require('gulp-sass')
 var coffee = require('gulp-coffee');
 var gutil = require('gulp-util');
+var bower = require('gulp-bower');
 
 gulp.task('slim', ['slim-main', 'slim-partials']);
 
@@ -33,6 +36,10 @@ gulp.task('coffee', function() {
   gulp.src('./src/coffee/*.coffee')
     .pipe(coffee({bare: true}).on('error', gutil.log))
     .pipe(gulp.dest('./www/js'))
+});
+
+gulp.task('bower', function() {
+  return bower('./src/bower_components');
 });
 
 gulp.task('clean', function(cb) {

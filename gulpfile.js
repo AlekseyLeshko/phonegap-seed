@@ -14,7 +14,7 @@ gulp.task('default', function() {
 });
 
 gulp.task('slim', ['slim-main', 'slim-partials']);
-gulp.task('build', ['slim', 'coffee', 'sass']);
+gulp.task('build', ['slim', 'coffee', 'sass', 'bower']);
 
 var srcPath = './src/';
 var appPath = './www/';
@@ -49,7 +49,7 @@ var path = {
     css: pathBaseOnApp('css/'),
     js: pathBaseOnApp('js/')
   },
-  bower: pathBaseOnSrc('bower_components')
+  bower: pathBaseOnApp('bower_components')
 };
 
 var cleanArr = [

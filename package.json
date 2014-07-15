@@ -1,0 +1,13 @@
+{
+  "version": "0.0.1",
+  "private": true,
+  "name": "phonegap-seed",
+  "description": "phonegap-seed",
+  "repository": "https://github.com/AlekseyLeshko/phonegap-seed",
+  "license": "MIT",
+  "devDependencies": {
+    "gulp": "^3.8.6",
+    "gulp-slim": "0.0.8",
+    "win-spawn": "^2.0.0"
+  }
+}

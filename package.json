@@ -14,7 +14,6 @@
     "gulp-sass": "^0.7.2",
     "gulp-slim": "0.0.8",
     "gulp-util": "^2.2.20",
-    "rimraf": "^2.2.8",
     "win-spawn": "^2.0.0"
   }
 }

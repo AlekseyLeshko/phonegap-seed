@@ -4,7 +4,6 @@ var gulp = require('gulp');
 var slim = require('gulp-slim');
 var rimraf = require('gulp-rimraf');
 var sass = require('gulp-sass')
-var coffee = require('gulp-coffee');
 var gutil = require('gulp-util');
 var bower = require('gulp-bower');
 var connect = require('gulp-connect');
@@ -14,7 +13,7 @@ gulp.task('default', function() {
 });
 
 gulp.task('slim', ['slim-main', 'slim-partials']);
-gulp.task('build', ['slim', 'coffee', 'sass', 'bower']);
+gulp.task('build', ['slim', 'js', 'sass', 'bower']);
 
 var srcPath = './src/';
 var appPath = './www/';
@@ -39,7 +38,7 @@ var path = {
       partials: pathBaseOnSrc('slim/partials/*.slim')
     },
     sass: pathBaseOnSrc('scss/*.scss'),
-    coffee: pathBaseOnSrc('coffee/*.coffee')
+    coffee: pathBaseOnSrc('js/*.js')
   },
   app: {
     html: {
@@ -81,12 +80,9 @@ gulp.task('sass', function() {
     .pipe(gulp.dest(path.app.css));
 });
 
-gulp.task('coffee', function() {
+gulp.task('js', function() {
   gulp.src(path.src.coffee)
-    .pipe(coffee({
-      bare: true
-    }).on('error', gutil.log))
-    .pipe(gulp.dest(path.app.js))
+  .pipe(gulp.dest(path.app.js));
 });
 
 gulp.task('bower', function() {

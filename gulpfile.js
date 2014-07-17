@@ -12,6 +12,7 @@ var minifyCSS = require('gulp-minify-css');
 var concat = require('gulp-concat');
 var uglify = require('gulp-uglify');
 var minifyHTML = require('gulp-minify-html');
+var shell = require('gulp-shell');
 
 gulp.task('default', ['run']);
 
@@ -36,6 +37,10 @@ gulp.task('concat', function(callback) {
   return runSequence(['concat-css', 'concat-js'],
     callback);
 });
+
+gulp.task('run-android', ['build'], shell.task([
+  'phonegap local run android'
+]));
 
 gulp.task('slim', ['slim-main', 'slim-partials']);
 gulp.task('minify-html', ['minify-html-main', 'minify-html-partials']);

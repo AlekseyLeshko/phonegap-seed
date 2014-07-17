@@ -21,13 +21,25 @@ gulp.task('start', function(callback) {
 });
 
 gulp.task('build', function(callback) {
-  return runSequence('clean', ['slim', 'js', 'sass', 'bower'],
+  return runSequence('clean', 'pre-build', 'minify', callback);
+});
+
+gulp.task('pre-build', function(callback) {
+  return runSequence(['slim', 'js', 'sass', 'bower'],
     'bower-app',
     callback);
 });
+
+// gulp.task('minify', function(callback) {
+//   return runSequence(['minify-html', 'minify-css', 'minify-js'],
+//     'bower-app',
+//     callback);
+// });
+
 gulp.task('slim', ['slim-main', 'slim-partials']);
 
 var srcPath = './src/';
+var tempPath = './temp/';
 var appPath = './www/';
 
 var pathBuilder = function(base, path) {
@@ -41,6 +53,7 @@ function partialOneArg(f, a) {
 };
 
 var pathBaseOnSrc = partialOneArg(pathBuilder, srcPath);
+var pathBaseOnTemp = partialOneArg(pathBuilder, tempPath);
 var pathBaseOnApp = partialOneArg(pathBuilder, appPath);
 
 var path = {
@@ -51,6 +64,17 @@ var path = {
     },
     sass: pathBaseOnSrc('scss/*.scss'),
     coffee: pathBaseOnSrc('js/*.js')
+  },
+  temp: {
+    html: {
+      main: pathBaseOnTemp(''),
+      partials: pathBaseOnTemp('partials/')
+    },
+    css: {
+      main: pathBaseOnTemp('css/main/'),
+      concat: pathBaseOnTemp('css/concat/'),
+    },
+    js: pathBaseOnTemp('js/')
   },
   app: {
     html: {
@@ -64,6 +88,7 @@ var path = {
 };
 
 var cleanArr = [
+  tempPath,
   path.app.html.partials,
   path.app.css,
   path.app.js,
@@ -76,7 +101,7 @@ gulp.task('slim-main', function() {
     .pipe(slim({
       pretty: true
     }))
-    .pipe(gulp.dest(path.app.html.main));
+    .pipe(gulp.dest(path.temp.html.main));
 });
 
 gulp.task('slim-partials', function() {
@@ -84,18 +109,30 @@ gulp.task('slim-partials', function() {
     .pipe(slim({
       pretty: true
     }))
-    .pipe(gulp.dest(path.app.html.partials));
+    .pipe(gulp.dest(path.temp.html.partials));
 });
 
 gulp.task('sass', function() {
   return gulp.src(path.src.sass)
     .pipe(sass())
+    .pipe(gulp.dest(path.temp.css.concat));
+});
+
+gulp.task('concat-css', function() {
+  return gulp.src(path.temp.css.concat + '*.css')
+    .pipe(concat('style.css'))
+    .pipe(gulp.dest(path.temp.css.main));
+});
+
+gulp.task('minify-css', function() {
+  return gulp.src(path.temp.css.main + '*.css')
+    .pipe(minifyCSS())
     .pipe(gulp.dest(path.app.css));
 });
 
 gulp.task('js', function() {
   return gulp.src(path.src.coffee)
-    .pipe(gulp.dest(path.app.js));
+    .pipe(gulp.dest(path.temp.js));
 });
 
 gulp.task('bower', function() {
@@ -104,7 +141,7 @@ gulp.task('bower', function() {
 
 gulp.task('bower-app', function() {
   gulp.src(path.bower + 'html5-boilerplate/css/*.css')
-    .pipe(gulp.dest(path.app.css));
+    .pipe(gulp.dest(path.temp.css.main));
 
   gulp.src(path.bower + 'html5-boilerplate/js/vendor/modernizr-2.6.2.min.js')
     .pipe(gulp.dest(path.app.js));

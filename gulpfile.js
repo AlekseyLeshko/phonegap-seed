@@ -8,6 +8,8 @@ var gutil = require('gulp-util');
 var bower = require('gulp-bower');
 var connect = require('gulp-connect');
 var runSequence = require('run-sequence');
+var minifyCSS = require('gulp-minify-css');
+var concat = require('gulp-concat');
 
 gulp.task('default', function() {
   // place code for your default task here

@@ -13,12 +13,12 @@ var concat = require('gulp-concat');
 var uglify = require('gulp-uglify');
 var minifyHTML = require('gulp-minify-html');
 
-// gulp.task('default', ['start']);
+gulp.task('default', ['run']);
 
-// gulp.task('start', function(callback) {
-//   return runSequence('build',
-//     'connect', callback);
-// });
+gulp.task('run', function(callback) {
+  return runSequence('build',
+    'connect', callback);
+});
 
 gulp.task('build', function(callback) {
   return runSequence('clean', 'pre-build', 'concat', 'minify', callback);
@@ -120,23 +120,17 @@ gulp.task('minify-html', ['minify-html-main', 'minify-html-partials']);
 
 gulp.task('minify-html-main', function() {
   var opts = {
-    comments: true,
-    spare: true
+    empty: true
   };
 
   gulp.src(path.temp.html.main + '*.html')
-    // .pipe(minifyHTML(opts))
+    .pipe(minifyHTML(opts))
     .pipe(gulp.dest(path.app.html.main))
 });
 
 gulp.task('minify-html-partials', function() {
-  var opts = {
-    comments: true,
-    spare: true
-  };
-
   gulp.src(path.temp.html.partials + '*.html')
-    // .pipe(minifyHTML(opts))
+    .pipe(minifyHTML())
     .pipe(gulp.dest(path.app.html.partials))
 });
 

@@ -10,31 +10,31 @@ var connect = require('gulp-connect');
 var runSequence = require('run-sequence');
 var minifyCSS = require('gulp-minify-css');
 var concat = require('gulp-concat');
+var uglify = require('gulp-uglify');
 
-gulp.task('default', function() {
-  // place code for your default task here
-});
+// gulp.task('default', ['start']);
 
-gulp.task('start', function(callback) {
-  return runSequence('build',
-    'connect', callback);
-});
+// gulp.task('start', function(callback) {
+//   return runSequence('build',
+//     'connect', callback);
+// });
 
 gulp.task('build', function(callback) {
-  return runSequence('clean', 'pre-build', 'minify', callback);
+  return runSequence('clean', 'pre-build', 'concat', 'minify', callback);
 });
 
 gulp.task('pre-build', function(callback) {
-  return runSequence(['slim', 'js', 'sass', 'bower'],
-    'bower-app',
-    callback);
+  return runSequence(['slim', 'js', 'sass', 'bower'], 'bower-app', callback);
 });
 
-// gulp.task('minify', function(callback) {
-//   return runSequence(['minify-html', 'minify-css', 'minify-js'],
-//     'bower-app',
-//     callback);
-// });
+gulp.task('minify', function(callback) {
+  return runSequence(['minify-css', 'minify-js'], callback);
+});
+
+gulp.task('concat', function(callback) {
+  return runSequence(['concat-css', 'concat-js'],
+    callback);
+});
 
 gulp.task('slim', ['slim-main', 'slim-partials']);
 
@@ -63,7 +63,7 @@ var path = {
       partials: pathBaseOnSrc('slim/partials/*.slim')
     },
     sass: pathBaseOnSrc('scss/*.scss'),
-    coffee: pathBaseOnSrc('js/*.js')
+    js: pathBaseOnSrc('js/*.js')
   },
   temp: {
     html: {
@@ -74,7 +74,10 @@ var path = {
       main: pathBaseOnTemp('css/main/'),
       concat: pathBaseOnTemp('css/concat/'),
     },
-    js: pathBaseOnTemp('js/')
+    js: {
+      main: pathBaseOnTemp('js/main/'),
+      concat: pathBaseOnTemp('js/concat/')
+    },
   },
   app: {
     html: {
@@ -131,8 +134,20 @@ gulp.task('minify-css', function() {
 });
 
 gulp.task('js', function() {
-  return gulp.src(path.src.coffee)
-    .pipe(gulp.dest(path.temp.js));
+  return gulp.src(path.src.js)
+    .pipe(gulp.dest(path.temp.js.concat));
+});
+
+gulp.task('concat-js', function() {
+  return gulp.src(path.temp.js.concat + '*.js')
+    .pipe(concat('all.js'))
+    .pipe(gulp.dest(path.temp.js.main))
+});
+
+gulp.task('minify-js', function() {
+  return gulp.src(path.temp.js.main + '*.js')
+    .pipe(uglify())
+    .pipe(gulp.dest(path.app.js))
 });
 
 gulp.task('bower', function() {

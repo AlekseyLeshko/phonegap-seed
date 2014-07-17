@@ -11,6 +11,7 @@ var runSequence = require('run-sequence');
 var minifyCSS = require('gulp-minify-css');
 var concat = require('gulp-concat');
 var uglify = require('gulp-uglify');
+var minifyHTML = require('gulp-minify-html');
 
 // gulp.task('default', ['start']);
 
@@ -28,15 +29,13 @@ gulp.task('pre-build', function(callback) {
 });
 
 gulp.task('minify', function(callback) {
-  return runSequence(['minify-css', 'minify-js'], callback);
+  return runSequence(['minify-html', 'minify-css', 'minify-js'], callback);
 });
 
 gulp.task('concat', function(callback) {
   return runSequence(['concat-css', 'concat-js'],
     callback);
 });
-
-gulp.task('slim', ['slim-main', 'slim-partials']);
 
 var srcPath = './src/';
 var tempPath = './temp/';
@@ -99,6 +98,8 @@ var cleanArr = [
   path.bower,
 ];
 
+gulp.task('slim', ['slim-main', 'slim-partials']);
+
 gulp.task('slim-main', function() {
   return gulp.src(path.src.slim.main)
     .pipe(slim({
@@ -113,6 +114,30 @@ gulp.task('slim-partials', function() {
       pretty: true
     }))
     .pipe(gulp.dest(path.temp.html.partials));
+});
+
+gulp.task('minify-html', ['minify-html-main', 'minify-html-partials']);
+
+gulp.task('minify-html-main', function() {
+  var opts = {
+    comments: true,
+    spare: true
+  };
+
+  gulp.src(path.temp.html.main + '*.html')
+    // .pipe(minifyHTML(opts))
+    .pipe(gulp.dest(path.app.html.main))
+});
+
+gulp.task('minify-html-partials', function() {
+  var opts = {
+    comments: true,
+    spare: true
+  };
+
+  gulp.src(path.temp.html.partials + '*.html')
+    // .pipe(minifyHTML(opts))
+    .pipe(gulp.dest(path.app.html.partials))
 });
 
 gulp.task('sass', function() {

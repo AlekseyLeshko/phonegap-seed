@@ -180,10 +180,10 @@ gulp.task('bower-app', function() {
   gulp.src(path.bower + 'html5-boilerplate/js/vendor/modernizr-2.6.2.min.js')
     .pipe(gulp.dest(path.app.js));
 
-  gulp.src(path.bower + 'angular/angular.js')
+  gulp.src(path.bower + 'angular/angular.min.js')
     .pipe(gulp.dest(path.app.js));
 
-  gulp.src(path.bower + 'angular-route/angular-route.js')
+  gulp.src(path.bower + 'angular-route/angular-route.min.js')
     .pipe(gulp.dest(path.app.js));
 });
 

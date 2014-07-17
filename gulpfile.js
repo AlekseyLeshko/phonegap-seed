@@ -37,7 +37,6 @@ gulp.task('concat', function(callback) {
     callback);
 });
 
-
 gulp.task('slim', ['slim-main', 'slim-partials']);
 gulp.task('minify-html', ['minify-html-main', 'minify-html-partials']);
 

@@ -1,5 +1,8 @@
 phonegap-seed
 =============
+[![Dependency Status](https://david-dm.org/AlekseyLeshko/phonegap-seed.svg?theme=shields.io)](https://david-dm.org/AlekseyLeshko/phonegap-seed)
+[![devDependency Status](https://david-dm.org/AlekseyLeshko/phonegap-seed/dev-status.svg?theme=shields.io)](https://david-dm.org/AlekseyLeshko/phonegap-seed#info=devDependencies)
+
 
 ## Install dependencies
 #### Install [nvm](https://github.com/creationix/nvm)

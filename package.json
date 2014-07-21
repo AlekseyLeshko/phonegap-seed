@@ -17,7 +17,7 @@
     "gulp-shell": "^0.2.8",
     "gulp-slim": "0.0.8",
     "gulp-uglify": "^0.3.1",
-    "gulp-util": "^2.2.20",
+    "gulp-util": "^3.0.0",
     "run-sequence": "^0.3.6",
     "win-spawn": "^2.0.0"
   }

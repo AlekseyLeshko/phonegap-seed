@@ -4,6 +4,12 @@ phonegap-seed
 [![devDependency Status](https://david-dm.org/AlekseyLeshko/phonegap-seed/dev-status.svg?theme=shields.io)](https://david-dm.org/AlekseyLeshko/phonegap-seed#info=devDependencies)
 
 
+## Start
+```
+git clone git@github.com:AlekseyLeshko/phonegap-seed.git
+cd phonegap-seed/
+```
+
 ## [Install dependencies](https://github.com/AlekseyLeshko/phonegap-seed/blob/master/Docs/install_dependencies.md)
 
 ## Build project

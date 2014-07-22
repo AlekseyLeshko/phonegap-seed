@@ -101,6 +101,13 @@ sudo apt-get install ant
 ```
 
 #### Install android sdk
+```
+wget -P ~/Downloads/ http://dl.google.com/android/adt/adt-bundle-linux-x86_64-20140702.zip
+unzip ~/Downloads//adt-bundle-linux-x86_64-20140702.zip -d ~/Programs
+chown -R user ~/Programs/adt-bundle-linux-x86_64-20140702
+echo "\n# Android SDK\nPATH=\$PATH:~/Programs/adt-bundle-linux-x86_64-20140702/sdk/platform-tools:~/Programs/adt-bundle-linux-x86_64-20140702/sdk/tools" >> ~/.bashrc
+```
+android sdk for 64-bit
 
 #### Install android API 19
 

@@ -15,7 +15,7 @@ export NVM_DIR=~/.nvm
 In .bashrc file and reboot terminal
 
 ## Error
-Not found packages: node, npm, gulp.
+Not found packages: node, npm, gulp, phonegap.
 
 #### Decision
 [Install nvm](https://github.com/AlekseyLeshko/phonegap-seed/blob/master/Docs/install_dependencies.md#install-nvm), [install node version](https://github.com/AlekseyLeshko/phonegap-seed/blob/master/Docs/install_dependencies.md#install-node)

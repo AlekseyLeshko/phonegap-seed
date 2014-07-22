@@ -2,6 +2,7 @@ Install dependencies
 ====================
 
 For work with PhoneGap seed project need install this dependency list
+
 1. All for Nodejs
   1. [nvm](#install-nvm)
   1. [node](#install-node)

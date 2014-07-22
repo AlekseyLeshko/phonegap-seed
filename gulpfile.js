@@ -215,3 +215,8 @@ gulp.task('connect', function() {
     livereload: true
   });
 });
+
+var port = 3001;
+gulp.task('phonegap-serve', shell.task([
+  'phonegap serve listening on 10.0.1.4:' + port
+]));

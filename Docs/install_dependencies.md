@@ -20,6 +20,7 @@ For work with PhoneGap seed project need install this dependency list
   3. [android sdk](#install-android-sdk)
     1. [install android API 19](#install-android-api-19)
     2. [configure emulator](#configure-emulator)
+  4. [phonegap](#install-phonegap)
 
 Or make use Vagrant and Ansible. [Please take script](https://github.com/AlekseyLeshko/ansible-phonegap-playbook)
 
@@ -126,3 +127,8 @@ android
 ```
 In opened window click 'Tools->manage AVDs->android virtual devices->Create'.
 Fill in the fields, for example divice 'Galaxy-Nexus' and click 'Ok'.
+
+#### Install phonegap
+```
+sudo npm install -g phonegap
+```

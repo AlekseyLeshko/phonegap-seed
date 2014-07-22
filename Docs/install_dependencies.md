@@ -110,5 +110,11 @@ echo "\n# Android SDK\nPATH=\$PATH:~/Programs/adt-bundle-linux-x86_64-20140702/s
 android sdk for 64-bit
 
 #### Install android API 19
+Run in terminal 'android'
+```
+android
+```
+In opened window select 'Android 4.2.2 (API 19)' and click 'Install 8 packages..'
+Wait .. = )
 
 #### Configure emulator

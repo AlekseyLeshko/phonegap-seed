@@ -118,3 +118,9 @@ In opened window select 'Android 4.2.2 (API 19)' and click 'Install 8 packages..
 Wait .. = )
 
 #### Configure emulator
+Run in terminal 'android'
+```
+android
+```
+In opened window click 'Tools->manage AVDs->android virtual devices->Create'.
+Fill in the fields, for example divice 'Galaxy-Nexus' and click 'Ok'.

@@ -2,25 +2,28 @@ Install dependencies
 ====================
 
 For work with PhoneGap seed project need install this dependency list
-1. nvm
-    1.1. node
-    1.2. npm
-    1.3. gulp
-    1.4. install gulp dependencies
-2. dependencies with gulp plugin
-    2.1. gulp-slim plugin
-        2.1.1. rvm
-        2.1.2. ruby
-        2.1.3. slim gem
+1. All for Nodejs
+  1. [nvm](#install-nvm)
+  1. [node](#install-node)
+  2. [npm](#install-npm)
+  3. [gulp](#install-gulp)
+  4. [install gulp plugin for project](#install-gulp-plugin)
+2. Dependencies with gulp plugin
+  1. gulp-slim plugin
+    1. [rvm](#install-rvm)
+    2. [ruby](#install-ruby)
+    3. [slim gem](#install-slim-gem)
 3. phonegap framework
-    3.1. java
-    3.2. ant
-    3.3. android sdk
-        3.3.1. install android API 19
-        3.3.2. configure emulator
+  1. [java](#install-java)
+  2. [ant](#install-ant)
+  3. [android sdk](#install-android-sdk)
+    1. [install android API 19](#install-android-api-19)
+    2. [configure emulator](#configure-emulator)
 
-#### Install [nvm](https://github.com/creationix/nvm)
-For Ubuntu
+## All shell command for Ubuntu
+
+#### Install nvm
+[nvm repo](https://github.com/creationix/nvm)
 ```
 sudo apt-get update
 sudo apt-get install build-essential libssl-dev
@@ -31,6 +34,7 @@ nvm -v
 ```
 
 #### Install node
+[node repo](https://github.com/joyent/node)
 ```
 nvm ls-remote
 nvm install 0.10.29
@@ -40,36 +44,55 @@ nvm use default
 ```
 
 #### Install npm
+[npm](https://www.npmjs.org/)
 ```
 npm install -g express
 npm -v
 ```
 
 #### Install gulp
+[gulp](http://gulpjs.com/)
 ```
 npm install -g gulp
 ```
 
 #### Install gulp plugin
+Navigate in project directory
 ```
+cd phonegap-seed/
 npm install
 ```
 
 #### Install dependencies specially for gulp-slim plugin
-Install gem(yeees, install ruby, install gemset and install current gem) and use him
 
-Install rvm
+#### Install rvm
+[rvm](https://rvm.io/)
+
 ```
 sudo apt-get install libgdbm-dev libncurses5-dev automake libtool bison libffi-dev
 curl -L https://get.rvm.io | bash -s stable
 source ~/.rvm/scripts/rvm
 echo "source ~/.rvm/scripts/rvm" >> ~/.bashrc
+```
+
+#### Install ruby
+```
 rvm install 2.1.2
 rvm use 2.1.2 --default
 ruby -v
 ```
 
-Install gem
+#### Install slim gem
 ```
 gem install slim
 ```
+
+#### Install java
+
+#### Install ant
+
+#### Install android sdk
+
+#### Install android API 19
+
+#### Configure emulator

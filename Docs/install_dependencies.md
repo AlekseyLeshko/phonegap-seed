@@ -89,8 +89,16 @@ gem install slim
 ```
 
 #### Install java
+```
+sudo add-apt-repository ppa:webupd8team/java
+sudo apt-get update
+sudo apt-get install oracle-java7-installer
+```
 
 #### Install ant
+```
+sudo apt-get install ant
+```
 
 #### Install android sdk
 

@@ -21,6 +21,8 @@ For work with PhoneGap seed project need install this dependency list
     1. [install android API 19](#install-android-api-19)
     2. [configure emulator](#configure-emulator)
 
+Or make use Vagrant and Ansible. [Please take script](https://github.com/AlekseyLeshko/ansible-phonegap-playbook)
+
 ## All shell command for Ubuntu
 
 #### Install nvm

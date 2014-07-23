@@ -149,10 +149,9 @@ gulp.task('bower', function() {
   return bower(path.bower);
 });
 
-gulp.task('bower-app', function() {
-  gulp.src(path.bower + 'html5-boilerplate/css/*.css')
-    .pipe(gulp.dest(path.build.css.main));
+gulp.task('bower-app', ['bower-app-js', 'bower-app-css']);
 
+gulp.task('bower-app-js', function() {
   gulp.src(path.bower + 'html5-boilerplate/js/vendor/modernizr-2.6.2.min.js')
     .pipe(gulp.dest(path.app.js));
 
@@ -161,6 +160,23 @@ gulp.task('bower-app', function() {
 
   gulp.src(path.bower + 'angular-route/angular-route.min.js')
     .pipe(gulp.dest(path.app.js));
+
+  gulp.src(path.bower + 'jquery/dist/jquery.min.js')
+    .pipe(gulp.dest(path.app.js));
+
+  gulp.src(path.bower + 'bootstrap/dist/js/bootstrap.min.js')
+    .pipe(gulp.dest(path.app.js));
+});
+
+gulp.task('bower-app-css', function() {
+  gulp.src(path.bower + 'html5-boilerplate/css/*.css')
+    .pipe(gulp.dest(path.build.css.main));
+
+  gulp.src(path.bower + 'bootstrap/dist/css/bootstrap.min.css')
+    .pipe(gulp.dest(path.build.css.main));
+
+  gulp.src(path.bower + 'bootstrap/dist/css/bootstrap-theme.min.css')
+    .pipe(gulp.dest(path.build.css.main));
 });
 
 gulp.task('clean', function(cb) {

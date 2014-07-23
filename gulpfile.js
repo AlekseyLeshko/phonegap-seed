@@ -18,7 +18,7 @@ gulp.task('default', ['run']);
 
 gulp.task('run', function(callback) {
   return runSequence('build',
-    'connect', callback);
+    ['connect', 'watch'], callback);
 });
 
 gulp.task('build', function(callback) {
@@ -27,6 +27,24 @@ gulp.task('build', function(callback) {
 
 gulp.task('pre-build', function(callback) {
   return runSequence(['slim', 'js', 'sass', 'bower'], 'bower-app', callback);
+});
+
+gulp.task('update-html', function(callback) {
+  return runSequence('slim', 'minify-html', callback);
+});
+
+gulp.task('update-js', function(callback) {
+  return runSequence('js', 'concat-js', 'minify-js', callback);
+});
+
+gulp.task('update-css', function(callback) {
+  return runSequence('sass', 'concat-css', 'minify-css', callback);
+});
+
+gulp.task('watch', function() {
+  gulp.watch([path.src.slim.main, path.src.slim.partials], ['update-html']);
+  gulp.watch([path.src.js], ['update-js']);
+  gulp.watch([path.src.sass], ['update-css']);
 });
 
 gulp.task('minify', function(callback) {
@@ -136,6 +154,7 @@ gulp.task('minify-html-partials', function() {
   gulp.src(path.build.html.partials + '*.html')
     .pipe(minifyHTML())
     .pipe(gulp.dest(path.app.html.partials))
+    .pipe(connect.reload());
 });
 
 gulp.task('sass', function() {
@@ -153,7 +172,8 @@ gulp.task('concat-css', function() {
 gulp.task('minify-css', function() {
   return gulp.src(path.build.css.main + '*.css')
     .pipe(minifyCSS())
-    .pipe(gulp.dest(path.app.css));
+    .pipe(gulp.dest(path.app.css))
+    .pipe(connect.reload());
 });
 
 gulp.task('js', function() {
@@ -171,6 +191,7 @@ gulp.task('minify-js', function() {
   return gulp.src(path.build.js.main + '*.js')
     .pipe(uglify())
     .pipe(gulp.dest(path.app.js))
+    .pipe(connect.reload());
 });
 
 gulp.task('bower', function() {
@@ -220,3 +241,7 @@ var port = 3001;
 gulp.task('phonegap-serve', shell.task([
   'phonegap serve listening on 10.0.1.4:' + port
 ]));
+
+gulp.task('reload', function() {
+  return gulp.src(pathBaseOnApp()).pipe(connect.reload());
+});

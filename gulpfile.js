@@ -241,7 +241,3 @@ var port = 3001;
 gulp.task('phonegap-serve', shell.task([
   'phonegap serve listening on 10.0.1.4:' + port
 ]));
-
-gulp.task('reload', function() {
-  return gulp.src(pathBaseOnApp()).pipe(connect.reload());
-});

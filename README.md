@@ -23,4 +23,4 @@ gulp connect
 ```
 and go to [link](http://localhost:8080/)
 
-#### [Startup errors](https://github.com/AlekseyLeshko/phonegap-seed/blob/master/Docs/startup_errors.md)
+#### [Startup errors](https://github.com/AlekseyLeshko/phonegap-seed/blob/master/Docs/startup_error.md)

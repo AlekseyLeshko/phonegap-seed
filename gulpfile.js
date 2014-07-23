@@ -3,7 +3,7 @@
 var gulp = require('gulp');
 var slim = require('gulp-slim');
 var rimraf = require('gulp-rimraf');
-var sass = require('gulp-sass')
+var sass = require('gulp-sass');
 var gutil = require('gulp-util');
 var bower = require('gulp-bower');
 var connect = require('gulp-connect');
@@ -13,55 +13,6 @@ var concat = require('gulp-concat');
 var uglify = require('gulp-uglify');
 var minifyHTML = require('gulp-minify-html');
 var shell = require('gulp-shell');
-
-gulp.task('default', ['run']);
-
-gulp.task('run', function(callback) {
-  return runSequence('build',
-    ['connect', 'watch'], callback);
-});
-
-gulp.task('build', function(callback) {
-  return runSequence('clean', 'pre-build', 'concat', 'minify', callback);
-});
-
-gulp.task('pre-build', function(callback) {
-  return runSequence(['slim', 'js', 'sass', 'bower'], 'bower-app', callback);
-});
-
-gulp.task('update-html', function(callback) {
-  return runSequence('slim', 'minify-html', callback);
-});
-
-gulp.task('update-js', function(callback) {
-  return runSequence('js', 'concat-js', 'minify-js', callback);
-});
-
-gulp.task('update-css', function(callback) {
-  return runSequence('sass', 'concat-css', 'minify-css', callback);
-});
-
-gulp.task('watch', function() {
-  gulp.watch([path.src.slim.main, path.src.slim.partials], ['update-html']);
-  gulp.watch([path.src.js], ['update-js']);
-  gulp.watch([path.src.sass], ['update-css']);
-});
-
-gulp.task('minify', function(callback) {
-  return runSequence(['minify-html', 'minify-css', 'minify-js'], callback);
-});
-
-gulp.task('concat', function(callback) {
-  return runSequence(['concat-css', 'concat-js'],
-    callback);
-});
-
-gulp.task('run-android', ['build'], shell.task([
-  'phonegap local run android'
-]));
-
-gulp.task('slim', ['slim-main', 'slim-partials']);
-gulp.task('minify-html', ['minify-html-main', 'minify-html-partials']);
 
 var srcPath = './src/';
 var buildPath = './build/';
@@ -147,7 +98,7 @@ gulp.task('minify-html-main', function() {
 
   gulp.src(path.build.html.main + '*.html')
     .pipe(minifyHTML(opts))
-    .pipe(gulp.dest(path.app.html.main))
+    .pipe(gulp.dest(path.app.html.main));
 });
 
 gulp.task('minify-html-partials', function() {
@@ -184,7 +135,7 @@ gulp.task('js', function() {
 gulp.task('concat-js', function() {
   return gulp.src(path.build.js.concat + '*.js')
     .pipe(concat('all.js'))
-    .pipe(gulp.dest(path.build.js.main))
+    .pipe(gulp.dest(path.build.js.main));
 });
 
 gulp.task('minify-js', function() {
@@ -240,4 +191,48 @@ gulp.task('connect', function() {
 var port = 3001;
 gulp.task('phonegap-serve', shell.task([
   'phonegap serve listening on 10.0.1.4:' + port
+]));
+
+gulp.task('slim', ['slim-main', 'slim-partials']);
+gulp.task('minify-html', ['minify-html-main', 'minify-html-partials']);
+
+gulp.task('minify', function(callback) {
+  return runSequence(['minify-html', 'minify-css', 'minify-js'], callback);
+});
+
+gulp.task('concat', function(callback) {
+  return runSequence(['concat-css', 'concat-js'],
+    callback);
+});
+
+gulp.task('watch', function() {
+  gulp.watch([path.src.slim.main, path.src.slim.partials], ['update-html']);
+  gulp.watch([path.src.js], ['update-js']);
+  gulp.watch([path.src.sass], ['update-css']);
+});
+
+gulp.task('update-css', function(callback) {
+  return runSequence('sass', 'concat-css', 'minify-css', callback);
+});
+
+gulp.task('update-js', function(callback) {
+  return runSequence('js', 'concat-js', 'minify-js', callback);
+});
+
+gulp.task('update-html', function(callback) {
+  return runSequence('slim', 'minify-html', callback);
+});
+
+gulp.task('build', function(callback) {
+  return runSequence('clean', 'bower', 'bower-app',
+    ['update-html', 'update-js', 'update-css'], callback);
+});
+
+gulp.task('run', function(callback) {
+  return runSequence('build', ['connect', 'watch'], callback);
+});
+gulp.task('default', ['run']);
+
+gulp.task('run-android', ['build'], shell.task([
+  'phonegap local run android'
 ]));

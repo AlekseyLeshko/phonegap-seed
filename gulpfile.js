@@ -166,6 +166,10 @@ gulp.task('bower-app-js', function() {
 
   gulp.src(path.bower + 'bootstrap/dist/js/bootstrap.min.js')
     .pipe(gulp.dest(path.app.js));
+
+  gulp.src(path.bower + 'angular-loader/angular-loader.min.js')
+    .pipe(gulp.dest(path.app.js));
+
 });
 
 gulp.task('bower-app-css', function() {

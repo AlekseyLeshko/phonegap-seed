@@ -23,6 +23,35 @@ var bower = require('gulp-bower');
 var karma = require('karma').server;
 var _ = require('lodash');
 
+var karmaCommonConf = {
+  basePath : '',
+  browsers: ['Chrome'],
+  frameworks: ['jasmine'],
+  files : [
+    'src/bower_components/angular/angular.js',
+    'src/bower_components/angular-route/angular-route.js',
+    'src/bower_components/angular-mocks/angular-mocks.js',
+    'src/js/**/*.js',
+    'test/unit/**/*.js'
+  ],
+  autoWatch : true,
+  usePolling: true,
+  plugins : [
+    'karma-chrome-launcher',
+    'karma-phantomjs-launcher',
+    'karma-jasmine',
+    'karma-coverage'
+  ],
+  reporters: ['progress', 'coverage'],
+  preprocessors: {
+    'src/js/**/*.js': ['coverage']
+  },
+  coverageReporter: {
+    type : 'html',
+    dir : 'coverage/'
+  }
+};
+
 var path = {
   src: {
     slim: {
@@ -42,6 +71,20 @@ var path = {
   },
   bower: 'src/bower_components/'
 };
+
+var bowerJsPaths = [
+  path.bower + 'html5-boilerplate/js/vendor/modernizr-2.6.2.min.js',
+  path.bower + 'angular/angular.min.js',
+  path.bower + 'angular-route/angular-route.min.js',
+  path.bower + 'jquery/dist/jquery.min.js',
+  path.bower + 'bootstrap/dist/js/bootstrap.min.js',
+  path.bower + 'angular-loader/angular-loader.min.js'
+];
+var bowerCssPaths = [
+  path.bower + 'html5-boilerplate/css/*.css',
+  path.bower + 'bootstrap/dist/css/bootstrap.min.css',
+  path.bower + 'bootstrap/dist/css/bootstrap-theme.min.css'
+];
 
 var cleanPaths = [
   path.app.html.partials,
@@ -89,25 +132,11 @@ gulp.task('bower', function() {
   return bower(path.bower);
 });
 
-var bowerJsPaths = [
-  path.bower + 'html5-boilerplate/js/vendor/modernizr-2.6.2.min.js',
-  path.bower + 'angular/angular.min.js',
-  path.bower + 'angular-route/angular-route.min.js',
-  path.bower + 'jquery/dist/jquery.min.js',
-  path.bower + 'bootstrap/dist/js/bootstrap.min.js',
-  path.bower + 'angular-loader/angular-loader.min.js'
-];
-
 gulp.task('bower-js', function() {
   gulp.src(bowerJsPaths)
     .pipe(gulp.dest(path.app.js));
 });
 
-var bowerCssPaths = [
-  path.bower + 'html5-boilerplate/css/*.css',
-  path.bower + 'bootstrap/dist/css/bootstrap.min.css',
-  path.bower + 'bootstrap/dist/css/bootstrap-theme.min.css'
-];
 gulp.task('bower-css', function() {
   return gulp.src(bowerCssPaths)
     .pipe(gulp.dest(path.app.css));
@@ -119,7 +148,7 @@ gulp.task('clean', function(cb) {
 });
 
 gulp.task('connect', function() {
-  connect.server({
+  return connect.server({
     root: 'www',
     port: 9001,
     livereload: true
@@ -131,38 +160,6 @@ gulp.task('watch', function() {
   gulp.watch([path.src.js], ['scripts']);
   gulp.watch([path.src.sass], ['css']);
 });
-
-var karmaCommonConf = {
-  basePath : '',
-  browsers: ['Chrome'],
-  frameworks: ['jasmine'],
-  files : [
-    'src/bower_components/angular/angular.js',
-    'src/bower_components/angular-route/angular-route.js',
-    'src/bower_components/angular-mocks/angular-mocks.js',
-    'src/js/**/*.js',
-    'test/unit/**/*.js'
-  ],
-  autoWatch : true,
-  usePolling: true,
-  plugins : [
-    'karma-chrome-launcher',
-    'karma-phantomjs-launcher',
-    'karma-jasmine',
-    'karma-coverage'
-  ],
-
-  reporters: ['progress', 'coverage'],
-
-  preprocessors: {
-    'src/js/**/*.js': ['coverage']
-  },
-
-  coverageReporter: {
-    type : 'html',
-    dir : 'coverage/'
-  }
-};
 
 gulp.task('html', ['html-main', 'html-partials']);
 gulp.task('bower-app', ['bower-js', 'bower-css']);
@@ -185,7 +182,7 @@ gulp.task('build', function(callback) {
 });
 
 gulp.task('run', function(callback) {
-  return runSequence('build', ['connect', 'watch', 'tdd'], callback);
+  return runSequence(['build', 'connect', 'watch', 'tdd'], callback);
 });
 
 gulp.task('default', ['run']);

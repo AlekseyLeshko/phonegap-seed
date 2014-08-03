@@ -10,6 +10,7 @@ var clean = require('gulp-clean');
 var jshint = require('gulp-jshint');
 var stylish = require('jshint-stylish');
 var uglify = require('gulp-uglify');
+var sourcemaps = require('gulp-sourcemaps');
 
 var slim = require('gulp-slim');
 var minifyHTML = require('gulp-minify-html');
@@ -138,8 +139,10 @@ gulp.task('scripts', function() {
   return gulp.src(path.src.js)
     .pipe(jshint())
     .pipe(jshint.reporter(stylish))
+    .pipe(sourcemaps.init())
     .pipe(uglify())
     .pipe(concat('all.min.js'))
+    .pipe(sourcemaps.write('maps'))
     .pipe(gulp.dest(path.app.js))
     .pipe(connect.reload());
 });

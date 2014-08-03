@@ -17,6 +17,7 @@
     "gulp-sass": "^0.7.2",
     "gulp-shell": "^0.2.8",
     "gulp-slim": "0.0.8",
+    "gulp-sourcemaps": "^1.1.0",
     "gulp-uglify": "^0.3.1",
     "gulp-util": "^3.0.0",
     "jshint-stylish": "^0.4.0",

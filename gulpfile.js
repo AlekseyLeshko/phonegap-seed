@@ -2,7 +2,6 @@
 
 var gulp = require('gulp');
 var slim = require('gulp-slim');
-var rimraf = require('gulp-rimraf');
 var sass = require('gulp-sass');
 var gutil = require('gulp-util');
 var bower = require('gulp-bower');
@@ -13,6 +12,9 @@ var concat = require('gulp-concat');
 var uglify = require('gulp-uglify');
 var minifyHTML = require('gulp-minify-html');
 var shell = require('gulp-shell');
+var clean = require('gulp-clean');
+var _ = require('lodash');
+var karma = require('karma').server;
 
 var srcPath = './src/';
 var buildPath = './build/';
@@ -72,7 +74,7 @@ var cleanArr = [
   path.app.css,
   path.app.js,
   path.app.html.main + '*.html',
-  path.bower,
+  path.bower
 ];
 
 gulp.task('slim-main', function() {
@@ -166,6 +168,10 @@ gulp.task('bower-app-js', function() {
 
   gulp.src(path.bower + 'bootstrap/dist/js/bootstrap.min.js')
     .pipe(gulp.dest(path.app.js));
+
+  gulp.src(path.bower + 'angular-loader/angular-loader.min.js')
+    .pipe(gulp.dest(path.app.js));
+
 });
 
 gulp.task('bower-app-css', function() {
@@ -180,12 +186,8 @@ gulp.task('bower-app-css', function() {
 });
 
 gulp.task('clean', function(cb) {
-  return gulp.src(cleanArr, {
-      read: false
-    })
-    .pipe(rimraf({
-      force: true
-    }));
+  return gulp.src(cleanArr)
+    .pipe(clean());
 });
 
 gulp.task('clean-build', function(cb) {
@@ -200,6 +202,7 @@ gulp.task('clean-build', function(cb) {
 gulp.task('connect', function() {
   connect.server({
     root: 'www',
+    port: 9001,
     livereload: true
   });
 });
@@ -227,6 +230,46 @@ gulp.task('watch', function() {
   gulp.watch([path.src.sass], ['update-css']);
 });
 
+var karmaCommonConf = {
+  basePath : '',
+  browsers: ['Chrome'],
+  frameworks: ['jasmine'],
+  files : [
+    'src/bower_components/angular/angular.js',
+    'src/bower_components/angular-route/angular-route.js',
+    'src/bower_components/angular-mocks/angular-mocks.js',
+    'src/js/**/*.js',
+    'test/unit/**/*.js'
+  ],
+  autoWatch : true,
+  usePolling: true,
+  plugins : [
+    'karma-chrome-launcher',
+    'karma-phantomjs-launcher',
+    'karma-jasmine',
+    'karma-coverage'
+  ],
+
+  reporters: ['progress', 'coverage'],
+
+  preprocessors: {
+    'src/js/**/*.js': ['coverage']
+  },
+
+  coverageReporter: {
+    type : 'html',
+    dir : 'coverage/'
+  }
+};
+
+gulp.task('test-single-run', function (done) {
+  karma.start(_.assign({}, karmaCommonConf, {singleRun: true}), done);
+});
+
+gulp.task('tdd', function (done) {
+  karma.start(karmaCommonConf, done);
+});
+
 gulp.task('update-css', function(callback) {
   return runSequence('sass', 'concat-css', 'minify-css', callback);
 });
@@ -245,8 +288,9 @@ gulp.task('build', function(callback) {
 });
 
 gulp.task('run', function(callback) {
-  return runSequence('build', ['connect', 'watch'], callback);
+  return runSequence('build', ['connect', 'watch', 'tdd'], callback);
 });
+
 gulp.task('default', ['run']);
 
 gulp.task('run-android', ['build'], shell.task([

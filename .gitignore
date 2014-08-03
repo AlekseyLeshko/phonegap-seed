@@ -5,6 +5,7 @@ www/js/
 www/partials/
 www/*.html
 build/
+coverage/
 
 
 #PhoneGap

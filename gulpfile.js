@@ -200,6 +200,7 @@ gulp.task('clean-build', function(cb) {
 gulp.task('connect', function() {
   connect.server({
     root: 'www',
+    port: 9001,
     livereload: true
   });
 });

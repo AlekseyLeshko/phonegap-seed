@@ -2,7 +2,6 @@
 
 var gulp = require('gulp');
 var slim = require('gulp-slim');
-var rimraf = require('gulp-rimraf');
 var sass = require('gulp-sass');
 var gutil = require('gulp-util');
 var bower = require('gulp-bower');
@@ -13,6 +12,7 @@ var concat = require('gulp-concat');
 var uglify = require('gulp-uglify');
 var minifyHTML = require('gulp-minify-html');
 var shell = require('gulp-shell');
+var clean = require('gulp-clean');
 
 var srcPath = './src/';
 var buildPath = './build/';
@@ -184,12 +184,8 @@ gulp.task('bower-app-css', function() {
 });
 
 gulp.task('clean', function(cb) {
-  return gulp.src(cleanArr, {
-      read: false
-    })
-    .pipe(rimraf({
-      force: true
-    }));
+  return gulp.src(cleanArr)
+    .pipe(clean());
 });
 
 gulp.task('clean-build', function(cb) {

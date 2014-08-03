@@ -12,13 +12,11 @@
     "gulp-connect": "^2.0.6",
     "gulp-minify-css": "^0.3.6",
     "gulp-minify-html": "^0.1.4",
-    "gulp-rimraf": "^0.1.0",
     "gulp-sass": "^0.7.2",
     "gulp-shell": "^0.2.8",
     "gulp-slim": "0.0.8",
     "gulp-uglify": "^0.3.1",
     "gulp-util": "^3.0.0",
-    "http-server": "^0.6.1",
     "karma": "^0.12.19",
     "karma-chrome-launcher": "^0.1.4",
     "karma-coverage": "^0.2.5",
@@ -28,17 +26,11 @@
     "protractor": "~0.20.1",
     "run-sequence": "^0.3.6",
     "shelljs": "^0.2.6",
-    "win-spawn": "^2.0.0"
+    "win-spawn": "^2.0.0",
+    "gulp-clean": "^0.3.1",
+    "lodash": "^2.4.1"
   },
   "scripts": {
-    "start": "http-server -a localhost -p 8000",
-    "pretest": "npm install",
-    "test": "karma start test/karma.conf.js",
-    "test-single-run": "karma start test/karma.conf.js  --single-run",
-    "preupdate-webdriver": "npm install",
-    "update-webdriver": "webdriver-manager update",
-    "preprotractor": "npm run update-webdriver",
-    "protractor": "protractor test/protractor-conf.js",
-    "update-index-async": "node -e \"require('shelljs/global'); sed('-i', /\\/\\/@@NG_LOADER_START@@[\\s\\S]*\\/\\/@@NG_LOADER_END@@/, '//@@NG_LOADER_START@@\\n' + cat('app/bower_components/angular-loader/angular-loader.min.js') + '\\n//@@NG_LOADER_END@@', 'app/index-async.html');\""
+    "test": "karma start test/karma.conf.js --single-run --browsers PhantomJS"
   }
 }

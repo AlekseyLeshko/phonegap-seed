@@ -13,6 +13,9 @@ var uglify = require('gulp-uglify');
 var minifyHTML = require('gulp-minify-html');
 var shell = require('gulp-shell');
 var clean = require('gulp-clean');
+var _ = require('lodash');
+var karma = require('karma').server;
+
 
 var srcPath = './src/';
 var buildPath = './build/';
@@ -226,6 +229,46 @@ gulp.task('watch', function() {
   gulp.watch([path.src.slim.main, path.src.slim.partials], ['update-html']);
   gulp.watch([path.src.js], ['update-js']);
   gulp.watch([path.src.sass], ['update-css']);
+});
+
+var karmaCommonConf = {
+  basePath : '',
+  browsers: ['Chrome'],
+  frameworks: ['jasmine'],
+  files : [
+    'src/bower_components/angular/angular.js',
+    'src/bower_components/angular-route/angular-route.js',
+    'src/bower_components/angular-mocks/angular-mocks.js',
+    'src/js/**/*.js',
+    'test/unit/**/*.js'
+  ],
+  autoWatch : true,
+  usePolling: true,
+  plugins : [
+    'karma-chrome-launcher',
+    'karma-phantomjs-launcher',
+    'karma-jasmine',
+    'karma-coverage'
+  ],
+
+  reporters: ['progress', 'coverage'],
+
+  preprocessors: {
+    'src/js/**/*.js': ['coverage']
+  },
+
+  coverageReporter: {
+    type : 'html',
+    dir : 'coverage/'
+  }
+};
+
+gulp.task('test-single-run', function (done) {
+  karma.start(_.assign({}, karmaCommonConf, {singleRun: true}), done);
+});
+
+gulp.task('tdd', function (done) {
+  karma.start(karmaCommonConf, done);
 });
 
 gulp.task('update-css', function(callback) {

@@ -49,6 +49,18 @@ the version that you have installed
 
 ## Error #4
 ```
+gulp watch
+
+->
+Error: watch ENOSPC
+  at exports._errnoException (util.js:742:11)
+  at FSWatcher.start (fs.js:1062:11)
+  at Object.fs.watch (fs.js:1088:11)
+
 ```
 
 #### Decision
+```
+echo fs.inotify.max_user_watches=524288 | sudo tee -a /etc/sysctl.conf && sudo sysctl -p
+```
+[stackoverflow](http://stackoverflow.com/questions/16748737/grunt-watch-error-waiting-fatal-error-watch-enospc)

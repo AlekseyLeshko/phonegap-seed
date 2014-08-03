@@ -16,7 +16,6 @@ var clean = require('gulp-clean');
 var _ = require('lodash');
 var karma = require('karma').server;
 
-
 var srcPath = './src/';
 var buildPath = './build/';
 var appPath = './www/';

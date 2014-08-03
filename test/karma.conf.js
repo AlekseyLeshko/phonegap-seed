@@ -16,12 +16,44 @@ module.exports = function(config){
 
     frameworks: ['jasmine'],
 
-    browsers : ['Chrome'],
+    browsers : [
+      'Chrome',
+      'PhantomJS'
+    ],
 
     plugins : [
       'karma-chrome-launcher',
+      'karma-phantomjs-launcher',
       'karma-jasmine',
-      'karma-junit-reporter'
-    ]
+      'karma-coverage'
+    ],
+
+    reporters: ['progress', 'coverage'],
+
+    preprocessors: {
+      'src/js/**/*.js': ['coverage']
+    },
+
+    coverageReporter: {
+      reporters:[
+        {
+          type: 'html',
+          dir:'coverage/'
+        }
+      ]
+    },
+
+    customLaunchers: {
+      'PhantomJS_custom': {
+        base: 'PhantomJS',
+        options: {
+          windowName: 'my-window',
+          settings: {
+            webSecurityEnabled: false
+          }
+        },
+        flags: ['--remote-debugger-port=9000']
+      }
+    }
   });
 };

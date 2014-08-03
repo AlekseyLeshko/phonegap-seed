@@ -7,6 +7,7 @@ var runSequence = require('run-sequence');
 var concat = require('gulp-concat');
 var clean = require('gulp-clean');
 
+var jshint = require('gulp-jshint');
 var uglify = require('gulp-uglify');
 
 var slim = require('gulp-slim');
@@ -45,7 +46,7 @@ var path = {
       partials: pathBaseOnSrc('slim/partials/*.slim')
     },
     sass: pathBaseOnSrc('scss/*.scss'),
-    js: pathBaseOnSrc('js/*.js')
+    js: pathBaseOnSrc('js/**/*.js')
   },
   build: {
     html: {
@@ -56,10 +57,10 @@ var path = {
       main: pathBaseOnBuild('css/main/'),
       concat: pathBaseOnBuild('css/concat/'),
     },
-    js: {
-      main: pathBaseOnBuild('js/main/'),
-      concat: pathBaseOnBuild('js/concat/')
-    },
+    // js: {
+      // main: pathBaseOnBuild('js/main/'),
+      // concat: pathBaseOnBuild('js/concat/')
+    // },
   },
   app: {
     html: {
@@ -77,8 +78,7 @@ var cleanArr = [
   path.app.html.partials,
   path.app.css,
   path.app.js,
-  path.app.html.main + '*.html',
-  path.bower
+  path.app.html.main + '*.html'
 ];
 
 gulp.task('slim-main', function() {
@@ -133,20 +133,11 @@ gulp.task('minify-css', function() {
     .pipe(connect.reload());
 });
 
-gulp.task('js', function() {
+gulp.task('scripts', function() {
   return gulp.src(path.src.js)
-    .pipe(gulp.dest(path.build.js.concat));
-});
-
-gulp.task('concat-js', function() {
-  return gulp.src(path.build.js.concat + '*.js')
-    .pipe(concat('all.js'))
-    .pipe(gulp.dest(path.build.js.main));
-});
-
-gulp.task('minify-js', function() {
-  return gulp.src(path.build.js.main + '*.js')
+    .pipe(jshint())
     .pipe(uglify())
+    .pipe(concat('all.min.js'))
     .pipe(gulp.dest(path.app.js))
     .pipe(connect.reload());
 });
@@ -220,17 +211,17 @@ gulp.task('slim', ['slim-main', 'slim-partials']);
 gulp.task('minify-html', ['minify-html-main', 'minify-html-partials']);
 
 gulp.task('minify', function(callback) {
-  return runSequence(['minify-html', 'minify-css', 'minify-js'], callback);
+  return runSequence(['minify-html', 'minify-css'], callback);
 });
 
 gulp.task('concat', function(callback) {
-  return runSequence(['concat-css', 'concat-js'],
+  return runSequence(['concat-css'],
     callback);
 });
 
 gulp.task('watch', function() {
   gulp.watch([path.src.slim.main, path.src.slim.partials], ['update-html']);
-  gulp.watch([path.src.js], ['update-js']);
+  gulp.watch([path.src.js], ['scripts']);
   gulp.watch([path.src.sass], ['update-css']);
 });
 
@@ -278,17 +269,13 @@ gulp.task('update-css', function(callback) {
   return runSequence('sass', 'concat-css', 'minify-css', callback);
 });
 
-gulp.task('update-js', function(callback) {
-  return runSequence('js', 'concat-js', 'minify-js', callback);
-});
-
 gulp.task('update-html', function(callback) {
   return runSequence('slim', 'minify-html', callback);
 });
 
 gulp.task('build', function(callback) {
   return runSequence('clean', 'bower', 'bower-app',
-    ['update-html', 'update-js', 'update-css'], callback);
+    ['update-html', 'scripts', 'update-css'], callback);
 });
 
 gulp.task('run', function(callback) {

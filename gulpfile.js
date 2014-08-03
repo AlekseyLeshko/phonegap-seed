@@ -171,15 +171,6 @@ gulp.task('clean', function(cb) {
     .pipe(clean());
 });
 
-gulp.task('clean-build', function(cb) {
-  return gulp.src(buildPath, {
-      read: false
-    })
-    .pipe(rimraf({
-      force: true
-    }));
-});
-
 gulp.task('connect', function() {
   connect.server({
     root: 'www',
@@ -238,6 +229,10 @@ var karmaCommonConf = {
   }
 };
 
+gulp.task('update-html', function(callback) {
+  return runSequence('slim', 'minify-html', callback);
+});
+
 gulp.task('test-single-run', function (done) {
   karma.start(_.assign({}, karmaCommonConf, {singleRun: true}), done);
 });
@@ -246,21 +241,18 @@ gulp.task('tdd', function (done) {
   karma.start(karmaCommonConf, done);
 });
 
-gulp.task('update-html', function(callback) {
-  return runSequence('slim', 'minify-html', callback);
-});
+gulp.task('run-android', ['build'], shell.task([
+  'phonegap local run android'
+]));
 
 gulp.task('build', function(callback) {
-  return runSequence('clean', 'bower', 'bower-app',
+  return runSequence('clean', 'bower-app',
     ['update-html', 'scripts', 'css'], callback);
 });
+
 
 gulp.task('run', function(callback) {
   return runSequence('build', ['connect', 'watch', 'tdd'], callback);
 });
 
 gulp.task('default', ['run']);
-
-gulp.task('run-android', ['build'], shell.task([
-  'phonegap local run android'
-]));

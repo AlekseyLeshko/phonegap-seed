@@ -54,15 +54,7 @@ var path = {
     html: {
       main: pathBaseOnBuild(''),
       partials: pathBaseOnBuild('partials/')
-    },
-    css: {
-      main: pathBaseOnBuild('css/main/'),
-      concat: pathBaseOnBuild('css/concat/'),
-    },
-    // js: {
-      // main: pathBaseOnBuild('js/main/'),
-      // concat: pathBaseOnBuild('js/concat/')
-    // },
+    }
   },
   app: {
     html: {
@@ -116,20 +108,10 @@ gulp.task('minify-html-partials', function() {
     .pipe(connect.reload());
 });
 
-gulp.task('sass', function() {
+gulp.task('css', function() {
   return gulp.src(path.src.sass)
     .pipe(sass())
-    .pipe(gulp.dest(path.build.css.concat));
-});
-
-gulp.task('concat-css', function() {
-  return gulp.src(path.build.css.concat + '*.css')
     .pipe(concat('style.css'))
-    .pipe(gulp.dest(path.build.css.main));
-});
-
-gulp.task('minify-css', function() {
-  return gulp.src(path.build.css.main + '*.css')
     .pipe(minifyCSS())
     .pipe(gulp.dest(path.app.css))
     .pipe(connect.reload());
@@ -171,7 +153,6 @@ gulp.task('bower-app-js', function() {
 
   gulp.src(path.bower + 'angular-loader/angular-loader.min.js')
     .pipe(gulp.dest(path.app.js));
-
 });
 
 gulp.task('bower-app-css', function() {
@@ -216,18 +197,13 @@ gulp.task('slim', ['slim-main', 'slim-partials']);
 gulp.task('minify-html', ['minify-html-main', 'minify-html-partials']);
 
 gulp.task('minify', function(callback) {
-  return runSequence(['minify-html', 'minify-css'], callback);
-});
-
-gulp.task('concat', function(callback) {
-  return runSequence(['concat-css'],
-    callback);
+  return runSequence(['minify-html'], callback);
 });
 
 gulp.task('watch', function() {
   gulp.watch([path.src.slim.main, path.src.slim.partials], ['update-html']);
   gulp.watch([path.src.js], ['scripts']);
-  gulp.watch([path.src.sass], ['update-css']);
+  gulp.watch([path.src.sass], ['css']);
 });
 
 var karmaCommonConf = {
@@ -270,17 +246,13 @@ gulp.task('tdd', function (done) {
   karma.start(karmaCommonConf, done);
 });
 
-gulp.task('update-css', function(callback) {
-  return runSequence('sass', 'concat-css', 'minify-css', callback);
-});
-
 gulp.task('update-html', function(callback) {
   return runSequence('slim', 'minify-html', callback);
 });
 
 gulp.task('build', function(callback) {
   return runSequence('clean', 'bower', 'bower-app',
-    ['update-html', 'scripts', 'update-css'], callback);
+    ['update-html', 'scripts', 'css'], callback);
 });
 
 gulp.task('run', function(callback) {

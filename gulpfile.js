@@ -50,12 +50,6 @@ var path = {
     sass: pathBaseOnSrc('scss/*.scss'),
     js: pathBaseOnSrc('js/**/*.js')
   },
-  build: {
-    html: {
-      main: pathBaseOnBuild(''),
-      partials: pathBaseOnBuild('partials/')
-    }
-  },
   app: {
     html: {
       main: pathBaseOnApp(''),
@@ -75,37 +69,18 @@ var cleanArr = [
   path.app.html.main + '*.html'
 ];
 
-gulp.task('slim-main', function() {
+gulp.task('html-main', function() {
   return gulp.src(path.src.slim.main)
-    .pipe(slim({
-      pretty: true
-    }))
-    .pipe(gulp.dest(path.build.html.main));
-});
-
-gulp.task('slim-partials', function() {
-  return gulp.src(path.src.slim.partials)
-    .pipe(slim({
-      pretty: true
-    }))
-    .pipe(gulp.dest(path.build.html.partials));
-});
-
-gulp.task('minify-html-main', function() {
-  var opts = {
-    empty: true
-  };
-
-  gulp.src(path.build.html.main + '*.html')
-    .pipe(minifyHTML(opts))
+    .pipe(slim({ pretty: true }))
+    .pipe(minifyHTML({ empty: true }))
     .pipe(gulp.dest(path.app.html.main));
 });
 
-gulp.task('minify-html-partials', function() {
-  gulp.src(path.build.html.partials + '*.html')
-    .pipe(minifyHTML())
-    .pipe(gulp.dest(path.app.html.partials))
-    .pipe(connect.reload());
+gulp.task('html-partials', function() {
+  return gulp.src(path.src.slim.partials)
+    .pipe(slim({ pretty: true }))
+    .pipe(minifyHTML({ empty: true }))
+    .pipe(gulp.dest(path.app.html.partials));
 });
 
 gulp.task('css', function() {
@@ -178,15 +153,8 @@ gulp.task('connect', function() {
   });
 });
 
-gulp.task('slim', ['slim-main', 'slim-partials']);
-gulp.task('minify-html', ['minify-html-main', 'minify-html-partials']);
-
-gulp.task('minify', function(callback) {
-  return runSequence(['minify-html'], callback);
-});
-
 gulp.task('watch', function() {
-  gulp.watch([path.src.slim.main, path.src.slim.partials], ['update-html']);
+  gulp.watch([path.src.slim.main, path.src.slim.partials], ['html']);
   gulp.watch([path.src.js], ['scripts']);
   gulp.watch([path.src.sass], ['css']);
 });
@@ -223,9 +191,7 @@ var karmaCommonConf = {
   }
 };
 
-gulp.task('update-html', function(callback) {
-  return runSequence('slim', 'minify-html', callback);
-});
+gulp.task('html', ['html-main', 'html-partials']);
 
 gulp.task('test-single-run', function (done) {
   karma.start(_.assign({}, karmaCommonConf, {singleRun: true}), done);
@@ -240,7 +206,8 @@ gulp.task('run-android', ['build'], shell.task([
 ]));
 
 gulp.task('build', function(callback) {
-  return runSequence('clean', ['update-html', 'scripts', 'css', 'bower-app'], callback);
+  return runSequence('clean',
+    ['html', 'scripts', 'css', 'bower-app'], callback);
 });
 
 gulp.task('run', function(callback) {

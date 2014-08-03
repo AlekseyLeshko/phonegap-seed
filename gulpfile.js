@@ -74,7 +74,7 @@ var cleanArr = [
   path.app.css,
   path.app.js,
   path.app.html.main + '*.html',
-  path.bower,
+  path.bower
 ];
 
 gulp.task('slim-main', function() {
@@ -288,8 +288,9 @@ gulp.task('build', function(callback) {
 });
 
 gulp.task('run', function(callback) {
-  return runSequence('build', ['connect', 'watch'], callback);
+  return runSequence('build', ['connect', 'watch', 'tdd'], callback);
 });
+
 gulp.task('default', ['run']);
 
 gulp.task('run-android', ['build'], shell.task([

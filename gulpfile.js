@@ -18,6 +18,7 @@ var shell = require('gulp-shell');
 var bower = require('gulp-bower');
 var karma = require('karma').server;
 var _ = require('lodash');
+var protractor = require("gulp-protractor").protractor;
 
 var karmaCommonConf = {
   basepaths : '',
@@ -168,6 +169,14 @@ gulp.task('bower-app', ['bower-js', 'bower-css']);
 
 gulp.task('test-single-run', function (done) {
   return karma.start(_.assign({}, karmaCommonConf, {singleRun: true}), done);
+});
+
+gulp.task('e2e', function(callback) {
+  gulp.src(paths.src.js)
+    .pipe(protractor({
+        configFile: "./test/protractor.config.js",
+        args: ['--baseUrl', 'http://127.0.0.1:8000']
+    }));
 });
 
 gulp.task('tdd', function (done) {

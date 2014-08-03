@@ -24,7 +24,6 @@ var karma = require('karma').server;
 var _ = require('lodash');
 
 var srcPath = './src/';
-var buildPath = './build/';
 var appPath = './www/';
 
 var pathBuilder = function(base, path) {
@@ -38,7 +37,6 @@ function partialOneArg(f, a) {
 };
 
 var pathBaseOnSrc = partialOneArg(pathBuilder, srcPath);
-var pathBaseOnBuild = partialOneArg(pathBuilder, buildPath);
 var pathBaseOnApp = partialOneArg(pathBuilder, appPath);
 
 var path = {
@@ -62,7 +60,6 @@ var path = {
 };
 
 var cleanArr = [
-  buildPath,
   path.app.html.partials,
   path.app.css,
   path.app.js,

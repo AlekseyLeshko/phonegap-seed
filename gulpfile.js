@@ -8,6 +8,7 @@ var concat = require('gulp-concat');
 var clean = require('gulp-clean');
 
 var jshint = require('gulp-jshint');
+var stylish = require('jshint-stylish');
 var uglify = require('gulp-uglify');
 
 var slim = require('gulp-slim');
@@ -136,6 +137,7 @@ gulp.task('minify-css', function() {
 gulp.task('scripts', function() {
   return gulp.src(path.src.js)
     .pipe(jshint())
+    .pipe(jshint.reporter(stylish))
     .pipe(uglify())
     .pipe(concat('all.min.js'))
     .pipe(gulp.dest(path.app.js))

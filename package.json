@@ -19,6 +19,7 @@
     "gulp-slim": "0.0.8",
     "gulp-uglify": "^0.3.1",
     "gulp-util": "^3.0.0",
+    "jshint-stylish": "^0.4.0",
     "karma": "^0.12.19",
     "karma-chrome-launcher": "^0.1.4",
     "karma-coverage": "^0.2.5",

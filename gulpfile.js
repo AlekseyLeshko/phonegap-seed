@@ -157,13 +157,13 @@ gulp.task('bower-app-js', function() {
 
 gulp.task('bower-app-css', function() {
   gulp.src(path.bower + 'html5-boilerplate/css/*.css')
-    .pipe(gulp.dest(path.build.css.main));
+    .pipe(gulp.dest(path.app.css));
 
   gulp.src(path.bower + 'bootstrap/dist/css/bootstrap.min.css')
-    .pipe(gulp.dest(path.build.css.main));
+    .pipe(gulp.dest(path.app.css));
 
   gulp.src(path.bower + 'bootstrap/dist/css/bootstrap-theme.min.css')
-    .pipe(gulp.dest(path.build.css.main));
+    .pipe(gulp.dest(path.app.css));
 });
 
 gulp.task('clean', function(cb) {
@@ -246,10 +246,9 @@ gulp.task('run-android', ['build'], shell.task([
 ]));
 
 gulp.task('build', function(callback) {
-  return runSequence('clean', 'bower-app',
+  return runSequence('clean', 'bower', 'bower-app',
     ['update-html', 'scripts', 'css'], callback);
 });
-
 
 gulp.task('run', function(callback) {
   return runSequence('build', ['connect', 'watch', 'tdd'], callback);

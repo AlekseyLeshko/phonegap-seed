@@ -23,43 +23,27 @@ var bower = require('gulp-bower');
 var karma = require('karma').server;
 var _ = require('lodash');
 
-var srcPath = './src/';
-var appPath = './www/';
-
-var pathBuilder = function(base, path) {
-  return base + path;
-};
-
-function partialOneArg(f, a) {
-  return function(b) {
-    return f(a, b);
-  }
-};
-
-var pathBaseOnSrc = partialOneArg(pathBuilder, srcPath);
-var pathBaseOnApp = partialOneArg(pathBuilder, appPath);
-
 var path = {
   src: {
     slim: {
-      main: pathBaseOnSrc('slim/*.slim'),
-      partials: pathBaseOnSrc('slim/partials/*.slim')
+      main: 'src/slim/*.slim',
+      partials: 'src/slim/partials/*.slim'
     },
-    sass: pathBaseOnSrc('scss/*.scss'),
-    js: pathBaseOnSrc('js/**/*.js')
+    sass: 'src/scss/*.scss',
+    js: 'src/js/**/*.js'
   },
   app: {
     html: {
-      main: pathBaseOnApp(''),
-      partials: pathBaseOnApp('partials/')
+      main: 'www/',
+      partials: 'www/partials/'
     },
-    css: pathBaseOnApp('css/'),
-    js: pathBaseOnApp('js/')
+    css: 'www/css/',
+    js: 'www/js/'
   },
-  bower: pathBaseOnSrc('bower_components/')
+  bower: 'src/bower_components/'
 };
 
-var cleanArr = [
+var cleanPaths = [
   path.app.html.partials,
   path.app.css,
   path.app.js,
@@ -105,40 +89,32 @@ gulp.task('bower', function() {
   return bower(path.bower);
 });
 
-gulp.task('bower-app', ['bower-app-js', 'bower-app-css']);
+var bowerJsPaths = [
+  path.bower + 'html5-boilerplate/js/vendor/modernizr-2.6.2.min.js',
+  path.bower + 'angular/angular.min.js',
+  path.bower + 'angular-route/angular-route.min.js',
+  path.bower + 'jquery/dist/jquery.min.js',
+  path.bower + 'bootstrap/dist/js/bootstrap.min.js',
+  path.bower + 'angular-loader/angular-loader.min.js'
+];
 
-gulp.task('bower-app-js', function() {
-  gulp.src(path.bower + 'html5-boilerplate/js/vendor/modernizr-2.6.2.min.js')
-    .pipe(gulp.dest(path.app.js));
-
-  gulp.src(path.bower + 'angular/angular.min.js')
-    .pipe(gulp.dest(path.app.js));
-
-  gulp.src(path.bower + 'angular-route/angular-route.min.js')
-    .pipe(gulp.dest(path.app.js));
-
-  gulp.src(path.bower + 'jquery/dist/jquery.min.js')
-    .pipe(gulp.dest(path.app.js));
-
-  gulp.src(path.bower + 'bootstrap/dist/js/bootstrap.min.js')
-    .pipe(gulp.dest(path.app.js));
-
-  gulp.src(path.bower + 'angular-loader/angular-loader.min.js')
+gulp.task('bower-js', function() {
+  gulp.src(bowerJsPaths)
     .pipe(gulp.dest(path.app.js));
 });
 
-var pathBowerCss = [
+var bowerCssPaths = [
   path.bower + 'html5-boilerplate/css/*.css',
   path.bower + 'bootstrap/dist/css/bootstrap.min.css',
   path.bower + 'bootstrap/dist/css/bootstrap-theme.min.css'
 ];
-gulp.task('bower-app-css', function() {
-  return gulp.src(pathBowerCss)
+gulp.task('bower-css', function() {
+  return gulp.src(bowerCssPaths)
     .pipe(gulp.dest(path.app.css));
 });
 
 gulp.task('clean', function(cb) {
-  return gulp.src(cleanArr)
+  return gulp.src(cleanPaths)
     .pipe(clean());
 });
 
@@ -189,6 +165,7 @@ var karmaCommonConf = {
 };
 
 gulp.task('html', ['html-main', 'html-partials']);
+gulp.task('bower-app', ['bower-js', 'bower-css']);
 
 gulp.task('test-single-run', function (done) {
   karma.start(_.assign({}, karmaCommonConf, {singleRun: true}), done);

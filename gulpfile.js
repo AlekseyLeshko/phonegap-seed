@@ -1,20 +1,24 @@
 'use strict';
 
 var gulp = require('gulp');
-var slim = require('gulp-slim');
-var sass = require('gulp-sass');
 var gutil = require('gulp-util');
-var bower = require('gulp-bower');
 var connect = require('gulp-connect');
 var runSequence = require('run-sequence');
-var minifyCSS = require('gulp-minify-css');
 var concat = require('gulp-concat');
-var uglify = require('gulp-uglify');
-var minifyHTML = require('gulp-minify-html');
-var shell = require('gulp-shell');
 var clean = require('gulp-clean');
-var _ = require('lodash');
+
+var uglify = require('gulp-uglify');
+
+var slim = require('gulp-slim');
+var minifyHTML = require('gulp-minify-html');
+
+var sass = require('gulp-sass');
+var minifyCSS = require('gulp-minify-css');
+
+var shell = require('gulp-shell');
+var bower = require('gulp-bower');
 var karma = require('karma').server;
+var _ = require('lodash');
 
 var srcPath = './src/';
 var buildPath = './build/';

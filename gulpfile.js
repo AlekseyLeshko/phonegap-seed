@@ -161,7 +161,7 @@ var pathBowerCss = [
   path.bower + 'bootstrap/dist/css/bootstrap-theme.min.css'
 ];
 gulp.task('bower-app-css', function() {
-  gulp.src(pathBowerCss)
+  return gulp.src(pathBowerCss)
     .pipe(gulp.dest(path.app.css));
 });
 
@@ -177,11 +177,6 @@ gulp.task('connect', function() {
     livereload: true
   });
 });
-
-var port = 3001;
-gulp.task('phonegap-serve', shell.task([
-  'phonegap serve listening on 10.0.1.4:' + port
-]));
 
 gulp.task('slim', ['slim-main', 'slim-partials']);
 gulp.task('minify-html', ['minify-html-main', 'minify-html-partials']);
@@ -245,8 +240,7 @@ gulp.task('run-android', ['build'], shell.task([
 ]));
 
 gulp.task('build', function(callback) {
-  return runSequence('clean', 'bower', 'bower-app',
-    ['update-html', 'scripts', 'css'], callback);
+  return runSequence('clean', ['update-html', 'scripts', 'css', 'bower-app'], callback);
 });
 
 gulp.task('run', function(callback) {

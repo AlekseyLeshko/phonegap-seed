@@ -155,14 +155,13 @@ gulp.task('bower-app-js', function() {
     .pipe(gulp.dest(path.app.js));
 });
 
+var pathBowerCss = [
+  path.bower + 'html5-boilerplate/css/*.css',
+  path.bower + 'bootstrap/dist/css/bootstrap.min.css',
+  path.bower + 'bootstrap/dist/css/bootstrap-theme.min.css'
+];
 gulp.task('bower-app-css', function() {
-  gulp.src(path.bower + 'html5-boilerplate/css/*.css')
-    .pipe(gulp.dest(path.app.css));
-
-  gulp.src(path.bower + 'bootstrap/dist/css/bootstrap.min.css')
-    .pipe(gulp.dest(path.app.css));
-
-  gulp.src(path.bower + 'bootstrap/dist/css/bootstrap-theme.min.css')
+  gulp.src(pathBowerCss)
     .pipe(gulp.dest(path.app.css));
 });
 

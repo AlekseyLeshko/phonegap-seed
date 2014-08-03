@@ -6,25 +6,21 @@ var connect = require('gulp-connect');
 var runSequence = require('run-sequence');
 var concat = require('gulp-concat');
 var clean = require('gulp-clean');
-
 var jshint = require('gulp-jshint');
 var stylish = require('jshint-stylish');
 var uglify = require('gulp-uglify');
 var sourcemaps = require('gulp-sourcemaps');
-
 var slim = require('gulp-slim');
 var minifyHTML = require('gulp-minify-html');
-
 var sass = require('gulp-sass');
 var minifyCSS = require('gulp-minify-css');
-
 var shell = require('gulp-shell');
 var bower = require('gulp-bower');
 var karma = require('karma').server;
 var _ = require('lodash');
 
 var karmaCommonConf = {
-  basePath : '',
+  basepaths : '',
   browsers: ['Chrome'],
   frameworks: ['jasmine'],
   files : [
@@ -52,7 +48,7 @@ var karmaCommonConf = {
   }
 };
 
-var path = {
+var paths = {
   src: {
     slim: {
       main: 'src/slim/*.slim',
@@ -67,83 +63,89 @@ var path = {
       partials: 'www/partials/'
     },
     css: 'www/css/',
-    js: 'www/js/'
+    js: 'www/js/',
+    maps: 'maps'
   },
   bower: 'src/bower_components/'
 };
 
-var bowerJsPaths = [
-  path.bower + 'html5-boilerplate/js/vendor/modernizr-2.6.2.min.js',
-  path.bower + 'angular/angular.min.js',
-  path.bower + 'angular-route/angular-route.min.js',
-  path.bower + 'jquery/dist/jquery.min.js',
-  path.bower + 'bootstrap/dist/js/bootstrap.min.js',
-  path.bower + 'angular-loader/angular-loader.min.js'
+var fileNames = {
+  script: 'all.min.js',
+  css: 'style.css'
+};
+
+var bowerJspathss = [
+  paths.bower + 'html5-boilerplate/js/vendor/modernizr-2.6.2.min.js',
+  paths.bower + 'angular/angular.min.js',
+  paths.bower + 'angular-route/angular-route.min.js',
+  paths.bower + 'jquery/dist/jquery.min.js',
+  paths.bower + 'bootstrap/dist/js/bootstrap.min.js',
+  paths.bower + 'angular-loader/angular-loader.min.js'
 ];
-var bowerCssPaths = [
-  path.bower + 'html5-boilerplate/css/*.css',
-  path.bower + 'bootstrap/dist/css/bootstrap.min.css',
-  path.bower + 'bootstrap/dist/css/bootstrap-theme.min.css'
+var bowerCsspathss = [
+  paths.bower + 'html5-boilerplate/css/*.css',
+  paths.bower + 'bootstrap/dist/css/bootstrap.min.css',
+  paths.bower + 'bootstrap/dist/css/bootstrap-theme.min.css'
 ];
 
-var cleanPaths = [
-  path.app.html.partials,
-  path.app.css,
-  path.app.js,
-  path.app.html.main + '*.html'
+var cleanpathss = [
+  paths.app.html.partials,
+  paths.app.css,
+  paths.app.js,
+  paths.app.html.main + '*.html'
 ];
 
 gulp.task('html-main', function() {
-  return gulp.src(path.src.slim.main)
+  return gulp.src(paths.src.slim.main)
     .pipe(slim({ pretty: true }))
     .pipe(minifyHTML({ empty: true }))
-    .pipe(gulp.dest(path.app.html.main));
+    .pipe(gulp.dest(paths.app.html.main));
 });
 
 gulp.task('html-partials', function() {
-  return gulp.src(path.src.slim.partials)
+  return gulp.src(paths.src.slim.partials)
     .pipe(slim({ pretty: true }))
     .pipe(minifyHTML({ empty: true }))
-    .pipe(gulp.dest(path.app.html.partials));
+    .pipe(gulp.dest(paths.app.html.partials));
 });
 
 gulp.task('css', function() {
-  return gulp.src(path.src.sass)
+  return gulp.src(paths.src.sass)
     .pipe(sass())
-    .pipe(concat('style.css'))
+    .pipe(concat(fileNames.css))
     .pipe(minifyCSS())
-    .pipe(gulp.dest(path.app.css))
+    .pipe(gulp.dest(paths.app.css))
     .pipe(connect.reload());
 });
 
 gulp.task('scripts', function() {
-  return gulp.src(path.src.js)
+  return gulp.src(paths.src.js)
     .pipe(jshint())
     .pipe(jshint.reporter(stylish))
     .pipe(sourcemaps.init())
     .pipe(uglify())
-    .pipe(concat('all.min.js'))
-    .pipe(sourcemaps.write('maps'))
-    .pipe(gulp.dest(path.app.js))
+    .pipe(concat(fileNames.script))
+    .pipe(sourcemaps.write(paths.app.maps))
+    .pipe(gulp.dest(paths.app.js))
     .pipe(connect.reload());
 });
 
 gulp.task('bower', function() {
-  return bower(path.bower);
+  return bower(paths.bower);
 });
 
 gulp.task('bower-js', function() {
-  gulp.src(bowerJsPaths)
-    .pipe(gulp.dest(path.app.js));
+  return gulp.src(bowerJspathss)
+    .pipe(gulp.dest(paths.app.js));
 });
 
 gulp.task('bower-css', function() {
-  return gulp.src(bowerCssPaths)
-    .pipe(gulp.dest(path.app.css));
+  return gulp.src(bowerCsspathss)
+    .pipe(gulp.dest(paths.app.css));
 });
 
 gulp.task('clean', function(cb) {
-  return gulp.src(cleanPaths)
+  return gulp.src(cleanpathss)
     .pipe(clean());
 });
 
@@ -156,16 +158,16 @@ gulp.task('connect', function() {
 });
 
 gulp.task('watch', function() {
-  gulp.watch([path.src.slim.main, path.src.slim.partials], ['html']);
-  gulp.watch([path.src.js], ['scripts']);
-  gulp.watch([path.src.sass], ['css']);
+  gulp.watch([paths.src.slim.main, paths.src.slim.partials], ['html']);
+  gulp.watch([paths.src.js], ['scripts']);
+  gulp.watch([paths.src.sass], ['css']);
 });
 
 gulp.task('html', ['html-main', 'html-partials']);
 gulp.task('bower-app', ['bower-js', 'bower-css']);
 
 gulp.task('test-single-run', function (done) {
-  karma.start(_.assign({}, karmaCommonConf, {singleRun: true}), done);
+  return karma.start(_.assign({}, karmaCommonConf, {singleRun: true}), done);
 });
 
 gulp.task('tdd', function (done) {

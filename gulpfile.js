@@ -19,6 +19,10 @@ var bower = require('gulp-bower');
 var karma = require('karma').server;
 var _ = require('lodash');
 var protractor = require("gulp-protractor").protractor;
+var webdriver_standalone = require("gulp-protractor").webdriver_standalone;
+var webdriver_update = require("gulp-protractor").webdriver_update;
+
+var port = 9001;
 
 var karmaCommonConf = {
   basepaths : '',
@@ -49,134 +53,119 @@ var karmaCommonConf = {
   }
 };
 
-var paths = {
-  src: {
-    slim: {
-      main: 'src/slim/*.slim',
-      partials: 'src/slim/partials/*.slim'
-    },
-    sass: 'src/scss/*.scss',
-    js: 'src/js/**/*.js'
-  },
-  app: {
-    html: {
-      main: 'www/',
-      partials: 'www/partials/'
-    },
-    css: 'www/css/',
-    js: 'www/js/',
-    maps: 'maps'
-  },
-  bower: 'src/bower_components/'
-};
-
-var fileNames = {
-  script: 'all.min.js',
-  css: 'style.css'
-};
-
-var bowerJspathss = [
-  paths.bower + 'html5-boilerplate/js/vendor/modernizr-2.6.2.min.js',
-  paths.bower + 'angular/angular.min.js',
-  paths.bower + 'angular-route/angular-route.min.js',
-  paths.bower + 'jquery/dist/jquery.min.js',
-  paths.bower + 'bootstrap/dist/js/bootstrap.min.js',
-  paths.bower + 'angular-loader/angular-loader.min.js'
+var htmlPaths = [
+  'src/slim/*.slim',
+  'src/slim/partials/*.slim'
 ];
-var bowerCsspathss = [
-  paths.bower + 'html5-boilerplate/css/*.css',
-  paths.bower + 'bootstrap/dist/css/bootstrap.min.css',
-  paths.bower + 'bootstrap/dist/css/bootstrap-theme.min.css'
+var scriptPaths = ['src/js/**/*.js'];
+var cssPaths = ['src/scss/*.scss'];
+var bowerPath = 'src/bower_components/'
+var bowerJSPaths = [
+  bowerPath + 'html5-boilerplate/js/vendor/modernizr-2.6.2.min.js',
+  bowerPath + 'angular/angular.min.js',
+  bowerPath + 'angular-route/angular-route.min.js',
+  bowerPath + 'jquery/dist/jquery.min.js',
+  bowerPath + 'bootstrap/dist/js/bootstrap.min.js',
+  bowerPath + 'angular-loader/angular-loader.min.js'
 ];
-
-var cleanpathss = [
-  paths.app.html.partials,
-  paths.app.css,
-  paths.app.js,
-  paths.app.html.main + '*.html'
+var bowerCssPaths = [
+  bowerPath + 'html5-boilerplate/css/*.css',
+  bowerPath + 'bootstrap/dist/css/bootstrap.min.css',
+  bowerPath + 'bootstrap/dist/css/bootstrap-theme.min.css'
+];
+var cleanPaths = [
+  'www/*.htm',
+  'www/partials/',
+  'www/css/',
+  'www/js/'
 ];
 
 gulp.task('html-main', function() {
-  return gulp.src(paths.src.slim.main)
+  return gulp.src('src/slim/*.slim')
     .pipe(slim({ pretty: true }))
     .pipe(minifyHTML({ empty: true }))
-    .pipe(gulp.dest(paths.app.html.main));
+    .pipe(gulp.dest('www/'));
 });
 
 gulp.task('html-partials', function() {
-  return gulp.src(paths.src.slim.partials)
+  return gulp.src('src/slim/partials/*.slim')
     .pipe(slim({ pretty: true }))
     .pipe(minifyHTML({ empty: true }))
-    .pipe(gulp.dest(paths.app.html.partials));
+    .pipe(gulp.dest('www/partials/'));
 });
 
 gulp.task('css', function() {
-  return gulp.src(paths.src.sass)
+  return gulp.src(cssPaths)
     .pipe(sass())
-    .pipe(concat(fileNames.css))
+    .pipe(concat('style.css'))
     .pipe(minifyCSS())
-    .pipe(gulp.dest(paths.app.css))
+    .pipe(gulp.dest('www/css/'))
     .pipe(connect.reload());
 });
 
 gulp.task('scripts', function() {
-  return gulp.src(paths.src.js)
+  return gulp.src(scriptPaths)
     .pipe(jshint())
     .pipe(jshint.reporter(stylish))
     .pipe(sourcemaps.init())
     .pipe(uglify())
-    .pipe(concat(fileNames.script))
-    .pipe(sourcemaps.write(paths.app.maps))
-    .pipe(gulp.dest(paths.app.js))
+    .pipe(concat('all.min.js'))
+    .pipe(sourcemaps.write('maps'))
+    .pipe(gulp.dest('www/js/'))
     .pipe(connect.reload());
 });
 
 gulp.task('bower', function() {
-  return bower(paths.bower);
+  return bower(bowerPath);
 });
 
 gulp.task('bower-js', function() {
-  return gulp.src(bowerJspathss)
-    .pipe(gulp.dest(paths.app.js));
+  return gulp.src(bowerJSPaths)
+    .pipe(gulp.dest('www/js/'));
 });
 
 gulp.task('bower-css', function() {
-  return gulp.src(bowerCsspathss)
-    .pipe(gulp.dest(paths.app.css));
+  return gulp.src(bowerCssPaths)
+    .pipe(gulp.dest('www/js/'));
 });
 
 gulp.task('clean', function(cb) {
-  return gulp.src(cleanpathss)
+  return gulp.src(cleanPaths)
     .pipe(clean());
 });
 
 gulp.task('connect', function() {
   return connect.server({
     root: 'www',
-    port: 9001,
+    port: port,
     livereload: true
   });
 });
 
 gulp.task('watch', function() {
-  gulp.watch([paths.src.slim.main, paths.src.slim.partials], ['html']);
-  gulp.watch([paths.src.js], ['scripts']);
-  gulp.watch([paths.src.sass], ['css']);
+  gulp.watch(htmlPaths, ['html']);
+  gulp.watch(scriptPaths, ['scripts']);
+  gulp.watch(cssPaths, ['css']);
 });
 
 gulp.task('html', ['html-main', 'html-partials']);
 gulp.task('bower-app', ['bower-js', 'bower-css']);
 
-gulp.task('test-single-run', function (done) {
-  return karma.start(_.assign({}, karmaCommonConf, {singleRun: true}), done);
+gulp.task('webdriver-update', webdriver_update);
+
+gulp.task('webdriver-standalone', webdriver_standalone);
+
+gulp.task('e2e', ['webdriver-update'], function(callback) {
+  return gulp.src('e2e/*.js')
+    .pipe(protractor({
+        configFile: "test/protractor-conf.js",
+        args: ['--baseUrl', 'http://127.0.0.1:' + port]
+    }))
+    .on('error', function(e) { throw e; });
 });
 
-gulp.task('e2e', function(callback) {
-  gulp.src(paths.src.js)
-    .pipe(protractor({
-        configFile: "./test/protractor.config.js",
-        args: ['--baseUrl', 'http://127.0.0.1:8000']
-    }));
+gulp.task('test-single-run', function (done) {
+  return karma.start(_.assign({}, karmaCommonConf, {singleRun: true}), done);
 });
 
 gulp.task('tdd', function (done) {

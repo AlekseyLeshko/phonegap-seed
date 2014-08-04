@@ -126,7 +126,7 @@ gulp.task('bower-js', function() {
 
 gulp.task('bower-css', function() {
   return gulp.src(bowerCssPaths)
-    .pipe(gulp.dest('www/js/'));
+    .pipe(gulp.dest('www/css/'));
 });
 
 gulp.task('clean', function(cb) {

@@ -5,7 +5,7 @@ var gutil = require('gulp-util');
 var connect = require('gulp-connect');
 var runSequence = require('run-sequence');
 var concat = require('gulp-concat');
-var clean = require('gulp-clean');
+var rimraf = require('gulp-rimraf');
 var jshint = require('gulp-jshint');
 var stylish = require('jshint-stylish');
 var uglify = require('gulp-uglify');
@@ -74,7 +74,7 @@ var bowerCssPaths = [
   bowerPath + 'bootstrap/dist/css/bootstrap-theme.min.css'
 ];
 var cleanPaths = [
-  'www/*.htm',
+  'www/*.html',
   'www/partials/',
   'www/css/',
   'www/js/'
@@ -129,9 +129,9 @@ gulp.task('bower-css', function() {
     .pipe(gulp.dest('www/css/'));
 });
 
-gulp.task('clean', function(cb) {
-  return gulp.src(cleanPaths)
-    .pipe(clean());
+gulp.task('clean', function() {
+  return gulp.src(cleanPaths, { read: false })
+    .pipe(rimraf());
 });
 
 gulp.task('connect', function() {

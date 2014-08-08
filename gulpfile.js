@@ -5,7 +5,6 @@ var gutil = require('gulp-util');
 var connect = require('gulp-connect');
 var runSequence = require('run-sequence');
 var concat = require('gulp-concat');
-var clean = require('gulp-clean');
 var jshint = require('gulp-jshint');
 var stylish = require('jshint-stylish');
 var uglify = require('gulp-uglify');
@@ -129,11 +128,6 @@ gulp.task('bower-css', function() {
     .pipe(gulp.dest('www/css/'));
 });
 
-gulp.task('clean', function(cb) {
-  return gulp.src(cleanPaths)
-    .pipe(clean());
-});
-
 gulp.task('connect', function() {
   return connect.server({
     root: 'www',
@@ -177,8 +171,7 @@ gulp.task('run-android', ['build'], shell.task([
 ]));
 
 gulp.task('build', function(callback) {
-  return runSequence('clean',
-    ['html', 'scripts', 'css', 'bower-app'], callback);
+  return runSequence(['html', 'scripts', 'css', 'bower-app'], callback);
 });
 
 gulp.task('run', function(callback) {

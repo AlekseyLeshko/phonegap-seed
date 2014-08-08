@@ -74,7 +74,7 @@ var bowerCssPaths = [
   bowerPath + 'bootstrap/dist/css/bootstrap-theme.min.css'
 ];
 var cleanPaths = [
-  'www/*.htm',
+  'www/*.html',
   'www/partials/',
   'www/css/',
   'www/js/'

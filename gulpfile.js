@@ -14,7 +14,7 @@ var slim = require('gulp-slim');
 var minifyHTML = require('gulp-minify-html');
 var sass = require('gulp-sass');
 var minifyCSS = require('gulp-minify-css');
-var shell = require('gulp-shell');
+var gshell = require('gulp-shell');
 var bower = require('gulp-bower');
 var karma = require('karma').server;
 var _ = require('lodash');
@@ -166,7 +166,7 @@ gulp.task('tdd', function (done) {
   karma.start(karmaCommonConf, done);
 });
 
-gulp.task('run-android', ['build'], shell.task([
+gulp.task('run-android', ['build'], gshell.task([
   'phonegap local run android'
 ]));
 

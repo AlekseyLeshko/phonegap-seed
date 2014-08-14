@@ -3,31 +3,60 @@ html.no-js lang="en" ng-app="myApp"
   head
     meta charset="utf-8"
     meta content="IE=edge" http-equiv="X-UA-Compatible"
-    title My AngularJS App
+    title My Cordova App
     meta content="" name="description"
-    meta content="width=device-width, initial-scale=1" name="viewport"
+    meta content="initial-scale=1, maximum-scale=1, user-scalable=no, width=device-width" name="viewport"
 
-    link href="css/normalize.css" rel="stylesheet"
-    link href="css/main.css" rel="stylesheet"
-    link href="css/bootstrap.min.css" rel="stylesheet"
-    link href="css/bootstrap-theme.min.css" rel="stylesheet"
-    link href="css/style.css" rel="stylesheet"
-    script src="js/modernizr-2.6.2.min.js"
-    script src="js/jquery.min.js"
-    script src="js/bootstrap.min.js"
+    / Css
+    / link href="css/normalize.css" rel="stylesheet"
+    / link href="css/main.css" rel="stylesheet"
+    / link href="css/bootstrap.min.css" rel="stylesheet"
+    / link href="css/bootstrap-theme.min.css" rel="stylesheet"
+    link href="css/style.min.css" rel="stylesheet"
+
+    / JS
+    / script src="cordova.js"
+    script src="js/lib/ionic.bundle.js"
+    script src="js/app.js"
+    script src="js/controllers.js"
+    script src="js/services.js"
+    script src="js/directives.js"
+    script src="js/filters.js"
+
+    / script src="js/modernizr-2.6.2.min.js"
+    / script src="js/jquery.min.js"
+    / script src="js/bootstrap.min.js"
 
   body
-    ul.menu
-      li
-        a href="#/view1"  view1
-      li
-        a href="#/view2"  view2
+    ion-nav-bar.nav-title-slide-ios7.bar-positive
+    ion-nav-view
 
-    div ng-view=""
-    div
-      | Angular seed app: v
-      span app-version=""
+    / div class="bar bar-header bar-light"
+    /   h1.title
+    /     | bar-light
 
-    script src="js/angular.min.js"
-    script src="js/angular-route.min.js"
-    script src="js/all.min.js"
+    / ion-tabs class="tabs-icon-midd bar-light"
+    /   ion-tab title="Home" icon-on="ion-ios7-filing" icon-off="ion-ios7-filing-outline" href="#/menu/home"
+    /     ion-nav-view name="home-tab"
+
+    /   ion-tab title="About" icon-on="ion-ios7-clock" icon-off="ion-ios7-clock-outline" href="#/menu/about"
+    /     ion-nav-view name="about-tab"
+
+    /   ion-tab title="Settings" icon-on="ion-ios7-gear" icon-off="ion-ios7-gear-outline" href="#/menu/settings"
+    /     ion-nav-view name="settings-tab"
+
+    / ul.menu
+    /   li
+    /     a href="#/view1"  view1
+    /   li
+    /     a href="#/view2"  view2
+
+    / div ng-view=""
+    / div
+    /   | Angular seed app: v
+    /   span app-version=""
+
+    / script src="js/angular.min.js"
+    / script src="js/angular-route.min.js"
+    / App JS
+    / script src="js/all.min.js"

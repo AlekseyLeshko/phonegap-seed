@@ -74,6 +74,11 @@ var bowerCssPaths = [
   bowerPath + 'bootstrap/dist/css/bootstrap-theme.min.css'
 ];
 
+gulp.task('img', function() {
+  return gulp.src('src/img/**/*.*')
+    .pipe(gulp.dest('www/img/'));
+});
+
 gulp.task('html-main', function() {
   return gulp.src('src/slim/*.slim')
     .pipe(slim({ pretty: true }))
@@ -172,7 +177,7 @@ gulp.task('run-android', ['build'], gshell.task([
 
 gulp.task('build', function(callback) {
   return runSequence('clean',
-    ['html', 'scripts', 'css', 'bower-app'], callback);
+    ['html', 'scripts', 'css', 'bower-app', 'img'], callback);
 });
 
 gulp.task('run', function(callback) {

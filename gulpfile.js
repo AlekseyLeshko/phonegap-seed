@@ -117,6 +117,20 @@ gulp.task('scripts', function() {
     .pipe(connect.reload());
 });
 
+gulp.task('ionic', function(callback) {
+  return runSequence(['ionic-fonts', 'ionic-js'], callback);
+});
+
+gulp.task('ionic-fonts', function(cb) {
+  return gulp.src('src/bower_components/ionic/fonts/**/*.*')
+    .pipe(gulp.dest('www/fonts'));
+});
+
+gulp.task('ionic-js', function(cb) {
+  return gulp.src('src/bower_components/ionic/js/ionic.bundle.js')
+    .pipe(gulp.dest('www/js/lib'));
+});
+
 gulp.task('git-check', function(done) {
   if (!sh.which('git')) {
     console.log(
@@ -195,8 +209,7 @@ gulp.task('run-android', ['build'], gshell.task([
 ]));
 
 gulp.task('build', function(callback) {
-  return runSequence('clean',
-    ['html', 'scripts', 'css', 'bower-app', 'img'], callback);
+  return runSequence('clean', 'bower', ['html', 'scripts', 'ionic', 'img'], 'css', callback);
 });
 
 gulp.task('run', function(callback) {

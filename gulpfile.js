@@ -73,12 +73,6 @@ var bowerCssPaths = [
   bowerPath + 'bootstrap/dist/css/bootstrap.min.css',
   bowerPath + 'bootstrap/dist/css/bootstrap-theme.min.css'
 ];
-var cleanPaths = [
-  'www/*.htm',
-  'www/partials/',
-  'www/css/',
-  'www/js/'
-];
 
 gulp.task('html-main', function() {
   return gulp.src('src/slim/*.slim')
@@ -130,7 +124,7 @@ gulp.task('bower-css', function() {
 });
 
 gulp.task('clean', function(cb) {
-  return gulp.src(cleanPaths)
+  return gulp.src('www')
     .pipe(clean());
 });
 

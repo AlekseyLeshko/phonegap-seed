@@ -110,7 +110,7 @@ gulp.task('scripts', function() {
     .pipe(jshint())
     .pipe(jshint.reporter(stylish))
     .pipe(sourcemaps.init())
-    .pipe(uglify())
+    // .pipe(uglify())
     .pipe(concat('all.min.js'))
     .pipe(sourcemaps.write('maps'))
     .pipe(gulp.dest('www/js/'))

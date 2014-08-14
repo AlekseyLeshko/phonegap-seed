@@ -96,8 +96,10 @@ gulp.task('html-partials', function() {
 gulp.task('css', function() {
   return gulp.src(cssPaths)
     .pipe(sass())
-    .pipe(concat('style.css'))
-    .pipe(minifyCSS())
+    .pipe(minifyCSS({
+      keepSpecialComments: 0
+    }))
+    .pipe(concat('style.min.css'))
     .pipe(gulp.dest('www/css/'))
     .pipe(connect.reload());
 });

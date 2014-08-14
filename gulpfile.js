@@ -30,8 +30,7 @@ var karmaCommonConf = {
   browsers: ['Chrome'],
   frameworks: ['jasmine'],
   files : [
-    'src/bower_components/angular/angular.js',
-    'src/bower_components/angular-route/angular-route.js',
+    'src/bower_components/ionic/js/ionic.bundle.js',
     'src/bower_components/angular-mocks/angular-mocks.js',
     'src/js/**/*.js',
     'test/unit/**/*.js'
@@ -60,20 +59,6 @@ var htmlPaths = [
 ];
 var scriptPaths = ['src/js/**/*.js'];
 var cssPaths = ['src/scss/*.scss'];
-var bowerPath = 'src/bower_components/'
-var bowerJSPaths = [
-  bowerPath + 'html5-boilerplate/js/vendor/modernizr-2.6.2.min.js',
-  bowerPath + 'angular/angular.min.js',
-  bowerPath + 'angular-route/angular-route.min.js',
-  bowerPath + 'jquery/dist/jquery.min.js',
-  bowerPath + 'bootstrap/dist/js/bootstrap.min.js',
-  bowerPath + 'angular-loader/angular-loader.min.js'
-];
-var bowerCssPaths = [
-  bowerPath + 'html5-boilerplate/css/*.css',
-  bowerPath + 'bootstrap/dist/css/bootstrap.min.css',
-  bowerPath + 'bootstrap/dist/css/bootstrap-theme.min.css'
-];
 
 gulp.task('img', function() {
   return gulp.src('src/img/**/*.*')
@@ -151,16 +136,6 @@ gulp.task('bower', ['git-check'], function() {
     });
 });
 
-gulp.task('bower-js', function() {
-  return gulp.src(bowerJSPaths)
-    .pipe(gulp.dest('www/js/'));
-});
-
-gulp.task('bower-css', function() {
-  return gulp.src(bowerCssPaths)
-    .pipe(gulp.dest('www/css/'));
-});
-
 gulp.task('clean', function(cb) {
   return gulp.src('www')
     .pipe(clean());
@@ -181,7 +156,6 @@ gulp.task('watch', function() {
 });
 
 gulp.task('html', ['html-main', 'html-partials']);
-gulp.task('bower-app', ['bower-js', 'bower-css']);
 
 gulp.task('webdriver-update', webdriver_update);
 

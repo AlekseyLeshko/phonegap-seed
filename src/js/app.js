@@ -1,16 +1,49 @@
 'use strict';
 
-
-// Declare app level module which depends on filters, and services
 angular.module('myApp', [
-  'ngRoute',
+  'ionic',
   'myApp.filters',
   'myApp.services',
   'myApp.directives',
   'myApp.controllers'
-]).
-config(['$routeProvider', function($routeProvider) {
-  $routeProvider.when('/view1', {templateUrl: 'partials/partial1.html', controller: 'MyCtrl1'});
-  $routeProvider.when('/view2', {templateUrl: 'partials/partial2.html', controller: 'MyCtrl2'});
-  $routeProvider.otherwise({redirectTo: '/view1'});
-}]);
+])
+
+.run(function($ionicPlatform) {
+  $ionicPlatform.ready(function() {
+    if(window.cordova && window.cordova.plugins.Keyboard) {
+      cordova.plugins.Keyboard.hideKeyboardAccessoryBar(true);
+    }
+    if(window.StatusBar) {
+      StatusBar.styleDefault();
+    }
+  });
+})
+
+.config(function($stateProvider, $urlRouterProvider) {
+  $stateProvider
+    .state('tabs', {
+      url: "/tab",
+      abstract: true,
+      templateUrl: "partials/tabs.html"
+    })
+    .state('tabs.view1', {
+      url: "/view1",
+      views: {
+        'view1-tab': {
+          templateUrl: "partials/partial1.html",
+          controller: 'MyCtrl1'
+        }
+      }
+    })
+    .state('tabs.view2', {
+      url: "/view2",
+      views: {
+        'view2-tab': {
+          templateUrl: "partials/partial2.html",
+          controller: 'MyCtrl2'
+        }
+      }
+    });
+
+   $urlRouterProvider.otherwise("/tab/view1");
+})

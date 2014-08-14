@@ -14,13 +14,14 @@ var slim = require('gulp-slim');
 var minifyHTML = require('gulp-minify-html');
 var sass = require('gulp-sass');
 var minifyCSS = require('gulp-minify-css');
-var shell = require('gulp-shell');
-var bower = require('gulp-bower');
+var gshell = require('gulp-shell');
 var karma = require('karma').server;
 var _ = require('lodash');
 var protractor = require("gulp-protractor").protractor;
 var webdriver_standalone = require("gulp-protractor").webdriver_standalone;
 var webdriver_update = require("gulp-protractor").webdriver_update;
+var sh = require('shelljs');
+var bower = require('bower');
 
 var port = 9001;
 
@@ -29,8 +30,7 @@ var karmaCommonConf = {
   browsers: ['Chrome'],
   frameworks: ['jasmine'],
   files : [
-    'src/bower_components/angular/angular.js',
-    'src/bower_components/angular-route/angular-route.js',
+    'src/bower_components/ionic/js/ionic.bundle.js',
     'src/bower_components/angular-mocks/angular-mocks.js',
     'src/js/**/*.js',
     'test/unit/**/*.js'
@@ -59,26 +59,11 @@ var htmlPaths = [
 ];
 var scriptPaths = ['src/js/**/*.js'];
 var cssPaths = ['src/scss/*.scss'];
-var bowerPath = 'src/bower_components/'
-var bowerJSPaths = [
-  bowerPath + 'html5-boilerplate/js/vendor/modernizr-2.6.2.min.js',
-  bowerPath + 'angular/angular.min.js',
-  bowerPath + 'angular-route/angular-route.min.js',
-  bowerPath + 'jquery/dist/jquery.min.js',
-  bowerPath + 'bootstrap/dist/js/bootstrap.min.js',
-  bowerPath + 'angular-loader/angular-loader.min.js'
-];
-var bowerCssPaths = [
-  bowerPath + 'html5-boilerplate/css/*.css',
-  bowerPath + 'bootstrap/dist/css/bootstrap.min.css',
-  bowerPath + 'bootstrap/dist/css/bootstrap-theme.min.css'
-];
-var cleanPaths = [
-  'www/*.html',
-  'www/partials/',
-  'www/css/',
-  'www/js/'
-];
+
+gulp.task('img', function() {
+  return gulp.src('src/img/**/*.*')
+    .pipe(gulp.dest('www/img/'));
+});
 
 gulp.task('html-main', function() {
   return gulp.src('src/slim/*.slim')
@@ -97,8 +82,10 @@ gulp.task('html-partials', function() {
 gulp.task('css', function() {
   return gulp.src(cssPaths)
     .pipe(sass())
-    .pipe(concat('style.css'))
-    .pipe(minifyCSS())
+    .pipe(minifyCSS({
+      keepSpecialComments: 0
+    }))
+    .pipe(concat('style.min.css'))
     .pipe(gulp.dest('www/css/'))
     .pipe(connect.reload());
 });
@@ -108,29 +95,49 @@ gulp.task('scripts', function() {
     .pipe(jshint())
     .pipe(jshint.reporter(stylish))
     .pipe(sourcemaps.init())
-    .pipe(uglify())
+    // .pipe(uglify())
     .pipe(concat('all.min.js'))
     .pipe(sourcemaps.write('maps'))
     .pipe(gulp.dest('www/js/'))
     .pipe(connect.reload());
 });
 
-gulp.task('bower', function() {
-  return bower(bowerPath);
+gulp.task('ionic', function(callback) {
+  return runSequence(['ionic-fonts', 'ionic-js'], callback);
 });
 
-gulp.task('bower-js', function() {
-  return gulp.src(bowerJSPaths)
-    .pipe(gulp.dest('www/js/'));
+gulp.task('ionic-fonts', function(cb) {
+  return gulp.src('src/bower_components/ionic/fonts/**/*.*')
+    .pipe(gulp.dest('www/fonts'));
 });
 
-gulp.task('bower-css', function() {
-  return gulp.src(bowerCssPaths)
-    .pipe(gulp.dest('www/css/'));
+gulp.task('ionic-js', function(cb) {
+  return gulp.src('src/bower_components/ionic/js/ionic.bundle.js')
+    .pipe(gulp.dest('www/js/lib'));
+});
+
+gulp.task('git-check', function(done) {
+  if (!sh.which('git')) {
+    console.log(
+      '  ' + gutil.colors.red('Git is not installed.'),
+      '\n  Git, the version control system, is required to download Ionic.',
+      '\n  Download git here:', gutil.colors.cyan('http://git-scm.com/downloads') + '.',
+      '\n  Once git is installed, run \'' + gutil.colors.cyan('gulp install') + '\' again.'
+    );
+    process.exit(1);
+  }
+  done();
+});
+
+gulp.task('bower', ['git-check'], function() {
+  return bower.commands.install()
+    .on('log', function(data) {
+      gutil.log('bower', gutil.colors.cyan(data.id), data.message);
+    });
 });
 
 gulp.task('clean', function() {
-  return gulp.src(cleanPaths, { read: false })
+  return gulp.src('www', { read: false })
     .pipe(rimraf());
 });
 
@@ -149,7 +156,6 @@ gulp.task('watch', function() {
 });
 
 gulp.task('html', ['html-main', 'html-partials']);
-gulp.task('bower-app', ['bower-js', 'bower-css']);
 
 gulp.task('webdriver-update', webdriver_update);
 
@@ -172,13 +178,12 @@ gulp.task('tdd', function (done) {
   karma.start(karmaCommonConf, done);
 });
 
-gulp.task('run-android', ['build'], shell.task([
+gulp.task('run-android', ['build'], gshell.task([
   'phonegap local run android'
 ]));
 
 gulp.task('build', function(callback) {
-  return runSequence('clean',
-    ['html', 'scripts', 'css', 'bower-app'], callback);
+  return runSequence('clean', 'bower', ['html', 'scripts', 'ionic', 'img'], 'css', callback);
 });
 
 gulp.task('run', function(callback) {

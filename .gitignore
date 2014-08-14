@@ -1,12 +1,7 @@
 node_modules/
-bower_components
-www/css/
-www/js/
-www/partials/
-www/*.html
-build/
+bower_components/
 coverage/
-
+www/
 
 #PhoneGap
 platforms/

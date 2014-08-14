@@ -15,12 +15,13 @@ var minifyHTML = require('gulp-minify-html');
 var sass = require('gulp-sass');
 var minifyCSS = require('gulp-minify-css');
 var gshell = require('gulp-shell');
-var bower = require('gulp-bower');
 var karma = require('karma').server;
 var _ = require('lodash');
 var protractor = require("gulp-protractor").protractor;
 var webdriver_standalone = require("gulp-protractor").webdriver_standalone;
 var webdriver_update = require("gulp-protractor").webdriver_update;
+var sh = require('shelljs');
+var bower = require('bower');
 
 var port = 9001;
 
@@ -116,8 +117,24 @@ gulp.task('scripts', function() {
     .pipe(connect.reload());
 });
 
-gulp.task('bower', function() {
-  return bower(bowerPath);
+gulp.task('git-check', function(done) {
+  if (!sh.which('git')) {
+    console.log(
+      '  ' + gutil.colors.red('Git is not installed.'),
+      '\n  Git, the version control system, is required to download Ionic.',
+      '\n  Download git here:', gutil.colors.cyan('http://git-scm.com/downloads') + '.',
+      '\n  Once git is installed, run \'' + gutil.colors.cyan('gulp install') + '\' again.'
+    );
+    process.exit(1);
+  }
+  done();
+});
+
+gulp.task('bower', ['git-check'], function() {
+  return bower.commands.install()
+    .on('log', function(data) {
+      gutil.log('bower', gutil.colors.cyan(data.id), data.message);
+    });
 });
 
 gulp.task('bower-js', function() {

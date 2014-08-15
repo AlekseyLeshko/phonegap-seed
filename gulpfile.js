@@ -157,8 +157,17 @@ gulp.task('connect', function() {
   });
 });
 
+gulp.task('reload-app', function() {
+  return gulp.src('app/**/*.*')
+    .pipe(connect.reload());
+});
+
+gulp.task('build-and-reload', function(callback) {
+  return runSequence('build', 'reload-app', callback);
+});
+
 gulp.task('watch', function() {
-  gulp.watch('app/**/*.*', ['build']);
+  gulp.watch('app/**/*.*', ['build-and-reload']);
 });
 
 gulp.task('webdriver-update', webdriver_update);

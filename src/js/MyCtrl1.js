@@ -1,4 +1,4 @@
-(function () {
+(function() {
   angular
     .module('myApp')
     .controller('MyCtrl1' , MyCtrl1);

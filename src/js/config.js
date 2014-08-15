@@ -15,7 +15,7 @@
         views: {
           'view1-tab': {
             templateUrl: 'partials/partial1.html',
-            controller: 'MyCtrl1'
+            controller: 'MyCtrl1 as myCtrl1'
           }
         }
       })
@@ -24,7 +24,7 @@
         views: {
           'view2-tab': {
             templateUrl: 'partials/partial2.html',
-            controller: 'MyCtrl2'
+            controller: 'MyCtrl2 as myCtrl2'
           }
         }
       });

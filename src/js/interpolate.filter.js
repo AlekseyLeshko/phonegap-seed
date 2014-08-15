@@ -1,6 +1,6 @@
 (function() {
   angular
-    .module('myApp')
+    .module('app')
     .filter('interpolate', interpolate);
 
   interpolate.$inject = ['version'];

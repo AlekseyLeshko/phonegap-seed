@@ -1,6 +1,6 @@
 (function() {
   angular
-    .module('myApp')
+    .module('app')
     .factory('strBuilderFactory', strBuilderFactory);
 
   function strBuilderFactory () {

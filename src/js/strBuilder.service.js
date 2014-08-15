@@ -1,6 +1,6 @@
 (function() {
   angular
-    .module('myApp')
+    .module('app')
     .service('strBuilderService', strBuilderService);
 
   function strBuilderService() {

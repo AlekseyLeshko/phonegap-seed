@@ -1,6 +1,6 @@
 (function() {
   angular
-    .module('myApp')
+    .module('app')
     .controller('MyCtrl2' , MyCtrl2);
 
   MyCtrl2.$inject = ['strBuilderService', 'strBuilderFactory'];

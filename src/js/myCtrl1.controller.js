@@ -1,6 +1,6 @@
 (function() {
   angular
-    .module('myApp')
+    .module('app')
     .controller('MyCtrl1' , MyCtrl1);
 
   function MyCtrl1() {

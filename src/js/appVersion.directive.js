@@ -1,6 +1,6 @@
 (function() {
   angular
-    .module('myApp')
+    .module('app')
     .directive('appVersion', appVersion);
 
   appVersion.$inject = ['version'];

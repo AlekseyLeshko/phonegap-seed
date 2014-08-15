@@ -1,6 +1,6 @@
 (function() {
   angular
-    .module('myApp')
+    .module('app')
     .run(run);
 
   run.$inject = ['$ionicPlatform'];

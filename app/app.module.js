@@ -1,6 +1,6 @@
-// (function() {
-  // 'use strict';
+(function() {
+  'use strict';
 
-//   angular
-//     .module('app', ['ionic']);
-// })();
+  angular
+    .module('app', ['ionic']);
+})();

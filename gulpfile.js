@@ -102,7 +102,7 @@ gulp.task('jshint', function() {
 });
 
 gulp.task('scripts', ['jshint'], function() {
-  return gulp.src('app/**/*.js')
+  return gulp.src(['app.module.js', 'app/**/*.js'])
     .pipe(sourcemaps.init())
     .pipe(uglify({mangle: true}))
     .pipe(concat('app-script.min.js'))

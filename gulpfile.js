@@ -19,9 +19,11 @@ var optipng = require('imagemin-optipng');
 var gshell = require('gulp-shell');
 var karma = require('karma').server;
 var _ = require('lodash');
-var protractor = require("gulp-protractor").protractor;
-var webdriver_standalone = require("gulp-protractor").webdriver_standalone;
-var webdriver_update = require("gulp-protractor").webdriver_update;
+var protractor = require('gulp-protractor').protractor;
+/*jshint camelcase: false */
+var webdriverStandalone = require('gulp-protractor').webdriver_standalone;
+/*jshint camelcase: false */
+var webdriverUpdate = require('gulp-protractor').webdriver_update;
 var sh = require('shelljs');
 var bower = require('bower');
 
@@ -54,27 +56,6 @@ gulp.task('run-android', ['build'], gshell.task([
   'phonegap local run android'
 ]));
 
-gulp.task('tdd', function (done) {
-  karma.start(karmaCommonConf, done);
-});
-
-gulp.task('test-single-run', function (done) {
-  return karma.start(_.assign({}, karmaCommonConf, {singleRun: true}), done);
-});
-
-gulp.task('e2e', ['webdriver-update'], function(callback) {
-  return gulp.src('e2e/*.js')
-    .pipe(protractor({
-        configFile: "test/protractor-conf.js",
-        args: ['--baseUrl', 'http://127.0.0.1:' + port]
-    }))
-    .on('error', function(e) { throw e; });
-});
-
-gulp.task('webdriver-standalone', webdriver_standalone);
-
-gulp.task('webdriver-update', webdriver_update);
-
 var karmaCommonConf = {
   basepaths : '',
   browsers: ['Chrome'],
@@ -102,6 +83,27 @@ var karmaCommonConf = {
     dir : 'coverage/'
   }
 };
+
+gulp.task('tdd', function (done) {
+  karma.start(karmaCommonConf, done);
+});
+
+gulp.task('test-single-run', function (done) {
+  return karma.start(_.assign({}, karmaCommonConf, {singleRun: true}), done);
+});
+
+gulp.task('e2e', ['webdriver-update'], function(callback) {
+  return gulp.src('e2e/*.js')
+    .pipe(protractor({
+        configFile: 'test/protractor-conf.js',
+        args: ['--baseUrl', 'http://127.0.0.1:' + port]
+    }))
+    .on('error', function(e) { throw e; });
+});
+
+gulp.task('webdriver-standalone', webdriverStandalone);
+
+gulp.task('webdriver-update', webdriverUpdate);
 
 gulp.task('img', function(callback) {
   return runSequence(['png'], callback);
@@ -146,7 +148,7 @@ gulp.task('scss', function() {
 gulp.task('jshint', function() {
   return gulp.src(['app/**/*.js', 'gulpfile.js'])
     .pipe(jshint())
-    .pipe(jshint.reporter(stylish))
+    .pipe(jshint.reporter(stylish));
 });
 
 gulp.task('scripts', ['jshint'], function() {

@@ -10,13 +10,13 @@
       .state('tabs', {
         url: '/tab' ,
         abstract: true,
-        templateUrl: 'partials/tabs.html'
+        templateUrl: 'views/tabs.html'
       })
       .state('tabs.view1', {
         url: '/view1',
         views: {
           'view1-tab': {
-            templateUrl: 'partials/partial1.html',
+            templateUrl: 'views/partial1.html',
             controller: 'MyCtrl1 as myCtrl1'
           }
         }
@@ -25,7 +25,7 @@
         url: '/view2',
         views: {
           'view2-tab': {
-            templateUrl: 'partials/partial2.html',
+            templateUrl: 'views/partial2.html',
             controller: 'MyCtrl2 as myCtrl2'
           }
         }

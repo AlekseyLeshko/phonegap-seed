@@ -3,6 +3,8 @@
     .module('myApp')
     .config(config);
 
+  config.$inject = ['$stateProvider', '$urlRouterProvider'];
+
   function config($stateProvider, $urlRouterProvider) {
     $stateProvider
       .state('tabs', {

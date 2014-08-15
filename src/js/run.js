@@ -3,6 +3,8 @@
     .module('myApp')
     .run(run);
 
+  run.$inject = ['$ionicPlatform'];
+
   function run($ionicPlatform) {
     $ionicPlatform.ready(function() {
       if(window.cordova && window.cordova.plugins.Keyboard) {

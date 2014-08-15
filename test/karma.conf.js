@@ -4,9 +4,9 @@ module.exports = function(config){
     basePath : '../',
 
     files : [
-      'src/bower_components/ionic/js/ionic.bundle.js',
-      'src/bower_components/angular-mocks/angular-mocks.js',
-      'src/js/**/*.js',
+      'bower_components/ionic/js/ionic.bundle.js',
+      'bower_components/angular-mocks/angular-mocks.js',
+      'app/**/*.js',
       'test/unit/**/*.js'
     ],
 

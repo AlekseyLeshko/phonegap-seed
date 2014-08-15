@@ -32,9 +32,9 @@ var karmaCommonConf = {
   browsers: ['Chrome'],
   frameworks: ['jasmine'],
   files : [
-    'src/bower_components/ionic/js/ionic.bundle.js',
-    'src/bower_components/angular-mocks/angular-mocks.js',
-    'src/js/**/*.js',
+    'bower_components/ionic/js/ionic.bundle.js',
+    'bower_components/angular-mocks/angular-mocks.js',
+    'app/**/*.js',
     'test/unit/**/*.js'
   ],
   autoWatch : true,
@@ -47,7 +47,7 @@ var karmaCommonConf = {
   ],
   reporters: ['progress', 'coverage'],
   preprocessors: {
-    'src/js/**/*.js': ['coverage']
+    'app/**/*.js': ['coverage']
   },
   coverageReporter: {
     type : 'html',
@@ -55,14 +55,11 @@ var karmaCommonConf = {
   }
 };
 
-var htmlPaths = [
-  'src/slim/*.slim',
-  'src/slim/partials/*.slim'
-];
-var scriptPaths = ['src/js/**/*.js'];
-var cssPaths = ['src/scss/*.scss'];
+gulp.task('img', function(callback) {
+  return runSequence(['png'], callback);
+});
 
-gulp.task('img', function() {
+gulp.task('png', function() {
   return gulp.src('src/img/**/*.png')
     .pipe(imagemin({
         progressive: true,
@@ -72,41 +69,45 @@ gulp.task('img', function() {
     .pipe(gulp.dest('www/img'));
 });
 
-gulp.task('html-main', function() {
-  return gulp.src('src/slim/*.slim')
+gulp.task('slim', ['slim-main', 'slim-views']);
+
+gulp.task('slim-main', function() {
+  return gulp.src('app/*.slim')
     .pipe(slim({ pretty: true }))
     .pipe(minifyHTML({ empty: true }))
     .pipe(gulp.dest('www/'));
 });
 
-gulp.task('html-partials', function() {
-  return gulp.src('src/slim/partials/*.slim')
+gulp.task('slim-views', function() {
+  return gulp.src('app/views/*.slim')
     .pipe(slim({ pretty: true }))
     .pipe(minifyHTML({ empty: true }))
-    .pipe(gulp.dest('www/partials/'));
+    .pipe(gulp.dest('www/views/'));
 });
 
-gulp.task('css', function() {
-  return gulp.src(cssPaths)
+gulp.task('scss', function() {
+  return gulp.src('app/assets/scss/**/*.scss')
     .pipe(sass())
     .pipe(minifyCSS({
       keepSpecialComments: 0
     }))
     .pipe(concat('style.min.css'))
-    .pipe(gulp.dest('www/css/'))
-    .pipe(connect.reload());
+    .pipe(gulp.dest('www/css/'));
 });
 
-gulp.task('scripts', function() {
-  return gulp.src(scriptPaths)
+gulp.task('jshint', function() {
+  return gulp.src(['app/**/*.js', 'gulpfile.js'])
     .pipe(jshint())
     .pipe(jshint.reporter(stylish))
+});
+
+gulp.task('scripts', ['jshint'], function() {
+  return gulp.src(['app.module.js', 'app/**/*.js'])
     .pipe(sourcemaps.init())
-    // .pipe(uglify())
-    .pipe(concat('all.min.js'))
+    .pipe(uglify({mangle: true}))
+    .pipe(concat('app-script.min.js'))
     .pipe(sourcemaps.write('maps'))
-    .pipe(gulp.dest('www/js/'))
-    .pipe(connect.reload());
+    .pipe(gulp.dest('www/js/'));
 });
 
 gulp.task('ionic', function(callback) {
@@ -114,12 +115,12 @@ gulp.task('ionic', function(callback) {
 });
 
 gulp.task('ionic-fonts', function(cb) {
-  return gulp.src('src/bower_components/ionic/fonts/**/*.*')
+  return gulp.src('bower_components/ionic/fonts/**/*.*')
     .pipe(gulp.dest('www/fonts'));
 });
 
 gulp.task('ionic-js', function(cb) {
-  return gulp.src('src/bower_components/ionic/js/ionic.bundle.js')
+  return gulp.src('bower_components/ionic/js/ionic.bundle.js')
     .pipe(gulp.dest('www/js/lib'));
 });
 
@@ -156,13 +157,18 @@ gulp.task('connect', function() {
   });
 });
 
-gulp.task('watch', function() {
-  gulp.watch(htmlPaths, ['html']);
-  gulp.watch(scriptPaths, ['scripts']);
-  gulp.watch(cssPaths, ['css']);
+gulp.task('reload-app', function() {
+  return gulp.src('app/**/*.*')
+    .pipe(connect.reload());
 });
 
-gulp.task('html', ['html-main', 'html-partials']);
+gulp.task('build-and-reload', function(callback) {
+  return runSequence('build', 'reload-app', callback);
+});
+
+gulp.task('watch', function() {
+  gulp.watch('app/**/*.*', ['build-and-reload']);
+});
 
 gulp.task('webdriver-update', webdriver_update);
 
@@ -190,7 +196,7 @@ gulp.task('run-android', ['build'], gshell.task([
 ]));
 
 gulp.task('build', function(callback) {
-  return runSequence('clean', 'bower', ['html', 'scripts', 'ionic', 'img'], 'css', callback);
+  return runSequence('clean', 'bower', ['slim', 'scripts', 'ionic', 'img'], 'scss', callback);
 });
 
 gulp.task('run', function(callback) {

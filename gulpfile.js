@@ -26,13 +26,14 @@ var webdriverStandalone = require('gulp-protractor').webdriver_standalone;
 var webdriverUpdate = require('gulp-protractor').webdriver_update;
 var sh = require('shelljs');
 var bower = require('bower');
+var gopen = require('gulp-open');
 
 var port = 9001;
 
 gulp.task('default', ['run']);
 
 gulp.task('run', function(callback) {
-  return runSequence(['build', 'connect', 'watch', 'tdd'], callback);
+  return runSequence(['build', 'connect', 'watch'], ['open-index', 'tdd'], callback);
 });
 
 gulp.task('build', function(callback) {
@@ -40,7 +41,7 @@ gulp.task('build', function(callback) {
 });
 
 gulp.task('watch', function() {
-  gulp.watch('app/**/*.*', ['build-and-reload']);
+  return gulp.watch('app/**/*.*', ['build-and-reload']);
 });
 
 gulp.task('build-and-reload', function(callback) {
@@ -52,9 +53,20 @@ gulp.task('reload-app', function() {
     .pipe(connect.reload());
 });
 
-gulp.task('run-android', ['build'], gshell.task([
-  'phonegap local run android'
-]));
+gulp.task('run-android', ['build'], function() {
+  return gshell.task([
+    'phonegap local run android'
+  ]);
+});
+
+gulp.task('open-index', function(){
+  var options = {
+    url: 'http://localhost:' + port,
+    app: 'google-chrome'
+  };
+  gulp.src('www/index.html')
+  .pipe(gopen('', options));
+});
 
 var karmaCommonConf = {
   basepaths : '',
@@ -85,7 +97,7 @@ var karmaCommonConf = {
 };
 
 gulp.task('tdd', function (done) {
-  karma.start(karmaCommonConf, done);
+  return karma.start(karmaCommonConf, done);
 });
 
 gulp.task('test-single-run', function (done) {

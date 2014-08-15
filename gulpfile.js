@@ -14,6 +14,8 @@ var slim = require('gulp-slim');
 var minifyHTML = require('gulp-minify-html');
 var sass = require('gulp-sass');
 var minifyCSS = require('gulp-minify-css');
+var imagemin = require('gulp-imagemin');
+var optipng = require('imagemin-optipng');
 var gshell = require('gulp-shell');
 var karma = require('karma').server;
 var _ = require('lodash');
@@ -61,8 +63,13 @@ var scriptPaths = ['src/js/**/*.js'];
 var cssPaths = ['src/scss/*.scss'];
 
 gulp.task('img', function() {
-  return gulp.src('src/img/**/*.*')
-    .pipe(gulp.dest('www/img/'));
+  return gulp.src('src/img/**/*.png')
+    .pipe(imagemin({
+        progressive: true,
+        svgoPlugins: [{removeViewBox: false}],
+        use: [optipng()]
+    }))
+    .pipe(gulp.dest('www/img'));
 });
 
 gulp.task('html-main', function() {

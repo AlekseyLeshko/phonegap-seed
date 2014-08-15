@@ -1,2 +1,4 @@
-angular
-  .module('myApp', ['ionic']);
+(function () {
+  angular
+    .module('myApp', ['ionic']);
+})();

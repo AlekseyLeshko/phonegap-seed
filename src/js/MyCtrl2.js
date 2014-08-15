@@ -1,6 +1,8 @@
-angular
-  .module('myApp')
-  .controller('MyCtrl2' , MyCtrl2);
+(function () {
+  angular
+    .module('myApp')
+    .controller('MyCtrl2' , MyCtrl2);
 
-function MyCtrl2($scope) {
-}
+  function MyCtrl2($scope) {
+  }
+})();

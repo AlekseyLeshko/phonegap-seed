@@ -3,8 +3,9 @@
     .module('myApp')
     .controller('MyCtrl2' , MyCtrl2);
 
-  function MyCtrl2(strBuilderService) {
+  function MyCtrl2(strBuilderService, strBuilderFactory) {
     var vm = this;
     vm.msg = strBuilderService.buildHello('World!');
+    vm.msg += ' : ' + strBuilderFactory.buildHello('World!');
   }
 })();

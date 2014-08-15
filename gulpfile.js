@@ -27,6 +27,54 @@ var bower = require('bower');
 
 var port = 9001;
 
+gulp.task('default', ['run']);
+
+gulp.task('run', function(callback) {
+  return runSequence(['build', 'connect', 'watch', 'tdd'], callback);
+});
+
+gulp.task('build', function(callback) {
+  return runSequence('clean', 'bower', ['slim', 'scripts', 'ionic', 'img'], 'scss', callback);
+});
+
+gulp.task('watch', function() {
+  gulp.watch('app/**/*.*', ['build-and-reload']);
+});
+
+gulp.task('build-and-reload', function(callback) {
+  return runSequence('build', 'reload-app', callback);
+});
+
+gulp.task('reload-app', function() {
+  return gulp.src('app/**/*.*')
+    .pipe(connect.reload());
+});
+
+gulp.task('run-android', ['build'], gshell.task([
+  'phonegap local run android'
+]));
+
+gulp.task('tdd', function (done) {
+  karma.start(karmaCommonConf, done);
+});
+
+gulp.task('test-single-run', function (done) {
+  return karma.start(_.assign({}, karmaCommonConf, {singleRun: true}), done);
+});
+
+gulp.task('e2e', ['webdriver-update'], function(callback) {
+  return gulp.src('e2e/*.js')
+    .pipe(protractor({
+        configFile: "test/protractor-conf.js",
+        args: ['--baseUrl', 'http://127.0.0.1:' + port]
+    }))
+    .on('error', function(e) { throw e; });
+});
+
+gulp.task('webdriver-standalone', webdriver_standalone);
+
+gulp.task('webdriver-update', webdriver_update);
+
 var karmaCommonConf = {
   basepaths : '',
   browsers: ['Chrome'],
@@ -156,51 +204,3 @@ gulp.task('connect', function() {
     livereload: true
   });
 });
-
-gulp.task('reload-app', function() {
-  return gulp.src('app/**/*.*')
-    .pipe(connect.reload());
-});
-
-gulp.task('build-and-reload', function(callback) {
-  return runSequence('build', 'reload-app', callback);
-});
-
-gulp.task('watch', function() {
-  gulp.watch('app/**/*.*', ['build-and-reload']);
-});
-
-gulp.task('webdriver-update', webdriver_update);
-
-gulp.task('webdriver-standalone', webdriver_standalone);
-
-gulp.task('e2e', ['webdriver-update'], function(callback) {
-  return gulp.src('e2e/*.js')
-    .pipe(protractor({
-        configFile: "test/protractor-conf.js",
-        args: ['--baseUrl', 'http://127.0.0.1:' + port]
-    }))
-    .on('error', function(e) { throw e; });
-});
-
-gulp.task('test-single-run', function (done) {
-  return karma.start(_.assign({}, karmaCommonConf, {singleRun: true}), done);
-});
-
-gulp.task('tdd', function (done) {
-  karma.start(karmaCommonConf, done);
-});
-
-gulp.task('run-android', ['build'], gshell.task([
-  'phonegap local run android'
-]));
-
-gulp.task('build', function(callback) {
-  return runSequence('clean', 'bower', ['slim', 'scripts', 'ionic', 'img'], 'scss', callback);
-});
-
-gulp.task('run', function(callback) {
-  return runSequence(['build', 'connect', 'watch', 'tdd'], callback);
-});
-
-gulp.task('default', ['run']);

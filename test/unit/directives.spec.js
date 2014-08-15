@@ -1,7 +1,7 @@
 'use strict';
 
 describe('directives', function() {
-  beforeEach(module('myApp.directives'));
+  beforeEach(module('app'));
 
   describe('app-version', function() {
     it('should print current version', function() {

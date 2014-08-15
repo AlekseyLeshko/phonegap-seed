@@ -1,7 +1,7 @@
 'use strict';
 
 describe('filter', function() {
-  beforeEach(module('myApp.filters'));
+  beforeEach(module('app'));
 
   describe('interpolate', function() {
     beforeEach(module(function($provide) {

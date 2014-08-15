@@ -1,7 +1,7 @@
 'use strict';
 
 describe('controllers', function(){
-  beforeEach(module('myApp.controllers'));
+  beforeEach(module('app'));
 
   it('should ....', inject(function($controller) {
     var myCtrl1 = $controller('MyCtrl1', { $scope: {} });

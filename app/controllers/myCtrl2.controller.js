@@ -1,4 +1,6 @@
 (function() {
+  'use strict';
+
   angular
     .module('app')
     .controller('MyCtrl2' , MyCtrl2);

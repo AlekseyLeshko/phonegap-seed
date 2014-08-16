@@ -5,7 +5,6 @@ var gutil = require('gulp-util');
 var connect = require('gulp-connect');
 var runSequence = require('run-sequence');
 var concat = require('gulp-concat');
-var rimraf = require('gulp-rimraf');
 var jshint = require('gulp-jshint');
 var stylish = require('jshint-stylish');
 var uglify = require('gulp-uglify');
@@ -16,7 +15,6 @@ var sass = require('gulp-sass');
 var minifyCSS = require('gulp-minify-css');
 var imagemin = require('gulp-imagemin');
 var optipng = require('imagemin-optipng');
-var gshell = require('gulp-shell');
 var karma = require('karma').server;
 var _ = require('lodash');
 var protractor = require('gulp-protractor').protractor;
@@ -37,7 +35,7 @@ gulp.task('run', function(callback) {
 });
 
 gulp.task('build', function(callback) {
-  return runSequence('clean', 'bower', ['slim', 'scripts', 'ionic', 'img'], 'scss', callback);
+  return runSequence('clean', 'bower', ['test-single-run', 'slim', 'scripts', 'ionic', 'img'], 'scss', callback);
 });
 
 gulp.task('watch', function() {
@@ -53,12 +51,6 @@ gulp.task('reload-app', function() {
     .pipe(connect.reload());
 });
 
-gulp.task('run-android', ['build'], function() {
-  return gshell.task([
-    'phonegap local run android'
-  ]);
-});
-
 gulp.task('open-index', function(){
   var options = {
     url: 'http://localhost:' + port,
@@ -70,7 +62,13 @@ gulp.task('open-index', function(){
 
 var karmaCommonConf = {
   basepaths : '',
-  browsers: ['Chrome'],
+  browsers: [
+    'Chrome',
+    'PhantomJS',
+    'Firefox',
+    'FirefoxAurora',
+    'FirefoxNightly'
+  ],
   frameworks: ['jasmine'],
   files : [
     'bower_components/ionic/js/ionic.bundle.js',
@@ -83,6 +81,7 @@ var karmaCommonConf = {
   plugins : [
     'karma-chrome-launcher',
     'karma-phantomjs-launcher',
+    'karma-firefox-launcher',
     'karma-jasmine',
     'karma-coverage'
   ],
@@ -97,7 +96,9 @@ var karmaCommonConf = {
 };
 
 gulp.task('tdd', function (done) {
-  return karma.start(karmaCommonConf, done);
+  return karma.start(_.assign({}, karmaCommonConf, {
+    browsers: ['PhantomJS']
+  }), done);
 });
 
 gulp.task('test-single-run', function (done) {
@@ -207,8 +208,56 @@ gulp.task('bower', ['git-check'], function() {
 });
 
 gulp.task('clean', function() {
-  return gulp.src('www', { read: false })
-    .pipe(rimraf());
+  sh.rm('-rf', 'www');
+});
+
+var cordovaConfig = {
+  platforms: [
+    'android'
+  ],
+  plugins: [
+    'org.apache.cordova.console'
+  ]
+};
+
+gulp.task('build-for-device', function(callback) {
+  return runSequence('build', 'build-cordova', callback);
+});
+
+gulp.task('build-cordova', function(callback) {
+  return runSequence('clean-cordova', 'install-platforms', 'install-plugins', callback);
+});
+
+gulp.task('install-platforms', function() {
+  var platforms = cordovaConfig.platforms;
+  for (var i = 0; i < platforms.length; i++) {
+    var platform = platforms[i];
+    var command = 'cordova platform add ' + platform;
+    sh.echo('run comand: ' + command);
+    sh.exec(command);
+  }
+});
+
+gulp.task('install-plugins', function() {
+  var plugins = cordovaConfig.plugins;
+  for (var i = 0; i < plugins.length; i++) {
+    var plugin = plugins[i];
+    var command = 'cordova plugin add ' + plugin;
+    sh.echo('run comand: ' + command);
+    sh.exec(command);
+  }
+});
+
+gulp.task('clean-cordova', function() {
+  var cordovaPaths = [
+    'platforms/',
+    'plugins/'
+  ];
+  sh.rm('-rf', cordovaPaths);
+});
+
+gulp.task('emulate-to-android', ['build-for-device'], function() {
+  sh.exec('cordova emulate android');
 });
 
 gulp.task('connect', function() {

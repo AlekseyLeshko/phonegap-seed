@@ -1,7 +1,13 @@
+#npm
 node_modules/
-bower_components/
-coverage/
+
+#bower
+bower_components
+
+#App
 www/
+coverage/
 
 #PhoneGap
 platforms/
+plugins/

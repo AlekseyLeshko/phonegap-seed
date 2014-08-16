@@ -35,7 +35,7 @@ gulp.task('run', function(callback) {
 });
 
 gulp.task('build', function(callback) {
-  return runSequence('clean', 'bower', ['slim', 'scripts', 'ionic', 'img'], 'scss', callback);
+  return runSequence('clean', 'bower', ['test-single-run', 'slim', 'scripts', 'ionic', 'img'], 'scss', callback);
 });
 
 gulp.task('watch', function() {
@@ -49,10 +49,6 @@ gulp.task('build-and-reload', function(callback) {
 gulp.task('reload-app', function() {
   return gulp.src('app/**/*.*')
     .pipe(connect.reload());
-});
-
-gulp.task('run-android', ['build'], function() {
-  sh.exec('phonegap local run android');
 });
 
 gulp.task('open-index', function(){
@@ -204,6 +200,55 @@ gulp.task('bower', ['git-check'], function() {
 
 gulp.task('clean', function() {
   sh.rm('-rf', 'www');
+});
+
+var cordovaConfig = {
+  platforms: [
+    'android'
+  ],
+  plugins: [
+    'org.apache.cordova.console'
+  ]
+};
+
+gulp.task('build-for-device', function(callback) {
+  return runSequence('build', 'build-cordova', callback);
+});
+
+gulp.task('build-cordova', function(callback) {
+  return runSequence('clean-cordova', 'install-platforms', 'install-plugins', callback);
+});
+
+gulp.task('install-platforms', function() {
+  var platforms = cordovaConfig.platforms;
+  for (var i = 0; i < platforms.length; i++) {
+    var platform = platforms[i];
+    var command = 'cordova platform add ' + platform;
+    sh.echo('run comand: ' + command);
+    sh.exec(command);
+  }
+});
+
+gulp.task('install-plugins', function() {
+  var plugins = cordovaConfig.plugins;
+  for (var i = 0; i < plugins.length; i++) {
+    var plugin = plugins[i];
+    var command = 'cordova plugin add ' + plugin;
+    sh.echo('run comand: ' + command);
+    sh.exec(command);
+  }
+});
+
+gulp.task('clean-cordova', function() {
+  var cordovaPaths = [
+    'platforms/',
+    'plugins/'
+  ];
+  sh.rm('-rf', cordovaPaths);
+});
+
+gulp.task('emulate-to-android', ['build-for-device'], function() {
+  sh.exec('cordova emulate android');
 });
 
 gulp.task('connect', function() {

@@ -102,7 +102,7 @@ gulp.task('tdd', function (done) {
 });
 
 gulp.task('test-single-run', function (done) {
-  return karma.start(karmaCommonConf, done);
+  return karma.start(_.assign({}, karmaCommonConf, {singleRun: true}), done);
 });
 
 gulp.task('e2e', ['webdriver-update'], function(callback) {

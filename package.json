@@ -18,7 +18,6 @@
     "gulp-protractor": "0.0.11",
     "gulp-rimraf": "^0.1.0",
     "gulp-sass": "^0.7.2",
-    "gulp-shell": "^0.2.8",
     "gulp-slim": "0.0.8",
     "gulp-sourcemaps": "^1.1.0",
     "gulp-uglify": "^0.3.1",

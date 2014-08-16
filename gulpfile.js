@@ -16,7 +16,6 @@ var sass = require('gulp-sass');
 var minifyCSS = require('gulp-minify-css');
 var imagemin = require('gulp-imagemin');
 var optipng = require('imagemin-optipng');
-var gshell = require('gulp-shell');
 var karma = require('karma').server;
 var _ = require('lodash');
 var protractor = require('gulp-protractor').protractor;
@@ -54,9 +53,7 @@ gulp.task('reload-app', function() {
 });
 
 gulp.task('run-android', ['build'], function() {
-  return gshell.task([
-    'phonegap local run android'
-  ]);
+  sh.exec('phonegap local run android');
 });
 
 gulp.task('open-index', function(){

@@ -5,7 +5,6 @@ var gutil = require('gulp-util');
 var connect = require('gulp-connect');
 var runSequence = require('run-sequence');
 var concat = require('gulp-concat');
-var rimraf = require('gulp-rimraf');
 var jshint = require('gulp-jshint');
 var stylish = require('jshint-stylish');
 var uglify = require('gulp-uglify');
@@ -204,8 +203,7 @@ gulp.task('bower', ['git-check'], function() {
 });
 
 gulp.task('clean', function() {
-  return gulp.src('www', { read: false })
-    .pipe(rimraf());
+  sh.rm('-rf', 'www');
 });
 
 gulp.task('connect', function() {

@@ -17,12 +17,15 @@ module.exports = function(config){
 
     browsers : [
       'Chrome',
-      'PhantomJS'
+      'PhantomJS',
+      'Firefox',
+      'FirefoxAurora',
+      'FirefoxNightly'
     ],
 
     plugins : [
-      'karma-chrome-launcher',
       'karma-phantomjs-launcher',
+      'karma-firefox-launcher',
       'karma-jasmine',
       'karma-coverage'
     ],

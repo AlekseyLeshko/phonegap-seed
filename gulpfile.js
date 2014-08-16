@@ -62,7 +62,13 @@ gulp.task('open-index', function(){
 
 var karmaCommonConf = {
   basepaths : '',
-  browsers: ['Chrome'],
+  browsers: [
+    'Chrome',
+    'PhantomJS',
+    'Firefox',
+    'FirefoxAurora',
+    'FirefoxNightly'
+  ],
   frameworks: ['jasmine'],
   files : [
     'bower_components/ionic/js/ionic.bundle.js',
@@ -75,6 +81,7 @@ var karmaCommonConf = {
   plugins : [
     'karma-chrome-launcher',
     'karma-phantomjs-launcher',
+    'karma-firefox-launcher',
     'karma-jasmine',
     'karma-coverage'
   ],
@@ -89,11 +96,13 @@ var karmaCommonConf = {
 };
 
 gulp.task('tdd', function (done) {
-  return karma.start(karmaCommonConf, done);
+  return karma.start(_.assign({}, karmaCommonConf, {
+    browsers: ['PhantomJS']
+  }), done);
 });
 
 gulp.task('test-single-run', function (done) {
-  return karma.start(_.assign({}, karmaCommonConf, {singleRun: true}), done);
+  return karma.start(karmaCommonConf, done);
 });
 
 gulp.task('e2e', ['webdriver-update'], function(callback) {

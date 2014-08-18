@@ -1,0 +1,8 @@
+{
+  "platforms": [
+    "android"
+  ],
+  "plugins": [
+    "org.apache.cordova.console"
+  ]
+}

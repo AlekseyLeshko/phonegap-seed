@@ -1,7 +1,7 @@
 var gulp = require('gulp');
 var karma = require('karma').server;
 var _ = require('lodash');
-var defaultConfig = require('../configs/karma.json');
+var defaultConfig = require('../../configs/karma.json');
 
 gulp.task('tdd', function (done) {
   var specificConfig = {

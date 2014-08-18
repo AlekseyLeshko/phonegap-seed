@@ -1,0 +1,34 @@
+{
+  "basepaths": "",
+  "browsers": [
+    "Chrome",
+    "PhantomJS",
+    "Firefox",
+    "FirefoxAurora",
+    "FirefoxNightly"
+  ],
+  "frameworks": ["jasmine"],
+  "files": [
+    "bower_components/ionic/js/ionic.bundle.js",
+    "bower_components/angular-mocks/angular-mocks.js",
+    "app/**/*.js",
+    "test/unit/**/*.js"
+  ],
+  "autoWatch": true,
+  "usePolling": true,
+  "plugins": [
+    "karma-chrome-launcher",
+    "karma-phantomjs-launcher",
+    "karma-firefox-launcher",
+    "karma-jasmine",
+    "karma-coverage"
+  ],
+  "reporters": ["progress", "coverage"],
+  "preprocessors": {
+    "app/**/*.js": ["coverage"]
+  },
+  "coverageReporter": {
+    "type": "html",
+    "dir": "coverage/"
+  }
+}

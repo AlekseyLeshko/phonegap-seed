@@ -9,5 +9,5 @@ gulp.task('tdd', function (done) {
   };
 
   var karmaConfig = _.assign({}, defaultConfig, specificConfig);
-  return karma.start(karmaConfig, done);
+  karma.start(karmaConfig, done);
 });

@@ -8,10 +8,13 @@ gulp.task('scripts', ['jshint'], function() {
     'app.module.js',
     'app/**/*.js'
   ];
+  var config = {
+    mangle: true
+  };
 
   return gulp.src(paths)
     .pipe(sourcemaps.init())
-    .pipe(uglify({mangle: true}))
+    .pipe(uglify(config))
     .pipe(concat('app-script.min.js'))
     .pipe(sourcemaps.write('maps'))
     .pipe(gulp.dest('www/js/'));

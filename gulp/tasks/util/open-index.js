@@ -7,6 +7,6 @@ gulp.task('open-index', function(){
     app: 'google-chrome'
   };
 
-  gulp.src('www/index.html')
+  return gulp.src('www/index.html')
     .pipe(gopen('', options));
 });

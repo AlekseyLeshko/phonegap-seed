@@ -7,7 +7,7 @@ gulp.task('install-platforms', function() {
   for (var i = 0; i < platforms.length; i++) {
     var platform = platforms[i];
     var command = 'cordova platform add ' + platform;
-    sh.echo('run comand: ' + command);
+    sh.echo('run command: ' + command);
     sh.exec(command);
   }
 });

@@ -7,7 +7,7 @@ gulp.task('install-plugins', function() {
   for (var i = 0; i < plugins.length; i++) {
     var plugin = plugins[i];
     var command = 'cordova plugin add ' + plugin;
-    sh.echo('run comand: ' + command);
+    sh.echo('run command: ' + command);
     sh.exec(command);
   }
 });

@@ -2,7 +2,7 @@ var gulp = require('gulp');
 var slim = require('gulp-slim');
 var minifyHTML = require('gulp-minify-html');
 var htmlreplace = require('gulp-html-replace');
-var config = require('../../configs/gulp.json');
+var gulpConfig = require('../../configs/gulp.json');
 
 gulp.task('slim-main', function() {
   var slimConfig = {
@@ -10,7 +10,7 @@ gulp.task('slim-main', function() {
   };
 
   var url = '"http://';
-  url += config.debug.ip + ':' + config.debug.port;
+  url += gulpConfig.debug.ip + ':' + gulpConfig.debug.port;
   url += '/target/target-script-min.js#anonymous"';
   var tpl = '<script src=%s></script>';
 

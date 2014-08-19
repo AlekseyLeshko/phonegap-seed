@@ -11,7 +11,7 @@ module.exports = {
 
   getHtmlreplaceConfig: function () {
     var url = '"http://';
-    url += gulpConfig.debug.ip + ':' + gulpConfig.debug.port;
+    url += this.getUrlForDebug();
     url += '/target/target-script-min.js#anonymous"';
     var tpl = '<script src=%s></script>';
 
@@ -23,5 +23,10 @@ module.exports = {
     };
 
     return config;
+  },
+
+  getUrlForDebug: function() {
+    var url = gulpConfig.debug.ip + ':' + gulpConfig.debug.port;
+    return url;
   }
 };

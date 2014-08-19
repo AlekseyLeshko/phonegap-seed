@@ -5,7 +5,7 @@
     "browser": "google-chrome-unstable"
   },
   "debug": {
-    "ip": "192.168.4.17",
+    "ip": "localhost",
     "port": "9091"
   }
 }

@@ -1,7 +1,8 @@
 {
   "dev": {
     "ip": "localhost",
-    "port": "9090"
+    "port": "9090",
+    "browser": "google-chrome-unstable"
   },
   "debug": {
     "ip": "192.168.4.17",

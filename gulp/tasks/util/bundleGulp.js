@@ -26,7 +26,13 @@ module.exports = {
   },
 
   getUrlForDebug: function() {
-    var url = gulpConfig.debug.ip + ':' + gulpConfig.debug.port;
+    var url = this.getIpForDebug() + ':' + gulpConfig.debug.port;
     return url;
+  },
+
+  getIpForDebug: function() {
+    // TODO
+    var ip = '192.168.4.17';
+    return ip;
   }
 };

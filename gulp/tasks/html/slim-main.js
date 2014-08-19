@@ -3,6 +3,7 @@ var slim = require('gulp-slim');
 var minifyHTML = require('gulp-minify-html');
 var htmlreplace = require('gulp-html-replace');
 var gulpConfig = require('../../configs/gulp.json');
+var util = require('gulp-util');
 
 gulp.task('slim-main', function() {
   var slimConfig = {
@@ -25,9 +26,19 @@ gulp.task('slim-main', function() {
     empty: true
   };
 
-  return gulp.src('app/*.slim')
-    .pipe(slim(slimConfig))
-    .pipe(htmlreplace(htmlreplaceConfig))
+  var task = gulp.src('app/*.slim')
+    .pipe(slim(slimConfig));
+
+  if (envIsDebug()) {
+    task = task.pipe(htmlreplace(htmlreplaceConfig));
+  }
+
+  return task
     .pipe(minifyHTML(minifyConfig))
     .pipe(gulp.dest('www/'));
 });
+
+function envIsDebug() {
+  var args = util.env;
+  return args.env === 'debug';
+}

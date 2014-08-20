@@ -1,5 +1,6 @@
 var util = require('gulp-util');
 var gulpConfig = require('../../configs/gulp.json');
+var myIP = require('my-ip');
 
 module.exports = {
   envIsDebug: function() {
@@ -31,8 +32,12 @@ module.exports = {
   },
 
   getIpForDebug: function() {
-    // TODO
-    var ip = '192.168.4.17';
+    var localhost = 'localhost';
+    var ip = gulpConfig.debug.ip;
+    if (ip === localhost) {
+      ip = myIP();
+    }
+
     return ip;
   }
 };

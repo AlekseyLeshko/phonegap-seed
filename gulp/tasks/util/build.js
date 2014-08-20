@@ -3,11 +3,5 @@ var runSequence = require('run-sequence');
 var bundleGulp = require('../util/bundleGulp');
 
 gulp.task('build', function(callback) {
-  var arr = ['slim', 'scripts', 'ionic', 'img'];
-
-  if (bundleGulp.envIsDebug()) {
-    arr.push('weinre');
-  }
-
-  return runSequence('clean', 'bower', arr, 'scss', callback);
+  return runSequence('clean', 'bower', ['slim', 'scripts', 'ionic', 'img'], 'scss', callback);
 });

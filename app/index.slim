@@ -9,7 +9,11 @@ html.no-js lang="en" ng-app="app"
 
     link href="css/style.min.css" rel="stylesheet"
 
-    / script src="cordova.js"
+    | <!-- build:jsForDebug -->
+        <!-- js for debug -->
+    | <!-- endbuild -->
+    <!-- cordova script (this will be a 404 during development) -->
+    script src="cordova.js"
     script src="js/lib/ionic.bundle.js"
 
   body

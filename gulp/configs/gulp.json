@@ -1,0 +1,11 @@
+{
+  "dev": {
+    "ip": "localhost",
+    "port": "9090",
+    "browser": "google-chrome-unstable"
+  },
+  "debug": {
+    "ip": "localhost",
+    "port": "9091"
+  }
+}

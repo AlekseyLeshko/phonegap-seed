@@ -1,12 +1,13 @@
 var gulp = require('gulp');
 var connect = require('gulp-connect');
+var gulpConfig = require('../../configs/gulp.json');
 
 gulp.task('connect', function() {
-  var config = {
+  var connectConfig = {
     root: 'www',
-    port: global.port,
+    port: gulpConfig.dev.port,
     livereload: true
   };
 
-  return connect.server(config);
+  return connect.server(connectConfig);
 });

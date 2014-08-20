@@ -23,6 +23,8 @@ For work with PhoneGap seed project need install this dependency list
   4. [cordova](#install-cordova)
   5. [phonegap](#install-phonegap)
   6. [ionicframework](#install-ionicframework)
+4. debug
+  1. [weinre](#install-weinre)
 
 Or make use Vagrant and Ansible. [Please take script](https://github.com/AlekseyLeshko/ansible-phonegap-playbook)
 
@@ -144,4 +146,9 @@ sudo npm install -g phonegap
 #### Install [ionicframework](http://ionicframework.com/)
 ```
 npm install -g ionic
+```
+
+#### Install [weinre](http://people.apache.org/~pmuellr/weinre-docs/latest/)
+```
+npm install -g weinre
 ```

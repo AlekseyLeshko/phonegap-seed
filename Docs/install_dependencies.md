@@ -20,6 +20,7 @@ For work with PhoneGap seed project need install this dependency list
   3. [android sdk](#install-android-sdk)
     1. [install android API 19](#install-android-api-19)
     2. [configure emulator](#configure-emulator)
+    3. [start emulator](#start-emulator)
   4. [cordova](#install-cordova)
   5. [phonegap](#install-phonegap)
   6. [ionicframework](#install-ionicframework)
@@ -131,6 +132,18 @@ android
 ```
 In opened window click 'Tools->manage AVDs->android virtual devices->Create'.
 Fill in the fields, for example divice 'Galaxy-Nexus' and click 'Ok'.
+
+#### Start emulator
+Get list devices
+```
+android list avds
+```
+
+Run emulator for current device
+```
+emulator @avd
+```
+Where @[your_avd_name]
 
 #### Install [cordova](http://cordova.apache.org/)
 ```

@@ -11,9 +11,16 @@
   "files": [
     "bower_components/ionic/js/ionic.bundle.js",
     "bower_components/angular-mocks/angular-mocks.js",
+    "test/testHelper.js",
+    "bower_components/jquery/dist/jquery.min.js",
+    "lib/*.js", {
+      "pattern": "test/fixtures/*.json",
+      "watched": true,
+      "served": true,
+      "included": false
+    },
     "app/**/*.js",
-    "test/unit/**/*.js",
-    "test/testHelper.js"
+    "test/unit/**/*.js"
   ],
   "autoWatch": true,
   "usePolling": true,

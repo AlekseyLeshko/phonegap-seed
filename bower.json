@@ -7,6 +7,7 @@
   "license": "MIT",
   "dependencies": {
     "angular-mocks": "~1.2.x",
-    "ionic": "driftyco/ionic-bower#1.0.0-beta.11"
+    "ionic": "driftyco/ionic-bower#1.0.0-beta.11",
+    "jquery": "~2.1.1"
   }
 }

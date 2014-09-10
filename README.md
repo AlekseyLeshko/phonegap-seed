@@ -33,7 +33,7 @@ gulp
 ```
 Move to google chrome browser(gulp automatically opens a page in it) or open any browser and move to [this path http://localhost:9090/](http://localhost:9090/)
 
-[Replace default browser](https://github.com/AlekseyLeshko/phonegap-seed/blob/master/gulp/configs/gulp.json)
+[Replace default browser](https://github.com/AlekseyLeshko/phonegap-seed/blob/master/config/gulp.json)
 
 ## Style Guide
 Project use [AngularJS Style Guide](https://github.com/johnpapa/angularjs-styleguide)

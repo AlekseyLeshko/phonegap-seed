@@ -29,6 +29,11 @@ cd phonegap-seed/
 
 ## Build project
 ```
+make
+```
+
+## Develop
+```
 gulp
 ```
 Move to google chrome browser(gulp automatically opens a page in it) or open any browser and move to [this path http://localhost:9090/](http://localhost:9090/)

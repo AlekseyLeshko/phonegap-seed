@@ -11,7 +11,12 @@ describe('controllers', function(){
   it('should ....', inject(function($controller) {
     var myCtrl2 = $controller('MyCtrl2', { $scope: {} });
     expect(myCtrl2).toBeDefined();
-    var url = UrlBuilder.createSimpleUrl();
-    expect(url).toBeDefined();
   }));
+
+  describe('test helper', function() {
+    it('should return simple url', function() {
+      var url = UrlBuilder.createSimpleUrl();
+      expect(url).toBeDefined();
+    })
+  });
 });

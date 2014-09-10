@@ -1,7 +1,7 @@
 # Binaries we use
-all: build
+all: clean node_modules build test
 
-build: clean node_modules test
+build:
 	gulp build
 
 test: karma

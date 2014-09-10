@@ -1,5 +1,5 @@
 {
-  "basepaths": "",
+  "basePath": "",
   "browsers": [
     "Chrome",
     "PhantomJS",

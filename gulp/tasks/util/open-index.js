@@ -1,6 +1,6 @@
 var gulp = require('gulp');
 var gopen = require('gulp-open');
-var appConfig = require('../../configs/app.json');
+var appConfig = require('../../../config/app.json');
 
 gulp.task('open-index', function(){
   var gopenConfig = {

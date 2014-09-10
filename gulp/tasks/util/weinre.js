@@ -1,6 +1,6 @@
 var gulp = require('gulp');
 var sh = require('shelljs');
-var appConfig = require('../../configs/app.json');
+var appConfig = require('../../../config/app.json');
 
 gulp.task('weinre', function() {
   var command = 'weinre --boundHost -all- --httpPort ';

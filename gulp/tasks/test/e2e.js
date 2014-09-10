@@ -1,6 +1,6 @@
 var gulp = require('gulp');
 var protractor = require('gulp-protractor').protractor;
-var appConfig = require('../../configs/app.json');
+var appConfig = require('../../../config/app.json');
 
 gulp.task('e2e', ['webdriver-update'], function(callback) {
   var url = 'http://';

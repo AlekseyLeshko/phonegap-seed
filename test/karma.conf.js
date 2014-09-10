@@ -1,4 +1,4 @@
-var karmaConfig = require('../gulp/configs/karma.json');
+var karmaConfig = require('../config/karma.json');
 
 module.exports = function(config) {
   karmaConfig.basePath = '../';

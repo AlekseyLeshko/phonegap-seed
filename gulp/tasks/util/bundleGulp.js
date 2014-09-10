@@ -1,5 +1,5 @@
 var util = require('gulp-util');
-var gulpConfig = require('../../configs/gulp.json');
+var appConfig = require('../../../config/app.json');
 var myIP = require('my-ip');
 
 module.exports = {
@@ -27,13 +27,13 @@ module.exports = {
   },
 
   getUrlForDebug: function() {
-    var url = this.getIpForDebug() + ':' + gulpConfig.debug.port;
+    var url = this.getIpForDebug() + ':' + appConfig.debug.port;
     return url;
   },
 
   getIpForDebug: function() {
     var localhost = 'localhost';
-    var ip = gulpConfig.debug.ip;
+    var ip = appConfig.debug.ip;
     if (ip === localhost) {
       ip = myIP();
     }

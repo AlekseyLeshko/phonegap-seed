@@ -1,6 +1,6 @@
 var gulp = require('gulp');
 var sh = require('shelljs');
-var config = require('../../configs/cordova.json');
+var config = require('../../../config/cordova.json');
 
 gulp.task('install-platforms', function() {
   var platforms = config.platforms;

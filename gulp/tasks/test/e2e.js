@@ -1,10 +1,10 @@
 var gulp = require('gulp');
 var protractor = require('gulp-protractor').protractor;
-var gulpConfig = require('../../configs/gulp.json');
+var appConfig = require('../../../config/app.json');
 
 gulp.task('e2e', ['webdriver-update'], function(callback) {
   var url = 'http://';
-  url += gulpConfig.dev.ip + ':' + gulpConfig.dev.port;
+  url += appConfig.dev.ip + ':' + appConfig.dev.port;
 
   var protractorConfig = {
     configFile: 'test/protractor-conf.js',

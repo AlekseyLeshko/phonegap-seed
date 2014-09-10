@@ -1,6 +1,6 @@
 var gulp = require('gulp');
 var connect = require('gulp-connect');
-var appConfig = require('../../configs/app.json');
+var appConfig = require('../../../config/app.json');
 
 gulp.task('connect', function() {
   var connectConfig = {

@@ -8,7 +8,8 @@ gulp.task('slim-views', function() {
   };
 
   var minifyConfig = {
-    empty: true
+    empty: true,
+    spare: true
   };
 
   return gulp.src('app/views/*.slim')

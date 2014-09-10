@@ -1,5 +1,5 @@
 {
-  "basepaths": "",
+  "basePath": "",
   "browsers": [
     "Chrome",
     "PhantomJS",
@@ -11,6 +11,14 @@
   "files": [
     "bower_components/ionic/js/ionic.bundle.js",
     "bower_components/angular-mocks/angular-mocks.js",
+    "test/testHelper.js",
+    "bower_components/jquery/dist/jquery.min.js",
+    "lib/*.js", {
+      "pattern": "test/fixtures/*.json",
+      "watched": true,
+      "served": true,
+      "included": false
+    },
     "app/**/*.js",
     "test/unit/**/*.js"
   ],

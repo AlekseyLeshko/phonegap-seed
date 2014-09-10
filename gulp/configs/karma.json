@@ -12,7 +12,8 @@
     "bower_components/ionic/js/ionic.bundle.js",
     "bower_components/angular-mocks/angular-mocks.js",
     "app/**/*.js",
-    "test/unit/**/*.js"
+    "test/unit/**/*.js",
+    "test/testHelper.js"
   ],
   "autoWatch": true,
   "usePolling": true,

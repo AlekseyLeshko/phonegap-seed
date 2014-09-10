@@ -11,5 +11,7 @@ describe('controllers', function(){
   it('should ....', inject(function($controller) {
     var myCtrl2 = $controller('MyCtrl2', { $scope: {} });
     expect(myCtrl2).toBeDefined();
+    var url = UrlBuilder.createSimpleUrl();
+    expect(url).toBeDefined();
   }));
 });

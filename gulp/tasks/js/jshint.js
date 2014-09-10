@@ -4,9 +4,11 @@ var stylish = require('jshint-stylish');
 
 gulp.task('jshint', function() {
   var paths = [
-    'app/**/*.js',
     'gulpfile.js',
-    'gulp/**/*.js'
+    'gulp/**/*.js',
+    'test/karma.conf.js',
+    'test/protractor-conf.js',
+    'app/**/*.js'
   ];
 
   return gulp.src(paths)

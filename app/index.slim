@@ -13,11 +13,19 @@ html.no-js lang="en" ng-app="app"
         <!-- js for debug -->
     | <!-- endbuild -->
     <!-- cordova script (this will be a 404 during development) -->
-    script src="cordova.js"
-    script src="js/lib/ionic.bundle.js"
+    / script src="cordova.js"
 
   body
-    ion-nav-bar.nav-title-slide-ios7.bar-positive
-    ion-nav-view
+    ul class="menu"
+    li
+        a href="#/view1"
+            | view1
+    li
+        a href="#/view2"
+            | view2
+    ng-view
+
+    script src="js/lib/angular.min.js"
+    script src="js/lib/angular-route.min.js"
 
     script src="js/app-script.min.js"

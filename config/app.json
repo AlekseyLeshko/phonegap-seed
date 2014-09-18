@@ -7,5 +7,16 @@
   "debug": {
     "ip": "localhost",
     "port": "9091"
-  }
+  },
+  "scripts": [
+    "bower_components/angular/angular.min.js",
+    "bower_components/angular-route/angular-route.min.js",
+    "bower_components/mobile-angular-ui/dist/js/mobile-angular-ui.min.js"
+  ],
+  "css": [
+    "bower_components/mobile-angular-ui/dist/css/mobile-angular-ui-base.min.css"
+  ],
+  "fonts": [
+    "bower_components/mobile-angular-ui/dist/fonts/**/*.*"
+  ]
 }

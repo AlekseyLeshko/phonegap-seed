@@ -7,17 +7,26 @@ html.no-js lang="en" ng-app="app"
     meta content="" name="description"
     meta content="initial-scale=1, maximum-scale=1, user-scalable=no, width=device-width" name="viewport"
 
+    link href="css/mobile-angular-ui-base.min.css" rel="stylesheet"
     link href="css/style.min.css" rel="stylesheet"
 
     | <!-- build:jsForDebug -->
         <!-- js for debug -->
     | <!-- endbuild -->
     <!-- cordova script (this will be a 404 during development) -->
-    script src="cordova.js"
-    script src="js/lib/ionic.bundle.js"
+    / script src="cordova.js"
 
   body
-    ion-nav-bar.nav-title-slide-ios7.bar-positive
-    ion-nav-view
+    sidebar#mainSidebar.sidebar.sidebar-left parent-active-class="sidebar-left-in" toggleable="toggle('mainSidebar')"
+
+    .app
+      navbar-top.navbar.navbar-app.navbar-absolute-top
+      navbar-bottom.navbar.navbar-app.navbar-absolute-bottom
+      .app-body
+        ng-view.app-content
+
+    script src="js/lib/angular.min.js"
+    script src="js/lib/angular-route.min.js"
+    script src="js/lib/mobile-angular-ui.min.js"
 
     script src="js/app-script.min.js"

@@ -17,14 +17,13 @@ html.no-js lang="en" ng-app="app"
     / script src="cordova.js"
 
   body
-    ul class="menu"
-    li
-        a href="#/view1"
-            | view1
-    li
-        a href="#/view2"
-            | view2
-    ng-view
+    sidebar#mainSidebar.sidebar.sidebar-left parent-active-class="sidebar-left-in" toggleable="toggle('mainSidebar')"
+
+    .app
+      navbar-top.navbar.navbar-app.navbar-absolute-top
+      navbar-bottom.navbar.navbar-app.navbar-absolute-bottom
+      .app-body
+        ng-view.app-content
 
     script src="js/lib/angular.min.js"
     script src="js/lib/angular-route.min.js"

@@ -1,9 +1,7 @@
 var gulp = require('gulp');
+var appConfig = require('../../../config/app.json');
 
 gulp.task('bower-fonts', function(cb) {
-  var arr = [];
-
-  // return gulp.src(arr)
-    // .pipe(gulp.dest('www/fonts'));
-  return gulp.src('');
+  return gulp.src(appConfig.fonts)
+    .pipe(gulp.dest('www/fonts'));
 });

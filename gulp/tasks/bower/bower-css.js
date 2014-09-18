@@ -1,9 +1,7 @@
 var gulp = require('gulp');
+var appConfig = require('../../../config/app.json');
 
 gulp.task('bower-css', function(cb) {
-  var arr = [];
-
-  // return gulp.src(arr)
-    // .pipe(gulp.dest('www/css'));
-  return gulp.src('');
+  return gulp.src(appConfig.css)
+    .pipe(gulp.dest('www/css'));
 });

@@ -2,5 +2,8 @@
   'use strict';
 
   angular
-    .module('app', ['ionic']);
+    .module('app', [
+      'ngRoute',
+      'mobile-angular-ui'
+    ]);
 })();

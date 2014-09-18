@@ -1,8 +1,7 @@
 var gulp = require('gulp');
+var appConfig = require('../../../config/app.json');
 
 gulp.task('bower-js', function(cb) {
-  var arr = [];
-
-  return gulp.src(arr)
+  return gulp.src(appConfig.scripts)
     .pipe(gulp.dest('www/js/lib'));
 });

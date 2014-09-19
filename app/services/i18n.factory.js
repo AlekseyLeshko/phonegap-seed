@@ -8,13 +8,26 @@
   i18n.$inject = ['$translate'];
 
   function i18n($translate) {
+    var currentLang = getDefaultLang();
+
     var factory = {
-      setLang: setLang
+      setLang: setLang,
+      getLang: getLang
     };
     return factory;
 
     function setLang(langKey) {
-      $translate.use(langKey);
+      currentLang = langKey;
+      $translate.use(currentLang);
+    }
+
+    function getLang() {
+      return currentLang;
+    }
+
+    function getDefaultLang() {
+      var defaultLang = 'en';
+      return defaultLang;
     }
   }
 })();

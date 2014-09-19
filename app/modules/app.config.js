@@ -5,20 +5,33 @@
     .module('app')
     .config(config);
 
-  config.$inject = ['$routeProvider', '$translateProvider'];
+  config.$inject = ['$stateProvider', '$urlRouterProvider', '$translateProvider'];
 
-  function config($routeProvider, $translateProvider) {
-    $routeProvider.
-      when('/:lang/view1', {
+  function config($stateProvider, $urlRouterProvider, $translateProvider) {
+    var defaultLang = 'en';
+    $urlRouterProvider.otherwise('/' + defaultLang + '/view/1');
+
+    $stateProvider
+      .state('lang', {
+        abstract: true,
+        url: '/:lang',
+        controller: 'LangCtrl as langCtrl',
+        template: '<ui-view/>'
+      })
+      .state('lang.view', {
+        abstract: true,
+        url: '/view',
+        template: '<ui-view/>'
+      })
+      .state('lang.view.first', {
+        url: '/1',
         templateUrl: 'views/partial1.html',
         controller: 'MyCtrl1 as myCtrl1'
-      }).
-      when('/:lang/view2', {
+      })
+      .state('lang.view.second', {
+        url: '/2',
         templateUrl: 'views/partial2.html',
         controller: 'MyCtrl2 as myCtrl2'
-      }).
-      otherwise({
-        redirectTo: 'en/view1'
       });
 
     $translateProvider.translations('en', {

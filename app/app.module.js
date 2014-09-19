@@ -3,7 +3,8 @@
 
   angular
     .module('app', [
-      'ngRoute',
-      'mobile-angular-ui'
+      'mobile-angular-ui',
+      'pascalprecht.translate',
+      'ui.router'
     ]);
 })();

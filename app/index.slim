@@ -11,7 +11,7 @@ html.no-js lang="en" ng-app="app"
     link href="css/style.min.css" rel="stylesheet"
 
     | <!-- build:jsForDebug -->
-        <!-- js for debug -->
+      <!-- js for debug -->
     | <!-- endbuild -->
     <!-- cordova script (this will be a 404 during development) -->
     / script src="cordova.js"
@@ -23,10 +23,12 @@ html.no-js lang="en" ng-app="app"
       navbar-top.navbar.navbar-app.navbar-absolute-top
       navbar-bottom.navbar.navbar-app.navbar-absolute-bottom
       .app-body
-        ng-view.app-content
+        ui-view.app-content
 
     script src="js/lib/angular.min.js"
-    script src="js/lib/angular-route.min.js"
+    script src="js/lib/angular-ui-router.min.js"
     script src="js/lib/mobile-angular-ui.min.js"
+    script src="js/lib/angular-translate.min.js"
 
     script src="js/app-script.min.js"
+

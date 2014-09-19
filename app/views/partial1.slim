@@ -1,7 +1,34 @@
-p
-  | This is the partial for view 1.
-p ng-click="myCtrl1.click()"
-  | {{ myCtrl1.msg }}
-div
-  | Angular seed app: v
-  span app-version=""
+.scrollable
+  .scrollable-content
+    .container
+      .row.text-center
+        h1 translate=""
+          | {{ 'TITLE' }}
+        p translate=""
+          | {{ 'FOO' }}
+
+      .row
+        .col-sm-2.col-sm-offset-3
+          a ui-sref="lang.view.id({ lang: 'en', id: 1 })"
+            .btn.btn-primary
+              img src="img/en.png"
+                | &#32;English
+        .col-sm-2.col-sm-offset-1
+          a ui-sref="lang.view.id({ lang: 'ru', id: 1 })"
+            .btn.btn-primary
+              img src="img/ru.png"
+                | &#32;Русский
+        .col-sm-2.col-sm-offset-1
+          a ui-sref="lang.view.id({ lang: 'de', id: 1 })"
+            .btn.btn-primary
+              img src="img/de.png"
+                | &#32;Deutsch
+
+      .row
+        p
+          | This is the partial for view 1.
+        p ng-click="myCtrl1.click()"
+          | {{ myCtrl1.msg }}
+        div
+          | Angular seed app: v
+          span app-version=""

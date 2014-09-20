@@ -7,9 +7,11 @@ phonegap-seed
 1. Core
   1. [Cordova](http://cordova.apache.org/)
   2. [PhoneGap](http://phonegap.com/)
-  3. [Ionicframework](http://ionicframework.com/)
 2. App
   1. [Angularjs](https://angularjs.org/)
+    1. [mobile-angular-ui](https://github.com/mcasimir/mobile-angular-ui) plugin
+    2. [angular-translate](https://github.com/angular-translate/angular-translate) plugin
+    3. [angular-ui-router](https://github.com/angular-ui/ui-router) plugin
   2. SCSS
   3. Slim
 3. Testing

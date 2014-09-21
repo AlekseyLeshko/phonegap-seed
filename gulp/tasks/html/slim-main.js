@@ -15,14 +15,9 @@ gulp.task('slim-main', function() {
     empty: true
   };
 
-  var task = gulp.src('app/*.slim')
-    .pipe(slim(slimConfig));
-
-  if (bundleGulp.envIsDebug()) {
-    task = task.pipe(htmlreplace(htmlreplaceConfig));
-  }
-
-  return task
+  var task = gulp.src('app/index.slim')
+    .pipe(slim(slimConfig))
+    .pipe(htmlreplace(htmlreplaceConfig))
     .pipe(minifyHTML(minifyConfig))
     .pipe(gulp.dest('www/'));
 });

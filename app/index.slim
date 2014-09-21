@@ -7,14 +7,12 @@ html.no-js lang="en" ng-app="app"
     meta content="" name="description"
     meta content="initial-scale=1, maximum-scale=1, user-scalable=no, width=device-width" name="viewport"
 
-    link href="css/mobile-angular-ui-base.min.css" rel="stylesheet"
-    link href="css/style.min.css" rel="stylesheet"
-
-    | <!-- build:jsForDebug -->
-      <!-- js for debug -->
+    | <!-- build:css -->
+      <!-- css -->
     | <!-- endbuild -->
+
     <!-- cordova script (this will be a 404 during development) -->
-    / script src="cordova.js"
+    script src="cordova.js"
 
   body
     sidebar#mainSidebar.sidebar.sidebar-left parent-active-class="sidebar-left-in" toggleable="toggle('mainSidebar')"
@@ -25,10 +23,6 @@ html.no-js lang="en" ng-app="app"
       .app-body
         ui-view.app-content
 
-    script src="js/lib/angular.min.js"
-    script src="js/lib/angular-ui-router.min.js"
-    script src="js/lib/mobile-angular-ui.min.js"
-    script src="js/lib/angular-translate.min.js"
-
-    script src="js/app-script.min.js"
-
+    | <!-- build:js -->
+      <!-- js libs -->
+    | <!-- endbuild -->

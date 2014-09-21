@@ -11,17 +11,18 @@ module.exports = {
   },
 
   getHtmlreplaceConfig: function () {
-    var url = '"http://';
-    url += this.getUrlForDebug();
-    url += '/target/target-script-min.js#anonymous"';
-    var tpl = '<script src=%s></script>';
-
     var config = {
-      jsForDebug: {
-        src: url,
-        tpl: tpl
-      }
+      js: this.getJSLibList(),
+      css: this.getCssLibList()
     };
+
+    if (this.envIsDebug()) {
+      var url = '"http://';
+      url += this.getUrlForDebug();
+      url += '/target/target-script-min.js#anonymous"';
+      var tpl = '<script src=%s></script>';
+      config.js.push(url);
+    }
 
     return config;
   },
@@ -39,5 +40,32 @@ module.exports = {
     }
 
     return ip;
+  },
+
+  getJSLibList: function() {
+    var arr = [];
+    for (var i = 0; i < appConfig.scripts.length; i++) {
+      var path = this.createPath(appConfig.scripts[i], 'js/lib/');
+      arr.push(path);
+    }
+    arr.push('js/' + appConfig.appScript);
+    return arr;
+  },
+
+  getCssLibList: function() {
+    var arr = [];
+    for (var i = 0; i < appConfig.css.length; i++) {
+      var path = this.createPath(appConfig.css[i], 'css/');
+      arr.push(path);
+    }
+    arr.push('css/' + appConfig.appCss);
+    return arr;
+  },
+
+  createPath: function(path, prefix) {
+    var splitArr = path.split('/');
+    var name = splitArr[splitArr.length - 1];
+    var newPath = prefix + name;
+    return newPath;
   }
 };

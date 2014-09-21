@@ -15,8 +15,16 @@ gulp.task('slim-main', function() {
     empty: true
   };
 
+  var obj = {
+    js: {
+      src: bundleGulp.getJSLibs(),
+      tpl: '<script src="%s"></script>'
+    }
+  };
+
   var task = gulp.src('app/*.slim')
-    .pipe(slim(slimConfig));
+    .pipe(slim(slimConfig))
+    .pipe(htmlreplace(obj));
 
   if (bundleGulp.envIsDebug()) {
     task = task.pipe(htmlreplace(htmlreplaceConfig));

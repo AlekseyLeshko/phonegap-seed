@@ -39,5 +39,17 @@ module.exports = {
     }
 
     return ip;
+  },
+
+  getJSLibs: function() {
+    var arr = [];
+    for (var i = 0; i < appConfig.scripts.length; i++) {
+      var lib = appConfig.scripts[i];
+      var splitArr = lib.split('/');
+      var name = splitArr[splitArr.length - 1];
+      var path = 'js/lib/' + name;
+      arr.push(path);
+    }
+    return arr;
   }
 };

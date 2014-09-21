@@ -11,17 +11,24 @@ module.exports = {
   },
 
   getHtmlreplaceConfig: function () {
-    var url = '"http://';
-    url += this.getUrlForDebug();
-    url += '/target/target-script-min.js#anonymous"';
-    var tpl = '<script src=%s></script>';
-
     var config = {
-      jsForDebug: {
-        src: url,
-        tpl: tpl
+      js: {
+        src: this.getJSLibList(),
+        tpl: '<script src="%s"></script>'
+      },
+      css: {
+        src: this.getCssLibList(),
+        tpl: '<link rel="stylesheet" href="%s">'
       }
     };
+
+    if (this.envIsDebug()) {
+      var url = '"http://';
+      url += this.getUrlForDebug();
+      url += '/target/target-script-min.js#anonymous"';
+      var tpl = '<script src=%s></script>';
+      config.js.src.push(url);
+    }
 
     return config;
   },
@@ -48,6 +55,16 @@ module.exports = {
       arr.push(path);
     }
     arr.push('js/' + appConfig.appScript);
+    return arr;
+  },
+
+  getCssLibList: function() {
+    var arr = [];
+    for (var i = 0; i < appConfig.css.length; i++) {
+      var path = this.createPath(appConfig.css[i], 'css/');
+      arr.push(path);
+    }
+    arr.push('css/' + appConfig.appCss);
     return arr;
   },
 

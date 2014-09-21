@@ -15,22 +15,9 @@ gulp.task('slim-main', function() {
     empty: true
   };
 
-  var obj = {
-    js: {
-      src: bundleGulp.getJSLibList(),
-      tpl: '<script src="%s"></script>'
-    }
-  };
-
-  var task = gulp.src('app/*.slim')
+  var task = gulp.src('app/index.slim')
     .pipe(slim(slimConfig))
-    .pipe(htmlreplace(obj));
-
-  if (bundleGulp.envIsDebug()) {
-    task = task.pipe(htmlreplace(htmlreplaceConfig));
-  }
-
-  return task
-    .pipe(minifyHTML(minifyConfig))
+    .pipe(htmlreplace(htmlreplaceConfig))
+    // .pipe(minifyHTML(minifyConfig))
     .pipe(gulp.dest('www/'));
 });

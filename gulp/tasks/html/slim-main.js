@@ -17,7 +17,7 @@ gulp.task('slim-main', function() {
 
   var obj = {
     js: {
-      src: bundleGulp.getJSLibs(),
+      src: bundleGulp.getJSLibList(),
       tpl: '<script src="%s"></script>'
     }
   };

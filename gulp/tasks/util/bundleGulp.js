@@ -41,15 +41,19 @@ module.exports = {
     return ip;
   },
 
-  getJSLibs: function() {
+  getJSLibList: function() {
     var arr = [];
     for (var i = 0; i < appConfig.scripts.length; i++) {
-      var lib = appConfig.scripts[i];
-      var splitArr = lib.split('/');
-      var name = splitArr[splitArr.length - 1];
-      var path = 'js/lib/' + name;
+      var path = this.createPath(appConfig.scripts[i], 'js/lib/');
       arr.push(path);
     }
     return arr;
+  },
+
+  createPath: function(path, prefix) {
+    var splitArr = path.split('/');
+    var name = splitArr[splitArr.length - 1];
+    var newPath = prefix + name;
+    return newPath;
   }
 };

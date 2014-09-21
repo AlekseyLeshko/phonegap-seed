@@ -8,6 +8,7 @@
     "ip": "localhost",
     "port": "9091"
   },
+  "appScript": "app-script.min.js",
   "scripts": [
     "bower_components/angular/angular.min.js",
     "bower_components/angular-route/angular-route.min.js",

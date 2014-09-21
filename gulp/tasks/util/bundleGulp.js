@@ -47,6 +47,7 @@ module.exports = {
       var path = this.createPath(appConfig.scripts[i], 'js/lib/');
       arr.push(path);
     }
+    arr.push('js/' + appConfig.appScript);
     return arr;
   },
 

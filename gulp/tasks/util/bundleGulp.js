@@ -12,14 +12,8 @@ module.exports = {
 
   getHtmlreplaceConfig: function () {
     var config = {
-      js: {
-        src: this.getJSLibList(),
-        tpl: '<script src="%s"></script>'
-      },
-      css: {
-        src: this.getCssLibList(),
-        tpl: '<link rel="stylesheet" href="%s">'
-      }
+      js: this.getJSLibList(),
+      css: this.getCssLibList()
     };
 
     if (this.envIsDebug()) {
@@ -27,7 +21,7 @@ module.exports = {
       url += this.getUrlForDebug();
       url += '/target/target-script-min.js#anonymous"';
       var tpl = '<script src=%s></script>';
-      config.js.src.push(url);
+      config.js.push(url);
     }
 
     return config;

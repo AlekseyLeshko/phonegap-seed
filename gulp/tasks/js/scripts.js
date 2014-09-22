@@ -4,6 +4,7 @@ var angularFilesort = require('gulp-angular-filesort');
 var concat = require('gulp-concat');
 var uglify = require('gulp-uglify');
 var sourcemaps = require('gulp-sourcemaps');
+var javascriptobfuscator = require('gulp-javascriptobfuscator');
 
 gulp.task('scripts', ['jshint'], function() {
   var config = {
@@ -16,5 +17,6 @@ gulp.task('scripts', ['jshint'], function() {
     .pipe(uglify(config))
     .pipe(concat(appConfig.appScript))
     .pipe(sourcemaps.write('maps'))
+    .pipe(javascriptobfuscator())
     .pipe(gulp.dest('www/js/'));
 });

@@ -10,7 +10,6 @@
   "frameworks": ["jasmine"],
   "files": [
     "bower_components/angular/angular.min.js",
-    "bower_components/angular-route/angular-route.min.js",
     "bower_components/mobile-angular-ui/dist/js/mobile-angular-ui.min.js",
     "bower_components/angular-translate/angular-translate.min.js",
     "bower_components/angular-mocks/angular-mocks.js",
@@ -23,6 +22,7 @@
       "served": true,
       "included": false
     },
+    "app/modules/app.module.js",
     "app/**/*.js",
     "test/unit/**/*.js"
   ],

@@ -1,10 +1,37 @@
 {
-  "version": "0.0.1",
-  "private": true,
   "name": "phonegap-seed",
-  "description": "phonegap-seed",
-  "repository": "https://github.com/AlekseyLeshko/phonegap-seed",
-  "license": "MIT",
+  "version": "0.0.1",
+  "description": "Phonegap-seed project with angularjs, slim, sass and gulp.",
+  "homepage": "https://github.com/AlekseyLeshko/phonegap-seed",
+  "author": {
+    "name": "Aleksey Leshko",
+    "url": "https://github.com/AlekseyLeshko"
+  },
+  "contributors": [{
+    "name": "Aleksey Leshko",
+    "email": "alekseyleshko@gmail.com"
+  }],
+  "repository": {
+    "type": "git",
+    "url": "https://github.com/AlekseyLeshko/phonegap-seed"
+  },
+  "bugs": {
+    "url": "https://github.com/AlekseyLeshko/phonegap-seed/issues"
+  },
+  "keywords": [
+    "phonegap-seed",
+    "phonegap",
+    "angularjs",
+    "slim",
+    "sass",
+    "gulp"
+  ],
+  "engines": {
+    "node": "0.10.29",
+    "npm": "1.4.14"
+  },
+  "dependencies": {
+  },
   "devDependencies": {
     "bower": "^1.3.9",
     "gulp": "^3.8.6",
@@ -40,5 +67,9 @@
   },
   "scripts": {
     "test": "karma start test/karma.conf.js --single-run --browsers PhantomJS"
-  }
+  },
+  "preferGlobal": false,
+  "private": false,
+  "analyze": true,
+  "license": "MIT"
 }

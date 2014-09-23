@@ -1,20 +1,19 @@
 <?xml version='1.0' encoding='utf-8' standalone='yes'?>
-<widget id="com.ionicframework.phonegap-seed" version="0.0.1" xmlns="http://www.w3.org/ns/widgets" xmlns:cdv="http://cordova.apache.org/ns/1.0">
-    <name>PhoneGap-seed</name>
-    <description>
-        Cordova project with ionicframework, angularjs, slim, sass, gulp.
-    </description>
-    <author email="alekseyleshko@gmail.com" href="https://github.com/AlekseyLeshko">
-        Aleksey Leshko
-    </author>
-    <content src="index.html"/>
-    <access origin="*"/>
-    <icon src="img/icon.png" />
-    <preference name="webviewbounce" value="false"/>
-    <preference name="UIWebViewBounce" value="false"/>
-    <preference name="DisallowOverscroll" value="true"/>
-    <preference name="BackupWebStorage" value="none"/>
-    <feature name="StatusBar">
-        <param name="ios-package" value="CDVStatusBar" onload="true"/>
-    </feature>
+  <widget id="com.phonegap.phonegap-seed" version="0.0.1" versionCode="0" xmlns="http://www.w3.org/ns/widgets" xmlns:gap="http://phonegap.com/ns/1.0">
+  <name>
+    PhoneGap-seed
+  </name>
+  <description>
+    Phonegap-seed project with, angularjs, slim, sass and gulp.
+  </description>
+  <author email="alekseyleshko@gmail.com" href="https://github.com/AlekseyLeshko">
+    Aleksey Leshko
+  </author>
+  <content src="index.html"/>
+  <access origin="*"/>
+  <icon src="img/icon.png" />
+
+  <preference name="phonegap-version" value="3.5.0" />
+  <preference name="orientation" value="landscape" />
+  <preference name="fullscreen" value="false" />
 </widget>

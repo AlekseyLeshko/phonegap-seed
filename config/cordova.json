@@ -3,6 +3,7 @@
     "android"
   ],
   "plugins": [
-    "org.apache.cordova.console"
+    "org.apache.cordova.console",
+    "org.apache.cordova.device"
   ]
 }

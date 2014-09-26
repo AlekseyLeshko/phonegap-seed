@@ -61,10 +61,6 @@ git commit -m "Update version"
 log "Build project"
 make
 
-log "Create commit: Update dist"
-git add dist
-git commit -m "Update dist"
-
 log "Checkout git branch: master"
 git checkout master
 

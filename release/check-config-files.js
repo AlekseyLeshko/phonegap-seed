@@ -5,7 +5,7 @@ function chechConfig(configArr) {
   var ver = configArr[0].ver
   for (var i = 1; i < configArr.length; i++) {
     var config = configArr[i];
-    if (config.ver !== ver) {
+    if (config.ver.toString() !== ver.toString()) {
       bail('Not equals version in config files');
     }
   }

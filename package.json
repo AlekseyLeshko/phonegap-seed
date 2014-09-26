@@ -7,10 +7,12 @@
     "name": "Aleksey Leshko",
     "url": "https://github.com/AlekseyLeshko"
   },
-  "contributors": [{
-    "name": "Aleksey Leshko",
-    "email": "alekseyleshko@gmail.com"
-  }],
+  "contributors": [
+    {
+      "name": "Aleksey Leshko",
+      "email": "alekseyleshko@gmail.com"
+    }
+  ],
   "repository": {
     "type": "git",
     "url": "https://github.com/AlekseyLeshko/phonegap-seed"
@@ -30,8 +32,7 @@
     "node": "0.10.29",
     "npm": "1.4.14"
   },
-  "dependencies": {
-  },
+  "dependencies": {},
   "devDependencies": {
     "bower": "^1.3.9",
     "gulp": "^3.8.6",

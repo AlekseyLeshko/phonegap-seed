@@ -12,25 +12,22 @@ bail() {
   exit 1
 }
 
-usage() {
-  bail "usage: $0 <MODULE_NAME> <DIST_DIR>"
-}
+# log "Publish plugin? (y/n)"
+# read CHAR
+# while [[ $CHAR != 'y' && $CHAR != 'n' ]]
+# do
+#   log "${red}Incorrect data, enter y or n"
+#   log "Publish plugin? (y/n)"
+#   read CHAR
+# done
+# if [ "$CHAR" == "y" ]; then
+#   IS_PUBLISH_VERSION=true
+# fi
+# if [ "$CHAR" == "n" ]; then
+#   IS_PUBLISH_VERSION=false
+# fi
 
-log "Publish plugin? (y/n)"
-read CHAR
-while [[ $CHAR != 'y' && $CHAR != 'n' ]]
-do
-  log "${red}Incorrect data, enter y or n"
-  log "Publish plugin? (y/n)"
-  read CHAR
-done
-if [ "$CHAR" == "y" ]; then
-  IS_PUBLISH_VERSION=true
-fi
-if [ "$CHAR" == "n" ]; then
-  IS_PUBLISH_VERSION=false
-fi
-
+IS_PUBLISH_VERSION=true
 log "Chech config files"
 IS_VALID_CONFIGS=$(node release/check-config-files.js)
 

@@ -36,6 +36,7 @@ if [[ $IS_VALID_CONFIGS == false ]] ; then
 fi
 log "${green}Config files is valid"
 
+node release/inc-version.js
 PROJECT_NAME=$(node release/get-project-name.js)
 VERSION=$(node release/get-version.js)
 

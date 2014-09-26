@@ -1,11 +1,5 @@
 var Config = require('./config');
-
-function bail(msg) {
-  var prexif = '[check-config-files] ';
-  process.stderr.write(prexif + msg + '\n');
-  console.log(false);
-  process.exit(1);
-}
+var bail = require('./bail');
 
 function chechConfig(configArr) {
   var ver = configArr[0].ver

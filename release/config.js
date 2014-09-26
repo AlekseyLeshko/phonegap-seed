@@ -1,5 +1,6 @@
 var fs = require('fs');
 var semver = require('semver');
+var bail = require('./bail');
 
 Config = function(fileName) {
   this.fileName = fileName;

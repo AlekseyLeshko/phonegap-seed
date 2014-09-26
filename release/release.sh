@@ -27,6 +27,13 @@ bail() {
 #   IS_PUBLISH_VERSION=false
 # fi
 
+log "Check branch"
+BRANCH=$(git branch | sed -n -e 's/^\* \(.*\)/\1/p')
+
+if [[ $BRANCH != "develop" ]] ; then
+  bail "${red}ERROR: Need develop git branch"
+fi
+
 IS_PUBLISH_VERSION=true
 log "Chech config files"
 IS_VALID_CONFIGS=$(node release/check-config-files.js)

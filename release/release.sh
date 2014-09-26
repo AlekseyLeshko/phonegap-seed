@@ -87,8 +87,6 @@ git push --tags
 if [[ $IS_PUBLISH_VERSION == true ]] ; then
   log "Start publish $PROJECT_NAME v$VERSION"
 
-  npm publish
-
   log "${green}$PROJECT_NAME v$VERSION is a published"
 fi
 

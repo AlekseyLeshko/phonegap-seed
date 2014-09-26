@@ -7,6 +7,15 @@ log() {
   echo -e ${red}[release]${NC} $1 ${NC}
 }
 
+bail() {
+  log "$*"
+  exit 1
+}
+
+usage() {
+  bail "usage: $0 <MODULE_NAME> <DIST_DIR>"
+}
+
 log "Publish plugin? (y/n)"
 read CHAR
 while [[ $CHAR != 'y' && $CHAR != 'n' ]]
@@ -26,27 +35,17 @@ log "Chech config files"
 IS_VALID_CONFIGS=$(node release/check-config-files.js)
 
 if [[ $IS_VALID_CONFIGS == false ]] ; then
-  exit 1
+  bail "${red}Config files does not invalid"
 fi
 log "${green}Config files is valid"
 
 PROJECT_NAME=$(node release/get-project-name.js)
 VERSION=$(node release/get-version.js)
 
-bail() {
-  echo $1 >&2
-  exit 1
-}
-
-usage() {
-  bail "usage: $0 <MODULE_NAME> <DIST_DIR>"
-}
-
-[ -n "$IS_PUBLISH_VERSION" ] || usage
-[ -n "$PROJECT_NAME" ] || usage
+[ -n "$IS_PUBLISH_VERSION" ] || bail "ERROR: IS_PUBLISH_VERSION empty"
+[ -n "$PROJECT_NAME" ] || bail "ERROR: PROJECT_NAME empty"
 [ -n "$VERSION" ] || bail "ERROR: Could not determine version from package.json"
 [ -z "`git tag -l v$VERSION`" ] || bail "ERROR: There is already a tag for: v$VERSION"
-
 
 log $VERSION
 log $IS_PUBLISH_VERSION

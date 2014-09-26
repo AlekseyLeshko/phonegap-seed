@@ -2,17 +2,17 @@
   "name": "phonegap-seed",
   "description": "phonegap-seed",
   "version": "0.0.1",
-  "private": true,
   "repository": "https://github.com/AlekseyLeshko/phonegap-seed",
   "license": "MIT",
-  "dependencies": {
-    "angular-mocks": "~1.2.25",
-    "jquery": "~2.1.1",
-    "angular": "~1.2.25",
-    "angular-route": "~1.2.25",
-    "angular-loader": "~1.2.25",
-    "mobile-angular-ui": "~1.1.0-beta.29",
-    "angular-translate": "~2.3.0",
-    "angular-ui-router": "~0.2.11"
-  }
+  "homepage": "https://github.com/AlekseyLeshko/phonegap-seed",
+  "authors": [
+    "alekseyleshko <alekseyleshko@gmail.com>"
+  ],
+  "ignore": [
+    "**/.*",
+    "node_modules",
+    "bower_components",
+    "test",
+    "tests"
+  ]
 }

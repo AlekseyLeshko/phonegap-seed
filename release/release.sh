@@ -39,7 +39,7 @@ log "Chech config files"
 IS_VALID_CONFIGS=$(node release/check-config-files.js)
 
 if [[ $IS_VALID_CONFIGS == false ]] ; then
-  bail "${red}Config files does not invalid"
+  bail "${red}Config files is invalid"
 fi
 log "${green}Config files is valid"
 

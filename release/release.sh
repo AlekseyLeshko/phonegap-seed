@@ -5,21 +5,21 @@ yellow='\e[0;33m'
 purple='\e[0;35m'
 NC='\e[0m'
 
-log() {
+mess() {
   echo -e ${purple}[release]${NC} $1 ${NC}
 }
 
 fail() {
-  log "${red}ERROR: $*"
+  mess "${red}ERROR: $*"
   exit 1
 }
 
 mess() {
-  log "${yellow}$1"
+  mess "${yellow}$1"
 }
 
 success() {
-  log "${green}success$1"
+  mess "${green}success$1"
 }
 
 task() {
@@ -44,44 +44,44 @@ task "Validate configs" $(node release/validate-configs.js) true
 IS_PUBLISH_VERSION=true
 PROJECT_NAME=$(node release/get-project-name.js)
 VERSION=$(node release/get-version.js)
-log "Project name: ${green}$PROJECT_NAME"
-log "Project version: ${green}$VERSION"
+mess "Project name: ${green}$PROJECT_NAME"
+mess "Project version: ${green}$VERSION"
 
 [ -n "$IS_PUBLISH_VERSION" ] || fail "ERROR: IS_PUBLISH_VERSION empty"
 [ -n "$PROJECT_NAME" ] || fail "ERROR: PROJECT_NAME empty"
 [ -n "$VERSION" ] || fail "ERROR: Could not determine version from package.json"
 [ -z "`git tag -l v$VERSION`" ] || fail "ERROR: There is already a tag for: v$VERSION"
 
-log "Create commit: Update version"
-git add package.json bower.json
+mess "Create commit: Update version"
+git add package.json bower.json config/app.json
 git commit -m "Update version"
 
-log "Build project"
+mess "Build project"
 make
 
-log "Checkout git branch: master"
+mess "Checkout git branch: master"
 git checkout master
 
-log "Pull --rebase"
+mess "Pull --rebase"
 git pull --rebase
 
-log "Merge branch:develop"
+mess "Merge branch:develop"
 git merge --no-ff develop -m "Release v$VERSION"
 
-log "Push data"
+mess "Push data"
 git push
 
-log "Tag v$VERSION created"
+mess "Tag v$VERSION created"
 git tag v$VERSION
 git ci -m "Publish $PROJECT v$VERSION"
 
-log "Push tag"
+mess "Push tag"
 git push --tags
 
 if [[ $IS_PUBLISH_VERSION == true ]] ; then
-  log "Start publish $PROJECT_NAME v$VERSION"
+  mess "Start publish $PROJECT_NAME v$VERSION"
 
-  log "${green}$PROJECT_NAME v$VERSION is a published"
+  success "$PROJECT_NAME v$VERSION is a published"
 fi
 
-log "${green}Project is released"
+success "Project is released"

@@ -5,7 +5,7 @@ yellow='\e[0;33m'
 purple='\e[0;35m'
 NC='\e[0m'
 
-mess() {
+log() {
   echo -e ${purple}[release]${NC} $1 ${NC}
 }
 
@@ -15,7 +15,7 @@ fail() {
 }
 
 mess() {
-  mess "${yellow}$1"
+  log "${yellow}$1"
 }
 
 success() {

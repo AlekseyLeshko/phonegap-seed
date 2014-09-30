@@ -10,7 +10,7 @@ log() {
 }
 
 fail() {
-  log "${red}$*"
+  log "${red}ERROR: $*"
   exit 1
 }
 
@@ -19,46 +19,33 @@ mess() {
 }
 
 success() {
-  log "${green}$1"
+  log "${green}success$1"
 }
 
-log "Check branch"
-BRANCH=$(git branch | sed -n -e 's/^\* \(.*\)/\1/p')
-if [[ $BRANCH != "develop" ]] ; then
-  fail "ERROR: Need develop git branch"
-fi
-log "${green}Branch develop"
+task() {
+  mess "$1"
+  VALUE=$2
+  if [[ $VALUE != $3 ]] ; then
+    fail $4
+  fi
+  success $5
+}
+
+task "Check branch" $(git branch | sed -n -e 's/^\* \(.*\)/\1/p') "develop"
+
+task "Chech config files" $(node release/check-config-files.js) true
+
+task "Increment version" $(node release/inc-version.js) true
+
+task "Update project info" $(node release/update-project-info.js) true
+
+task "Validate configs" $(node release/validate-configs.js) true
 
 IS_PUBLISH_VERSION=true
-log "Chech config files"
-IS_VALID_CONFIGS=$(node release/check-config-files.js)
-
-if [[ $IS_VALID_CONFIGS == false ]] ; then
-  fail "Config files is invalid"
-fi
-log "${green}Config files is valid"
-
-log "Inc version"
-RES=$(node release/inc-version.js)
-[[ $RES == true ]] || fail "ERROR 0"
-log "${green}Inc version finish"
-
-log "Update project info"
-RES=$(node release/update-project-info.js)
-[[ $RES == true ]] || fail "ERROR: project info doesn't update"
-log "${green}Project info updated"
-
-log "Validate configs"
-RES=$(node release/validate-configs.js)
-[[ $RES == true ]] || fail "ERROR: Configs is invalid"
-log "${green}Configs is valid"
-
 PROJECT_NAME=$(node release/get-project-name.js)
-log "Project name: $PROJECT_NAME"
-
 VERSION=$(node release/get-version.js)
-log "Project version: $VERSION"
-
+log "Project name: ${green}$PROJECT_NAME"
+log "Project version: ${green}$VERSION"
 
 [ -n "$IS_PUBLISH_VERSION" ] || fail "ERROR: IS_PUBLISH_VERSION empty"
 [ -n "$PROJECT_NAME" ] || fail "ERROR: PROJECT_NAME empty"

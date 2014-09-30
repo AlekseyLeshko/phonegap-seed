@@ -32,7 +32,7 @@ Config.prototype = {
   },
 
   updateJson: function(mainConfig) {
-    this.json = extend({}, mainConfig.json.config, this.json);
+    this.json = extend({},  this.json, mainConfig.json.config);
   },
 
   save: function() {

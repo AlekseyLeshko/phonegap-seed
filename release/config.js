@@ -33,7 +33,7 @@ Config.prototype = {
   save: function() {
     var replacer = undefined;
     var space = 2;
-    var jsonData = JSON.stringify(this.json, replacer, space);
+    var jsonData = JSON.stringify(this.json, replacer, space) + "\n";
     fs.writeFileSync(this.fileName, jsonData);
     this.readFile();
   }

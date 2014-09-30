@@ -27,7 +27,7 @@ Config.prototype = {
   incVer: function(type) {
     var defaultType = "patch";
     var newVer = this.ver.inc(defaultType);
-    this.json.version = newVer.toString();
+    this.json.config.version = newVer.toString();
   },
 
   save: function() {

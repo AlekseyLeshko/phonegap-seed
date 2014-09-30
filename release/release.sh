@@ -1,96 +1,87 @@
 #!/bin/bash
 green='\e[0;32m'
 red='\e[0;31m'
+yellow='\e[0;33m'
+purple='\e[0;35m'
 NC='\e[0m'
 
 log() {
-  echo -e ${red}[release]${NC} $1 ${NC}
+  echo -e ${purple}[release]${NC} $1 ${NC}
 }
 
-bail() {
-  log "$*"
+fail() {
+  mess "${red}ERROR: $*"
   exit 1
 }
 
-# log "Publish plugin? (y/n)"
-# read CHAR
-# while [[ $CHAR != 'y' && $CHAR != 'n' ]]
-# do
-#   log "${red}Incorrect data, enter y or n"
-#   log "Publish plugin? (y/n)"
-#   read CHAR
-# done
-# if [ "$CHAR" == "y" ]; then
-#   IS_PUBLISH_VERSION=true
-# fi
-# if [ "$CHAR" == "n" ]; then
-#   IS_PUBLISH_VERSION=false
-# fi
+mess() {
+  log "${yellow}$1"
+}
 
-log "Check branch"
-BRANCH=$(git branch | sed -n -e 's/^\* \(.*\)/\1/p')
+success() {
+  mess "${green}success$1"
+}
 
-if [[ $BRANCH != "develop" ]] ; then
-  bail "${red}ERROR: Need develop git branch"
-fi
+task() {
+  mess "$1"
+  VALUE=$2
+  if [[ $VALUE != $3 ]] ; then
+    fail $4
+  fi
+  success $5
+}
+
+task "Check branch" $(git branch | sed -n -e 's/^\* \(.*\)/\1/p') "develop"
+
+task "Chech config files" $(node release/check-config-files.js) true
+
+task "Increment version" $(node release/inc-version.js) true
+
+task "Update project info" $(node release/update-project-info.js) true
+
+task "Validate configs" $(node release/validate-configs.js) true
 
 IS_PUBLISH_VERSION=true
-log "Chech config files"
-IS_VALID_CONFIGS=$(node release/check-config-files.js)
-
-if [[ $IS_VALID_CONFIGS == false ]] ; then
-  bail "${red}Config files is invalid"
-fi
-log "${green}Config files is valid"
-
-
-node release/inc-version.js
-log "Inc version"
-
-
 PROJECT_NAME=$(node release/get-project-name.js)
-log "Project name: $PROJECT_NAME"
-
-
 VERSION=$(node release/get-version.js)
-log "Project version: $VERSION"
+mess "Project name: ${green}$PROJECT_NAME"
+mess "Project version: ${green}$VERSION"
 
+[ -n "$IS_PUBLISH_VERSION" ] || fail "ERROR: IS_PUBLISH_VERSION empty"
+[ -n "$PROJECT_NAME" ] || fail "ERROR: PROJECT_NAME empty"
+[ -n "$VERSION" ] || fail "ERROR: Could not determine version from package.json"
+[ -z "`git tag -l v$VERSION`" ] || fail "ERROR: There is already a tag for: v$VERSION"
 
-[ -n "$IS_PUBLISH_VERSION" ] || bail "ERROR: IS_PUBLISH_VERSION empty"
-[ -n "$PROJECT_NAME" ] || bail "ERROR: PROJECT_NAME empty"
-[ -n "$VERSION" ] || bail "ERROR: Could not determine version from package.json"
-[ -z "`git tag -l v$VERSION`" ] || bail "ERROR: There is already a tag for: v$VERSION"
-
-log "Create commit: Update version"
-git add package.json bower.json
+mess "Create commit: Update version"
+git add package.json bower.json config/app.json
 git commit -m "Update version"
 
-log "Build project"
+mess "Build project"
 make
 
-log "Checkout git branch: master"
+mess "Checkout git branch: master"
 git checkout master
 
-log "Pull --rebase"
+mess "Pull --rebase"
 git pull --rebase
 
-log "Merge branch:develop"
+mess "Merge branch:develop"
 git merge --no-ff develop -m "Release v$VERSION"
 
-log "Push data"
+mess "Push data"
 git push
 
-log "Tag v$VERSION created"
+mess "Tag v$VERSION created"
 git tag v$VERSION
 git ci -m "Publish $PROJECT v$VERSION"
 
-log "Push tag"
+mess "Push tag"
 git push --tags
 
 if [[ $IS_PUBLISH_VERSION == true ]] ; then
-  log "Start publish $PROJECT_NAME v$VERSION"
+  mess "Start publish $PROJECT_NAME v$VERSION"
 
-  log "${green}$PROJECT_NAME v$VERSION is a published"
+  success "$PROJECT_NAME v$VERSION is a published"
 fi
 
-log "${green}Project is released"
+success "Project is released"

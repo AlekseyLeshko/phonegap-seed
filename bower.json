@@ -1,13 +1,37 @@
 {
   "name": "phonegap-seed",
-  "description": "phonegap-seed",
-  "version": "0.0.4",
-  "repository": "https://github.com/AlekseyLeshko/phonegap-seed",
-  "license": "MIT",
+  "version": "0.0.7",
+  "description": "Phonegap-seed project with angularjs, slim, sass and gulp.",
   "homepage": "https://github.com/AlekseyLeshko/phonegap-seed",
-  "authors": [
-    "alekseyleshko <alekseyleshko@gmail.com>"
+  "author": {
+    "name": "Aleksey Leshko",
+    "url": "https://github.com/AlekseyLeshko"
+  },
+  "contributors": [
+    {
+      "name": "Aleksey Leshko",
+      "email": "alekseyleshko@gmail.com"
+    }
   ],
+  "repository": {
+    "type": "git",
+    "url": "https://github.com/AlekseyLeshko/phonegap-seed"
+  },
+  "bugs": {
+    "url": "https://github.com/AlekseyLeshko/phonegap-seed/issues"
+  },
+  "keywords": [
+    "phonegap-seed",
+    "phonegap",
+    "angularjs",
+    "slim",
+    "sass",
+    "gulp"
+  ],
+  "engines": {
+    "node": "0.10.29"
+  },
+  "license": "MIT",
   "ignore": [
     "**/.*",
     "node_modules",

@@ -1,6 +1,7 @@
 var fs = require('fs');
 var semver = require('semver');
 var bail = require('./bail');
+var extend = require('./extend');
 
 Config = function(fileName) {
   this.fileName = fileName;
@@ -14,11 +15,11 @@ Config.prototype = {
   },
 
   check: function () {
-    if (!('version' in this.json)) {
+    if (!('version' in this.json.config)) {
       bail('ERROR: Could not find version in ' + this.fileName);
     }
 
-    this.ver = semver.parse(this.json.version);
+    this.ver = semver.parse(this.json.config.version);
     if (this.ver === null) {
       bail('ERROR: Incorrect version in ' + this.fileName);
     }
@@ -27,13 +28,17 @@ Config.prototype = {
   incVer: function(type) {
     var defaultType = "patch";
     var newVer = this.ver.inc(defaultType);
-    this.json.version = newVer.toString();
+    this.json.config.version = newVer.toString();
+  },
+
+  updateJson: function(mainConfig) {
+    this.json = extend({},  this.json, mainConfig.json.config);
   },
 
   save: function() {
     var replacer = undefined;
     var space = 2;
-    var jsonData = JSON.stringify(this.json, replacer, space);
+    var jsonData = JSON.stringify(this.json, replacer, space) + "\n";
     fs.writeFileSync(this.fileName, jsonData);
     this.readFile();
   }

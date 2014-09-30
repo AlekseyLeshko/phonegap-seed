@@ -8,5 +8,5 @@ gulp.task('build', function(callback) {
     'scss', 'bower-copy', 'cordova-config'
   ];
 
-  return runSequence('clean', 'bower', taskList, callback);
+  return runSequence('clean', 'validate-configs', 'bower', taskList, callback);
 });

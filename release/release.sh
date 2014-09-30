@@ -1,21 +1,31 @@
 #!/bin/bash
 green='\e[0;32m'
 red='\e[0;31m'
+yellow='\e[0;33m'
+purple='\e[0;35m'
 NC='\e[0m'
 
 log() {
-  echo -e ${red}[release]${NC} $1 ${NC}
+  echo -e ${purple}[release]${NC} $1 ${NC}
 }
 
-bail() {
+fail() {
   log "${red}$*"
   exit 1
+}
+
+mess() {
+  log "${yellow}$1"
+}
+
+success() {
+  log "${green}$1"
 }
 
 log "Check branch"
 BRANCH=$(git branch | sed -n -e 's/^\* \(.*\)/\1/p')
 if [[ $BRANCH != "develop" ]] ; then
-  bail "ERROR: Need develop git branch"
+  fail "ERROR: Need develop git branch"
 fi
 log "${green}Branch develop"
 
@@ -24,23 +34,23 @@ log "Chech config files"
 IS_VALID_CONFIGS=$(node release/check-config-files.js)
 
 if [[ $IS_VALID_CONFIGS == false ]] ; then
-  bail "Config files is invalid"
+  fail "Config files is invalid"
 fi
 log "${green}Config files is valid"
 
 log "Inc version"
 RES=$(node release/inc-version.js)
-[[ $RES == true ]] || bail "ERROR 0"
+[[ $RES == true ]] || fail "ERROR 0"
 log "${green}Inc version finish"
 
 log "Update project info"
 RES=$(node release/update-project-info.js)
-[[ $RES == true ]] || bail "ERROR: project info doesn't update"
+[[ $RES == true ]] || fail "ERROR: project info doesn't update"
 log "${green}Project info updated"
 
 log "Validate configs"
 RES=$(node release/validate-configs.js)
-[[ $RES == true ]] || bail "ERROR: Configs is invalid"
+[[ $RES == true ]] || fail "ERROR: Configs is invalid"
 log "${green}Configs is valid"
 
 PROJECT_NAME=$(node release/get-project-name.js)
@@ -50,10 +60,10 @@ VERSION=$(node release/get-version.js)
 log "Project version: $VERSION"
 
 
-[ -n "$IS_PUBLISH_VERSION" ] || bail "ERROR: IS_PUBLISH_VERSION empty"
-[ -n "$PROJECT_NAME" ] || bail "ERROR: PROJECT_NAME empty"
-[ -n "$VERSION" ] || bail "ERROR: Could not determine version from package.json"
-[ -z "`git tag -l v$VERSION`" ] || bail "ERROR: There is already a tag for: v$VERSION"
+[ -n "$IS_PUBLISH_VERSION" ] || fail "ERROR: IS_PUBLISH_VERSION empty"
+[ -n "$PROJECT_NAME" ] || fail "ERROR: PROJECT_NAME empty"
+[ -n "$VERSION" ] || fail "ERROR: Could not determine version from package.json"
+[ -z "`git tag -l v$VERSION`" ] || fail "ERROR: There is already a tag for: v$VERSION"
 
 log "Create commit: Update version"
 git add package.json bower.json

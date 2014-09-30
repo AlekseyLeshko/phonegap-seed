@@ -8,49 +8,43 @@ log() {
 }
 
 bail() {
-  log "$*"
+  log "${red}$*"
   exit 1
 }
 
-# log "Publish plugin? (y/n)"
-# read CHAR
-# while [[ $CHAR != 'y' && $CHAR != 'n' ]]
-# do
-#   log "${red}Incorrect data, enter y or n"
-#   log "Publish plugin? (y/n)"
-#   read CHAR
-# done
-# if [ "$CHAR" == "y" ]; then
-#   IS_PUBLISH_VERSION=true
-# fi
-# if [ "$CHAR" == "n" ]; then
-#   IS_PUBLISH_VERSION=false
-# fi
-
 log "Check branch"
 BRANCH=$(git branch | sed -n -e 's/^\* \(.*\)/\1/p')
-
 if [[ $BRANCH != "develop" ]] ; then
-  bail "${red}ERROR: Need develop git branch"
+  bail "ERROR: Need develop git branch"
 fi
+log "${green}Branch develop"
 
 IS_PUBLISH_VERSION=true
 log "Chech config files"
 IS_VALID_CONFIGS=$(node release/check-config-files.js)
 
 if [[ $IS_VALID_CONFIGS == false ]] ; then
-  bail "${red}Config files is invalid"
+  bail "Config files is invalid"
 fi
 log "${green}Config files is valid"
 
-
-node release/inc-version.js
 log "Inc version"
+RES=$(node release/inc-version.js)
+[[ $RES == true ]] || bail "ERROR 0"
+log "${green}Inc version finish"
 
+log "Update project info"
+RES=$(node release/update-project-info.js)
+[[ $RES == true ]] || bail "ERROR: project info doesn't update"
+log "${green}Project info updated"
+
+log "Validate configs"
+RES=$(node release/validate-configs.js)
+[[ $RES == true ]] || bail "ERROR: Configs is invalid"
+log "${green}Configs is valid"
 
 PROJECT_NAME=$(node release/get-project-name.js)
 log "Project name: $PROJECT_NAME"
-
 
 VERSION=$(node release/get-version.js)
 log "Project version: $VERSION"

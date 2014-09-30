@@ -14,11 +14,11 @@ Config.prototype = {
   },
 
   check: function () {
-    if (!('version' in this.json)) {
+    if (!('version' in this.json.config)) {
       bail('ERROR: Could not find version in ' + this.fileName);
     }
 
-    this.ver = semver.parse(this.json.version);
+    this.ver = semver.parse(this.json.config.version);
     if (this.ver === null) {
       bail('ERROR: Incorrect version in ' + this.fileName);
     }

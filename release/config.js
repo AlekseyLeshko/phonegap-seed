@@ -1,6 +1,7 @@
 var fs = require('fs');
 var semver = require('semver');
 var bail = require('./bail');
+var extend = require('./extend');
 
 Config = function(fileName) {
   this.fileName = fileName;
@@ -28,6 +29,10 @@ Config.prototype = {
     var defaultType = "patch";
     var newVer = this.ver.inc(defaultType);
     this.json.config.version = newVer.toString();
+  },
+
+  updateJson: function(mainConfig) {
+    this.json = extend({}, mainConfig.json.config, this.json);
   },
 
   save: function() {

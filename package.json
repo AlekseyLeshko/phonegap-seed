@@ -1,6 +1,6 @@
 {
   "name": "phonegap-seed",
-  "version": "0.0.6",
+  "version": "0.0.7",
   "description": "Phonegap-seed project with angularjs, slim, sass and gulp.",
   "homepage": "https://github.com/AlekseyLeshko/phonegap-seed",
   "author": {

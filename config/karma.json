@@ -15,8 +15,12 @@
     "bower_components/angular-mocks/angular-mocks.js",
     "bower_components/angular-ui-router/release/angular-ui-router.min.js",
     "test/testHelper.js",
-    "bower_components/jquery/dist/jquery.min.js",
-    "lib/*.js", {
+    "bower_components/jquery/dist/jquery.min.js", {
+      "pattern": "node_modules/jasmine-jquery/lib/jasmine-jquery.js",
+      "watched": false,
+      "served": true,
+      "included": true
+    }, {
       "pattern": "test/fixtures/*.json",
       "watched": true,
       "served": true,

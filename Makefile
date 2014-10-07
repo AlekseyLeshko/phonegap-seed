@@ -1,5 +1,5 @@
 # Binaries we use
-all: clean node_modules build test
+all: clean node_modules bower_components build test
 
 build:
 	gulp build
@@ -21,3 +21,6 @@ fullclean: clean
 
 node_modules:
 	npm install
+
+bower_components:
+	bower install

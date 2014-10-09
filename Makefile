@@ -17,6 +17,7 @@ bower_components:
 
 install_global_module:
 	npm install -g gulp
+	npm install -g bower
 	npm install -g karma-cli
 	npm install -g npm-check-updates
 

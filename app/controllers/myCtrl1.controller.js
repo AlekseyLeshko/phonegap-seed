@@ -13,7 +13,7 @@
     vm.click = click;
 
     function click() {
-      vm.msg += ' world!';
+      vm.msg += 'world!';
     }
   }
 })();

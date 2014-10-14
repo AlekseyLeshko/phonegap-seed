@@ -1,6 +1,6 @@
 {
   "name": "phonegap-seed",
-  "version": "0.0.9",
+  "version": "0.0.10",
   "description": "Phonegap-seed project with angularjs, slim, sass and gulp.",
   "homepage": "https://github.com/AlekseyLeshko/phonegap-seed",
   "author": {
@@ -40,13 +40,6 @@
     "tests"
   ],
   "dependencies": {
-    "angular-mocks": "~1.2.25",
-    "jquery": "~2.1.1",
-    "angular": "~1.2.25",
-    "angular-route": "~1.2.25",
-    "angular-loader": "~1.2.25",
-    "mobile-angular-ui": "~1.1.0-beta.29",
-    "angular-translate": "~2.3.0",
-    "angular-ui-router": "~0.2.11"
+    "mobile-angular-ui": "1.1.0-beta.30"
   }
 }

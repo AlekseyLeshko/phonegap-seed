@@ -9,16 +9,17 @@
     '$stateProvider',
     '$urlRouterProvider',
     '$translateProvider',
-    'routes'
+    'routes',
+    'appConfig'
   ];
 
-  function config($stateProvider, $urlRouterProvider, $translateProvider, routes) {
+  function config($stateProvider, $urlRouterProvider, $translateProvider, routes, appConfig) {
     createRouting();
     createI18n();
 
     function createRouting() {
-      var defaultLang = 'en';
-      $urlRouterProvider.otherwise('/' + defaultLang + '/view/1');
+      var location = appConfig.location;
+      $urlRouterProvider.otherwise('/' + location + '/view/1');
 
       for (var i = 0; i < routes.length; i++) {
         var state = routes[i];

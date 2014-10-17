@@ -1,6 +1,6 @@
 .navbar-brand.navbar-brand-center
-  span
-    | My App
+  span ng-bind="appCtrl.name"
+
 .btn-group.pull-left
   .btn.btn-navbar.sidebar-toggle ng-click="toggle('mainSidebar')"
     i.fa.fa-bars

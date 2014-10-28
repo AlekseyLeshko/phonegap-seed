@@ -74,7 +74,8 @@
     "run-sequence": "^1.0.1",
     "semver": "^4.0.3",
     "shelljs": "^0.3.0",
-    "win-spawn": "^2.0.0"
+    "win-spawn": "^2.0.0",
+    "mobile-angular-ui": "git+ssh://git@github.com/mcasimir/mobile-angular-ui.git#1.1.0-beta.30"
   },
   "scripts": {
     "test": "karma start test/karma.conf.js --single-run --browsers PhantomJS"

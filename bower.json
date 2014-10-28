@@ -38,8 +38,5 @@
     "bower_components",
     "test",
     "tests"
-  ],
-  "dependencies": {
-    "mobile-angular-ui": "1.1.0-beta.30"
-  }
+  ]
 }

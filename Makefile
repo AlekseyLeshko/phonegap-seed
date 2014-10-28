@@ -7,13 +7,10 @@ build:
 tests:
 	karma start test/karma.conf.js --single-run --browsers PhantomJS
 
-install_dependencies: install_global_module node_modules bower_components check_module
+install_dependencies: install_global_module node_modules check_module
 
 node_modules:
 	npm install
-
-bower_components:
-	bower install
 
 install_global_module:
 	npm install -g gulp

@@ -11,20 +11,20 @@
   "appScript": "app-script.min.js",
   "scripts": [
     "node_modules/angular/angular.min.js",
-    "bower_components/mobile-angular-ui/dist/js/mobile-angular-ui.min.js",
+    "node_modules/mobile-angular-ui/dist/js/mobile-angular-ui.min.js",
     "node_modules/angular-translate/dist/angular-translate.min.js",
     "node_modules/angular-ui-router/release/angular-ui-router.min.js"
   ],
   "appCss": "style.min.css",
   "css": [
-    "bower_components/mobile-angular-ui/dist/css/mobile-angular-ui-base.min.css"
+    "node_modules/mobile-angular-ui/dist/css/mobile-angular-ui-base.min.css"
   ],
   "fonts": [
-    "bower_components/mobile-angular-ui/dist/fonts/**/*.*"
+    "node_modules/mobile-angular-ui/dist/fonts/**/*.*"
   ],
   "config": {
     "name": "phonegap-seed",
-    "version": "0.0.10",
+    "version": "0.0.11",
     "description": "Phonegap-seed project with angularjs, slim, sass and gulp.",
     "homepage": "https://github.com/AlekseyLeshko/phonegap-seed",
     "author": {

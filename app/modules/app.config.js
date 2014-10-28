@@ -8,44 +8,22 @@
   config.$inject = [
     '$stateProvider',
     '$urlRouterProvider',
-    '$translateProvider'
+    '$translateProvider',
+    'routes',
+    'appConfig'
   ];
 
-  function config($stateProvider, $urlRouterProvider, $translateProvider) {
+  function config($stateProvider, $urlRouterProvider, $translateProvider, routes, appConfig) {
     createRouting();
     createI18n();
 
     function createRouting() {
-      var defaultLang = 'en';
-      $urlRouterProvider.otherwise('/' + defaultLang + '/view/1');
+      var location = appConfig.location;
+      $urlRouterProvider.otherwise('/' + location + '/view/1');
 
-      $stateProvider
-        .state('lang', {
-          abstract: true,
-          url: '/:lang',
-          controller: 'LangCtrl as langCtrl',
-          template: '<ui-view/>'
-        })
-        .state('lang.view', {
-          abstract: true,
-          url: '/view',
-          template: '<ui-view/>'
-        })
-        .state('lang.view.id', {
-          url: '/:id',
-          templateUrl: getTemplateUrl,
-          controllerProvider: ['$stateParams', getCtrlName]
-        });
-
-      function getTemplateUrl($stateParams) {
-        var url = 'views/partial' + $stateParams.id + '.html';
-        return url;
-      }
-
-      function getCtrlName($stateParams) {
-        var id = $stateParams.id;
-        var ctrlName = 'MyCtrl' + id + ' as myCtrl' + id;
-        return ctrlName;
+      for (var i = 0; i < routes.length; i++) {
+        var state = routes[i];
+        $stateProvider.state(state);
       }
     }
 

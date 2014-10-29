@@ -20,14 +20,19 @@
       "served": true,
       "included": true
     }, {
-      "pattern": "test/fixtures/*.json",
+      "pattern": "test/fixtures/json/**/*.json",
+      "watched": true,
+      "served": true,
+      "included": false
+    }, {
+      "pattern": "test/fixtures/views/**/*.html",
       "watched": true,
       "served": true,
       "included": false
     },
     "app/modules/app.module.js",
     "app/**/*.js",
-    "test/testHelper.js",
+    "test/helpers/**/*.js",
     "test/unit/**/*.js"
   ],
   "autoWatch": true,

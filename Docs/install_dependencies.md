@@ -41,6 +41,12 @@ echo "source ~/.nvm/nvm.sh" >> ~/.bashrc
 nvm -v
 ```
 
+##### Update nvm
+```
+curl https://raw.githubusercontent.com/creationix/nvm/v0.7.0/install.sh | sh
+```
+and restart terminal
+
 #### Install node
 [node repo](https://github.com/joyent/node)
 ```

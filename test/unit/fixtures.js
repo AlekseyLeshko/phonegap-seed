@@ -2,7 +2,7 @@
 
 describe('fixtures', function() {
   beforeEach(function() {
-    jasmine.getJSONFixtures().fixturesPath = 'base/test/fixtures';
+    Includer.includeJson();
   });
 
   it('should return fixture', function() {

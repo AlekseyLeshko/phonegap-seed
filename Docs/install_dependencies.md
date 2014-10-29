@@ -26,7 +26,7 @@ For work with PhoneGap seed project need install this dependency list
 4. debug
   1. [weinre](#install-weinre)
 
-Or make use Vagrant and Ansible. [Please take script](https://github.com/AlekseyLeshko/ansible-phonegap-playbook)
+Or make use Vagrant with Ansible. [Here you are playbook](https://github.com/AlekseyLeshko/ansible-phonegap-playbook)
 
 ## All shell command for Ubuntu
 

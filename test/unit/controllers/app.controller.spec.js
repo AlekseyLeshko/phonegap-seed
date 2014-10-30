@@ -3,14 +3,20 @@
 describe('app controller', function() {
   beforeEach(module('app'));
 
-  var ctrlName = 'AppController';
   var ctrl;
   var appConfig;
 
   beforeEach(function() {
-    inject(function($injector, $controller) {
-      ctrl = $controller(ctrlName);
-      appConfig = $injector.get('appConfig');
+    var ctrlName = 'AppController';
+    var name = 'appName';
+    appConfig = {
+      name: name
+    };
+    var injectObj = {
+      appConfig: appConfig
+    };
+    inject(function($controller) {
+      ctrl = $controller(ctrlName, injectObj);
     });
   });
 

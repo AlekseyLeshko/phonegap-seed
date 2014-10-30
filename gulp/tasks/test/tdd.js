@@ -3,7 +3,7 @@ var karma = require('karma').server;
 var _ = require('lodash');
 var defaultConfig = require('../../../config/karma.json');
 
-gulp.task('tdd', function (done) {
+gulp.task('tdd', ['create-html-fixtures'], function (done) {
   var specificConfig = {
     browsers: ['PhantomJS']
   };

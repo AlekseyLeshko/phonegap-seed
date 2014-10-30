@@ -1,9 +1,9 @@
 'use strict';
 
-describe('MyCtrl1 controller', function() {
+describe('HomeController controller', function() {
   beforeEach(module('app'));
 
-  var ctrlName = 'MyCtrl1';
+  var ctrlName = 'HomeController';
   var ctrl;
 
   beforeEach(function() {

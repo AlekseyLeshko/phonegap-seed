@@ -27,8 +27,11 @@
       .row
         p
           | This is the partial for view 1.
-        p ng-click="myCtrl1.click()"
-          | {{ myCtrl1.msg }}
+        p
+          | {{ homeCtrl.msg }}
+        p
+          .btn.btn-primary ng-click="homeCtrl.click()"
+            | Click
         div
           | Angular seed app: v
           span app-version=""

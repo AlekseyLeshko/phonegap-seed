@@ -18,7 +18,7 @@
           name: 'lang',
           abstract: true,
           url: '/:lang',
-          controller: 'LangCtrl as langCtrl',
+          controller: 'LangController as langCtrl',
           template: '<ui-view/>'
         }
       ];

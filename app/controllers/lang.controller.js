@@ -3,11 +3,14 @@
 
   angular
     .module('app')
-    .controller('LangCtrl' , LangCtrl);
+    .controller('LangController' , LangController);
 
-  LangCtrl.$inject = ['$stateParams', 'i18n'];
+  LangController.$inject = [
+    '$stateParams',
+    'i18n'
+  ];
 
-  function LangCtrl($stateParams, i18n) {
+  function LangController($stateParams, i18n) {
     var vm = this;
     vm.setLang = setLang;
 

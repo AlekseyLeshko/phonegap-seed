@@ -8,7 +8,7 @@ describe('lang controller', function() {
   var langKey;
 
   beforeEach(function() {
-    var ctrlName = 'LangCtrl';
+    var ctrlName = 'LangController';
     i18n = {
       setLang: function (value) {
         langKey = value;

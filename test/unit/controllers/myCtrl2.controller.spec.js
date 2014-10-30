@@ -33,8 +33,9 @@ describe('MyCtrl2 controller', function() {
   });
 
   it('should init', function() {
+    var expected = 'Hello, World! : Hello, World!';
     expect(strBuilderService.buildHello).toHaveBeenCalled();
     expect(strBuilderFactory.buildHello).toHaveBeenCalled();
-    expect(ctrl.msg).toEqual('Hello, World! : Hello, World!');
+    expect(ctrl.msg).toEqual(expected);
   });
 });

@@ -1,26 +1,35 @@
 'use strict';
 
-describe('controllers', function() {
+describe('lang controller', function() {
   beforeEach(module('app'));
 
-  describe('lang', function() {
+  var ctrl;
+  var i18n;
+  var langKey;
+
+  beforeEach(function() {
     var ctrlName = 'LangCtrl';
-    var ctrl;
-    var i18n;
+    i18n = {
+      setLang: function (value) {
+        langKey = value;
+      }
+    };
+    spyOn(i18n, 'setLang').and.callThrough();
 
-    beforeEach(function() {
-      inject(function($injector, $controller) {
-        ctrl = $controller(ctrlName);
-        i18n = $injector.get('i18n');
-      });
+    var injectObj = {
+      i18n: i18n
+    };
+    inject(function($controller) {
+      ctrl = $controller(ctrlName, injectObj);
     });
-
-    it('should changes locale', inject(function() {
-      var locale = 'de';
-      ctrl.setLang('ru');
-      ctrl.setLang(locale);
-
-      expect(i18n.getLang()).toEqual(locale);
-    }));
   });
+
+  it('should changes locale', inject(function() {
+    var locale = 'de';
+    ctrl.setLang('ru');
+    ctrl.setLang(locale);
+
+    expect(i18n.setLang).toHaveBeenCalled();
+    expect(langKey).toEqual(locale);
+  }));
 });

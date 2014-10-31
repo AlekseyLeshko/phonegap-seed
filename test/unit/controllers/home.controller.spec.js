@@ -3,11 +3,11 @@
 describe('HomeController controller', function() {
   beforeEach(module('app'));
 
-  var ctrlName = 'HomeController';
   var ctrl;
 
   beforeEach(function() {
-    inject(function($injector, $controller) {
+    var ctrlName = 'HomeController';
+    inject(function($controller) {
       ctrl = $controller(ctrlName);
     });
   });

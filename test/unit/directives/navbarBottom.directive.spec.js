@@ -17,7 +17,7 @@ describe('navbarBottom directive', function() {
     Includer.includeHtml();
   });
 
-  it('should ', function() {
+  it('should directive have \'a\' tags', function() {
     var fileName = 'navbarBottom.html';
     var fixture = jasmine.getFixtures().read(fileName);
 

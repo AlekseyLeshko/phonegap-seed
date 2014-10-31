@@ -17,7 +17,7 @@ describe('navbarTop directive', function() {
     Includer.includeHtml();
   });
 
-  it('should ', function() {
+  it('should directive have \'div\' tags', function() {
     var fileName = 'navbarTop.html';
     var fixture = jasmine.getFixtures().read(fileName);
 

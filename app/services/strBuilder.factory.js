@@ -5,6 +5,8 @@
     .module('app')
     .factory('strBuilderFactory', strBuilderFactory);
 
+  strBuilderFactory.$inject = [];
+
   function strBuilderFactory () {
     var factory = {
       buildHello: buildHello

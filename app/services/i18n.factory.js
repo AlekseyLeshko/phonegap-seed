@@ -5,7 +5,9 @@
     .module('app')
     .factory('i18n', i18n);
 
-  i18n.$inject = ['$translate'];
+  i18n.$inject = [
+    '$translate'
+  ];
 
   function i18n($translate) {
     var currentLang = getDefaultLang();

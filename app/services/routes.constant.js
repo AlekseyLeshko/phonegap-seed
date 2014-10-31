@@ -5,6 +5,8 @@
     .module('app')
     .constant('routes', routes());
 
+  routes.$inject = [];
+
   function routes() {
     var stateList = [];
 

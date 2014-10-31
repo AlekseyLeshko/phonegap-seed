@@ -19,7 +19,7 @@
 
     function createRouting() {
       var location = appConfig.location;
-      $urlRouterProvider.otherwise('/' + location + '/view/1');
+      $urlRouterProvider.otherwise('/' + location + '/home');
 
       for (var i = 0; i < routes.length; i++) {
         var state = routes[i];

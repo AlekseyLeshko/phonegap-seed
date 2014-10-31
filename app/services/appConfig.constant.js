@@ -5,6 +5,8 @@
     .module('app')
     .constant('appConfig', appConfig());
 
+  appConfig.$inject = [];
+
   function appConfig() {
     var config = {
       name: 'PhoneGap-seed',

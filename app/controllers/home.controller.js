@@ -3,11 +3,11 @@
 
   angular
     .module('app')
-    .controller('MyCtrl1' , MyCtrl1);
+    .controller('HomeController' , HomeController);
 
-  MyCtrl1.$inject = [];
+  HomeController.$inject = [];
 
-  function MyCtrl1() {
+  function HomeController() {
     var vm = this;
     vm.msg = 'Hello, ';
     vm.click = click;

@@ -5,11 +5,14 @@
     .module('app')
     .constant('routes', routes());
 
+  routes.$inject = [];
+
   function routes() {
     var stateList = [];
 
     stateList = stateList.concat(getLangStateList());
-    stateList = stateList.concat(getViewStatelist());
+    stateList = stateList.concat(getHomeStateList());
+    stateList = stateList.concat(getSettingStateList());
 
     return stateList;
 
@@ -18,38 +21,33 @@
           name: 'lang',
           abstract: true,
           url: '/:lang',
-          controller: 'LangCtrl as langCtrl',
+          controller: 'LangController as langCtrl',
           template: '<ui-view/>'
         }
       ];
       return langStateList;
     }
 
-    function getViewStatelist() {
-      var externalStatelist = [{
-          name: 'lang.view',
-          abstract: true,
-          url: '/view',
-          template: '<ui-view/>'
-        }, {
-          name: 'lang.view.id',
-          url: '/:id',
-          templateUrl: getTemplateUrl,
-          controllerProvider: ['$stateParams', getCtrlName]
-        }];
-
-      return externalStatelist;
+    function getHomeStateList() {
+      var langStateList = [{
+          name: 'lang.home',
+          url: '/home',
+          templateUrl: '/views/home.html',
+          controller: 'HomeController as homeCtrl'
+        }
+      ];
+      return langStateList;
     }
 
-    function getTemplateUrl($stateParams) {
-      var url = 'views/partial' + $stateParams.id + '.html';
-      return url;
-    }
-
-    function getCtrlName($stateParams) {
-      var id = $stateParams.id;
-      var ctrlName = 'MyCtrl' + id + ' as myCtrl' + id;
-      return ctrlName;
+    function getSettingStateList() {
+      var langStateList = [{
+          name: 'lang.setting',
+          url: '/setting',
+          templateUrl: '/views/setting.html',
+          controller: 'SettingController as settingCtrl'
+        }
+      ];
+      return langStateList;
     }
   }
 })();

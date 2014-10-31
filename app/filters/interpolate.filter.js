@@ -5,7 +5,9 @@
     .module('app')
     .filter('interpolate', interpolate);
 
-  interpolate.$inject = ['version'];
+  interpolate.$inject = [
+    'version'
+  ];
 
   function interpolate(version) {
     return function(text) {

@@ -8,7 +8,7 @@ describe('lang controller', function() {
   var langKey;
 
   beforeEach(function() {
-    var ctrlName = 'LangCtrl';
+    var ctrlName = 'LangController';
     i18n = {
       setLang: function (value) {
         langKey = value;
@@ -24,12 +24,12 @@ describe('lang controller', function() {
     });
   });
 
-  it('should changes locale', inject(function() {
+  it('should changes locale', function() {
     var locale = 'de';
     ctrl.setLang('ru');
     ctrl.setLang(locale);
 
     expect(i18n.setLang).toHaveBeenCalled();
     expect(langKey).toEqual(locale);
-  }));
+  });
 });

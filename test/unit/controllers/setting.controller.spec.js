@@ -1,6 +1,6 @@
 'use strict';
 
-describe('MyCtrl2 controller', function() {
+describe('Setting controller', function() {
   beforeEach(module('app'));
 
   var ctrl;
@@ -8,7 +8,7 @@ describe('MyCtrl2 controller', function() {
   var strBuilderFactory;
 
   beforeEach(function() {
-    var ctrlName = 'MyCtrl2';
+    var ctrlName = 'SettingController';
 
     var buildHello = function (msg) {
       return 'Hello, ' + msg;

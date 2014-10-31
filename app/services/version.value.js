@@ -8,7 +8,7 @@
   version.$inject = [];
 
   function version() {
-    var v = '0.1';
+    var v = '0.0.1';
     return v;
   }
 })();

@@ -10,6 +10,7 @@
 
     stateList = stateList.concat(getLangStateList());
     stateList = stateList.concat(getHomeStateList());
+    stateList = stateList.concat(getSettingStateList());
 
     return stateList;
 
@@ -31,6 +32,17 @@
           url: '/home',
           templateUrl: '/views/home.html',
           controller: 'HomeController as homeCtrl'
+        }
+      ];
+      return langStateList;
+    }
+
+    function getSettingStateList() {
+      var langStateList = [{
+          name: 'lang.setting',
+          url: '/setting',
+          templateUrl: '/views/setting.html',
+          controller: 'SettingController as settingCtrl'
         }
       ];
       return langStateList;

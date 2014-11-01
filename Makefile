@@ -5,7 +5,7 @@ build:
 	gulp build
 
 tests:
-	karma start test/karma.conf.js --single-run --browsers PhantomJS
+	npm test
 
 install_dependencies: install_global_module node_modules check_module
 
@@ -25,6 +25,7 @@ clean:
 	rm -rf www/
 
 fullclean: clean
+	rm -rf test/fixtures/views/
 	rm -rf node_modules/
 	rm -rf bower_components/
 	rm -rf coverage/

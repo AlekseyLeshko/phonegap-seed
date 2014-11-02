@@ -1,5 +1,5 @@
 # Binaries we use
-all: clean install_dependencies tests build
+all: install_dependencies clean tests build
 
 build:
 	gulp build
@@ -11,13 +11,8 @@ install_dependencies:
 	npm install
 
 clean:
-	gulp clean
+	gulp fullclean
 
 fullclean: clean
-	rm -rf test/fixtures/views/
 	rm -rf node_modules/
 	rm -rf bower_components/
-	rm -rf coverage/
-	rm -rf platforms/
-	rm -rf plugins/
-	rm -rf merges/

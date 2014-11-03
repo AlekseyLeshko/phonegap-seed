@@ -2,5 +2,11 @@ var gulp = require('gulp');
 var sh = require('shelljs');
 
 gulp.task('clean', function() {
-  sh.rm('-rf', 'www');
+  var paths = [
+    'www',
+    'test/fixtures/views/',
+    'coverage/'
+  ];
+
+  sh.rm('-rf', paths);
 });

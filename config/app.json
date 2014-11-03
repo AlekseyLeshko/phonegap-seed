@@ -24,7 +24,7 @@
   ],
   "config": {
     "name": "phonegap-seed",
-    "version": "0.0.12",
+    "version": "0.0.13",
     "description": "Phonegap-seed project with angularjs, slim, sass and gulp.",
     "homepage": "https://github.com/AlekseyLeshko/phonegap-seed",
     "author": {

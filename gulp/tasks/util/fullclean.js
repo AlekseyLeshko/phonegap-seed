@@ -1,6 +1,10 @@
 var gulp = require('gulp');
-var runSequence = require('run-sequence');
+var sh = require('shelljs');
 
-gulp.task('fullclean', function(callback) {
-  return runSequence('clean', 'clean-cordova', callback);
+gulp.task('fullclean', ['clean', 'clean-cordova'], function() {
+  var paths = [
+    'test/fixtures/views/'
+  ];
+
+  sh.rm('-rf', paths);
 });

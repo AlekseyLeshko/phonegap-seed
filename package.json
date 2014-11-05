@@ -80,7 +80,8 @@
   "scripts": {
     "preinstall": "npm install -g gulp bower karma-cli npm-check-updates",
     "postinstall": "npm-check-updates",
-    "test": "gulp tdd"
+    "pretest": "gulp create-html-fixtures",
+    "test": "karma start test/karma.conf.js --single-run --browsers PhantomJS"
   },
   "preferGlobal": false,
   "private": false,

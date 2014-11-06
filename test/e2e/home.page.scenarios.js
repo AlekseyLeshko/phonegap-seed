@@ -8,10 +8,6 @@ describe('my app', function() {
       browser.get('index.html#/en/home');
     });
 
-    afterEach(function() {
-      browser.get('index.html#/en/home');
-    });
-
     it('should render page have text', function() {
       var expected = /partial for view 1/;
       var el = element.all(by.css('.container')).first();

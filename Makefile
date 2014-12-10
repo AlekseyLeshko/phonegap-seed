@@ -16,7 +16,8 @@ install_global_module: install_say_me
 	@$(call install_npm_module,npm-check-updates,-g)
 
 tests:
-	npm test
+	gulp create-html-fixtures
+	karma start test/karma.conf.js --single-run --browsers PhantomJS
 
 build:
 	gulp build

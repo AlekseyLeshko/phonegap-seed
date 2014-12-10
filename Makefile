@@ -1,7 +1,6 @@
 .DEFAULT_TARGET: all
 .PHONY: all
 
-# Binaries we use
 all: install_dependencies clean tests build
 
 build:

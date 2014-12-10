@@ -68,20 +68,16 @@
     "karma-phantomjs-launcher": "^0.1.4",
     "lodash": "^2.4.1",
     "map-stream": "^0.1.0",
+    "mobile-angular-ui": "git+ssh://git@github.com/mcasimir/mobile-angular-ui.git#1.1.0-beta.30",
     "my-ip": "^1.1.1",
     "package-json-validator": "^0.5.6",
     "require-dir": "^0.1.0",
     "run-sequence": "^1.0.1",
     "semver": "^4.1.0",
     "shelljs": "^0.3.0",
-    "win-spawn": "^2.0.0",
-    "mobile-angular-ui": "git+ssh://git@github.com/mcasimir/mobile-angular-ui.git#1.1.0-beta.30"
+    "win-spawn": "^2.0.0"
   },
   "scripts": {
-    "preinstall": "npm install -g gulp bower karma-cli npm-check-updates",
-    "postinstall": "npm-check-updates",
-    "pretest": "gulp create-html-fixtures",
-    "test": "karma start test/karma.conf.js --single-run --browsers PhantomJS"
   },
   "preferGlobal": false,
   "private": false,

@@ -78,10 +78,6 @@
     "win-spawn": "^2.0.0"
   },
   "scripts": {
-    "preinstall": "npm install -g gulp bower karma-cli npm-check-updates",
-    "postinstall": "npm-check-updates",
-    "pretest": "gulp create-html-fixtures",
-    "test": "karma start test/karma.conf.js --single-run --browsers PhantomJS"
   },
   "preferGlobal": false,
   "private": false,

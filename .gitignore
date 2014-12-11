@@ -1,15 +1,22 @@
-#npm
-node_modules/
-
-#bower
-bower_components
-
-#App
-www/
-coverage/
-test/fixtures/views/
+# app
+/www/**/*
+/coverage/**/*
+/test/fixtures/views/**/*
 
 #PhoneGap
-platforms/
-plugins/
-merges/
+/platforms/**/*
+/plugins/**/*
+/merges/**/*
+
+# Logs
+logs
+*.log
+
+# node-waf configuration
+.lock-wscript
+
+# Bower
+bower_components
+
+# NPM
+node_modules
